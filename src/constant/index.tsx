@@ -13,10 +13,10 @@ export const BRAND_NAME = 'GDGroup'
 export const BRAND_IMAGE = 'Template nextjs material-ui'
 
 export const META_DATA = {
-    title:'Du lịch - Văn hoá huyện Cầu Kè',
-    image:'/images/di-tich-lich-su/khu-tuong-niem/khu-tuong-niem%20(9).jpg',
-    icon:'/images/logo-doan-tncs-hcm.png',
-    description:'Lịch sử, văn hóa và du lịch huyện Cầu Kè',
+    title:'Hệ thống quản lý GDGroup',
+    image:'/favicon/android-chrome-192x192.png',
+    icon:'/favicon/android-chrome-192x192.png',
+    description:'Hệ thông quản lý Hệ thống sinh thái giáo dục GDGroup',
     url:''
 }
 
