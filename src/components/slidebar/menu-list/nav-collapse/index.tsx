@@ -79,26 +79,12 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
                     alignItems: 'flex-start',
                     backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
                     py: level > 1 ? 1 : 1.25,
-                    pl: `${level * 24}px`
+                    pl: `${level * 18}px`
                 }}
                 selected={selected === menu.id}
                 onClick={handleClick}
             >
-                <ListItemIcon sx={{ my: 'auto', minWidth: !menu.icon ? 18 : 36 }}>
-                    {
-                        menu?.icon ?
-                            menu?.icon
-                            :
-                            <FiberManualRecordIcon
-                                sx={{
-                                    width: selected === menu.id ? 8 : 6,
-                                    height: selected === menu.id ? 8 : 6
-                                }}
-                                fontSize={level > 0 ? 'inherit' : 'medium'}
-                            />
-                    }
-
-                </ListItemIcon>
+                
                 <ListItemText
                     primary={
                         <Typography variant={selected === menu.id ? 'h5' : 'body1'} color="inherit" sx={{ my: 'auto' }}>
