@@ -5,10 +5,8 @@ import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 import '@/styles/globals.css'
 import '@/styles/react-slick.css'
+import '../config/locale/i18n';
 import ThemeCustomization from '@/config/theme'
-import animationData from '../../public/animation/bus.json'
-import Lottie from 'react-lottie'
-import { Box } from '@mui/material'
 import { Provider } from 'react-redux'
 import { store } from '@/store'
 import { META_DATA } from '@/constant';
