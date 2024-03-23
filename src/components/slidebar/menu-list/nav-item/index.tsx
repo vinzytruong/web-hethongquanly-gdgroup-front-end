@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { OPEN_DRWAWER, SELECT_ITEM } from '@/store/menu/action';
 import Link from 'next/link';
 import { ChipProps } from '@mui/material/Chip';
+import { useTranslation } from 'react-i18next';
 
 export type LinkTarget = '_blank' | '_self' | '_parent' | '_top';
 
@@ -46,6 +47,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
     const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
     const dispatch = useAppDispatch();
     const { selectedItem } = useAppSelector((state) => state.menu);
+    const { t } = useTranslation();
 
     let itemTarget: LinkTarget = '_self';
     if (item.target) {
@@ -72,7 +74,6 @@ const NavItem = ({ item, level }: NavItemProps) => {
 
     return (
         <ListItemButton
-            // {...listItemProps}
             disabled={item.disabled}
             sx={{
                 
@@ -89,13 +90,13 @@ const NavItem = ({ item, level }: NavItemProps) => {
             <ListItemText
                 primary={
                     <Typography variant={selectedItem?.findIndex((id: string | undefined) => id === item.id) > -1 ? 'h5' : 'body1'} color="inherit">
-                        {(item.title!)}
+                        {t(item.title!)}
                     </Typography>
                 }
                 secondary={
                     item.caption && (
                         <Typography variant="caption"display="block" gutterBottom>
-                            {item.caption}
+                            {t(item.caption.toString())}
                         </Typography>
                     )
                 }

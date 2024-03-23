@@ -11,6 +11,7 @@ import { drawerWidth, headerHeight } from "@/constant";
 import NotificationSection from "./NotificationSection";
 import SearchSection from "./SearchSection";
 import LocalizationSection from "./LocalizationSection";
+import ThemeModeSection from "./ThemeModeSection";
 
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
@@ -47,15 +48,15 @@ const Header = () => {
             background: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
             color: theme.palette.primary.dark,
             '&[aria-controls="menu-list-grow"],&:hover': {
-                borderColor: theme.palette.primary.main,
-                background: theme.palette.primary.main,
-                color: theme.palette.primary.light
+              borderColor: theme.palette.primary.main,
+              background: theme.palette.primary.main,
+              color: theme.palette.primary.light
             }
           }}
           onClick={() => dispatch(OPEN_DRWAWER({ drawerOpen: !drawerOpen }))}
           color='inherit'
         >
-          <IconMenu2 stroke={1.5} size="20px"  />
+          <IconMenu2 stroke={1.5} size="20px" />
         </Avatar>
 
 
@@ -66,7 +67,7 @@ const Header = () => {
           <LocalizationSection />
           <NotificationSection />
           <ProfileSection />
-
+          <ThemeModeSection />
         </Box>
       </Box>
 

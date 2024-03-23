@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 import productReducer from './product/reducer';
 import sitesReducer from './sites/reducer';
 import menuReducer from './menu/reducer';
-import userReducer from './user/reducer';
+import authReducer from './auth/reducer';
 import storageReducer from './storage/reducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
@@ -14,7 +14,7 @@ const reducer = combineReducers({
     product: productReducer,
     sites: sitesReducer,
     menu: menuReducer,
-    user: userReducer,
+    auth: authReducer,
     storage:storageReducer,
 });
 export default reducer;

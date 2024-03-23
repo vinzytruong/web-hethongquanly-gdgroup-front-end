@@ -1,5 +1,9 @@
 {
-  "home": "Home",
+  "Home": "Home",
+  "Administrative personnel":"Administrative personnel",
+  "Staff information":"Staff information",
+  "Timekeeping":"Timekeeping",
+  "Leave of absence":"Leave of absence",
   "action_play": "Play",
   "action_paused": "Paused",
   "action_reset": "Reset",

@@ -1,5 +1,9 @@
 {
-  "home": "Trang chủ",
+  "Home": "Trang chủ",
+  "Administrative personnel":"Hành chính nhân sự",
+  "Staff information":"Thông tin nhân viên",
+  "Timekeeping":"Chấm công",
+  "Leave of absence":"Nghỉ phép",
   "action_play": "Phát",
   "action_paused": "Dừng lại",
   "action_reset": "Tải lại",

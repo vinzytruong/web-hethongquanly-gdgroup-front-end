@@ -1,8 +1,8 @@
+import { JWTContextType } from "@/interfaces/auth";
+import { KeyedObject } from "@/interfaces/object";
 import { AppState } from "@/store";
 import { LOGIN, LOGOUT } from "@/store/auth/action";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { KeyedObject } from "@/types";
-import { JWTContextType } from "@/types/auth";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/router";

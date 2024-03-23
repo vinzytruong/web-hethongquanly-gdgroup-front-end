@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { List, Typography } from "@mui/material";
 import NavItem from "../nav-item";
 import NavCollapse from "../nav-collapse";
+import { useTranslation } from "react-i18next";
 
 // ==============================|| SIDEBAR MENU LIST GROUP ||============================== //
 
@@ -18,6 +19,7 @@ export interface NavGroupProps {
 }
 
 const NavGroup = ({ item }: NavGroupProps) => {
+  const { t } = useTranslation();
   const items = item.children?.map((menu) => {
     switch (menu.type) {
       case "collapse":
@@ -43,14 +45,14 @@ const NavGroup = ({ item }: NavGroupProps) => {
               display="block"
               gutterBottom
             >
-              {(item.title!)}
+              {t(item.title!)}
               {item.caption && (
                 <Typography
                   variant="caption"
                   display="block"
                   gutterBottom
                 >
-                  {item.caption}
+                  {t(item.caption.toString())}
                 </Typography>
               )}
             </Typography>

@@ -3,7 +3,7 @@ import { Html, Head, Main, NextScript } from 'next/document'
 
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="vi">
       <Head>
         {process.env.NEXT_PUBLIC_NODE_PRODUCTION && (
           <link rel="preconnect" href={process.env.NEXT_PUBLIC_NODE_PRODUCTION} />

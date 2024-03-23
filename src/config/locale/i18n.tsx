@@ -4,8 +4,8 @@ import { initReactI18next } from 'react-i18next';
 // config
 import { defaultLang } from './locale';
 //
-import enLocales from './locales/en.json';
-import vnLocales from './locales/vn.json';
+import enLocales from './language/en.json';
+import vnLocales from './language/vn.json';
 
 // ----------------------------------------------------------------------
 

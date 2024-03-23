@@ -11,39 +11,39 @@ const dashboardAdmin = [
         children: [
             {
                 id: 'home',
-                title: "Trang chủ",
+                title: "Home",
                 type: 'item',
                 url: '/home',
                 icon: <IconHome />,
                 breadcrumbs: false
             },
             {
-                id: 'employee',
-                title: "Hành chính nhân sự",
+                id: 'administrative_personnel',
+                title: "Administrative personnel",
                 type: 'collapse',
                 url: '#',
                 icon: <IconCheese />,
                 breadcrumbs: false,
                 children:[
                     {
-                        id: 'home',
-                        title: "Thông tin nhân sự",
+                        id: 'staff-information',
+                        title: "Staff information",
                         type: 'item',
                         url: '#',
                         icon: <IconHome />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'employee',
-                        title: "Chấm công",
+                        id: 'time-keeping',
+                        title: "Timekeeping",
                         type: 'item',
                         url: '#',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'employee',
-                        title: "Nghỉ phép",
+                        id: 'Leave-of-absence',
+                        title: "Leave of absence",
                         type: 'item',
                         url: '#',
                         icon: <IconCheese />,

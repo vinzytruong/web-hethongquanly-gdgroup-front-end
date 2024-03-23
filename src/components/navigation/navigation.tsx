@@ -16,7 +16,7 @@ const NavItem = styled(Box)(({ theme }) => ({
 const Navigation: FC = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, px: 3, gap: 5 }}>
-      {navigationMenu.map((item, index) => (
+      {navigationMenu.map((item:any, index:any) => (
         item.children === null ?
           <Link style={{ textDecoration: 'none' }} href={item.path} key={index}>
             <NavItem>
@@ -24,7 +24,7 @@ const Navigation: FC = () => {
             </NavItem>
           </Link>
           :
-          <MegaMenuSection idx={index} key={index} />
+          <MegaMenuSection key={index} />
       ))}
     </Box>
   )

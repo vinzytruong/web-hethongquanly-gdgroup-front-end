@@ -1,6 +1,0 @@
-export { default as HomeHero } from '../../pages/home/hero'
-export { default as HomeFeature } from '../../pages/home/feature'
-export { default as HomePopularSites } from '../../pages/home/popular-sites'
-export { default as HomeHistorySites } from '../../pages/home/historical-sites'
-export { default as HomeSiteSeeingSites } from '../../pages/home/sightseeing-sites'
-export { default as HomeOCOP } from '../../pages/home/ocop-product'

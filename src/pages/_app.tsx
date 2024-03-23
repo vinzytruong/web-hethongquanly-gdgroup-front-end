@@ -12,6 +12,9 @@ import { store } from '@/store'
 import { META_DATA } from '@/constant';
 import 'moment/locale/vi';
 import moment from 'moment';
+import { ConfigProvider } from '@/contexts/ConfigContext';
+import { useTranslation } from 'react-i18next';
+import useConfig from '@/hooks/useConfig';
 
 export default function App({ Component, pageProps }: AppProps) {
   moment.locale('vi')
@@ -36,11 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href={META_DATA.icon} />
       </Head>
       <Provider store={store}>
-        <ThemeCustomization>
-         
-            <Component {...pageProps} />
-        
-        </ThemeCustomization>
+        <ConfigProvider>
+          <Component {...pageProps} />
+        </ConfigProvider>
       </Provider>
     </>
   )

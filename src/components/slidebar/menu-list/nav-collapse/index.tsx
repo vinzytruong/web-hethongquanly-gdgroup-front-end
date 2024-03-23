@@ -6,6 +6,7 @@ import NavItem from '../nav-item';
 import { NavGroupProps } from '../nav-group';
 import { IconChevronDown, IconChevronUp, IconHome } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 
 // ==============================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||============================== //
 
@@ -18,7 +19,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState<string | null | undefined>(null);
-
+    const { t } = useTranslation();
     const handleClick = () => {
         setOpen(!open);
         setSelected(!open ? menu.id : null);
@@ -74,7 +75,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
         <>
             <ListItemButton
                 sx={{
-                    
+
                     mb: 0.5,
                     alignItems: 'flex-start',
                     backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
@@ -84,17 +85,17 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
                 selected={selected === menu.id}
                 onClick={handleClick}
             >
-                
+
                 <ListItemText
                     primary={
                         <Typography variant={selected === menu.id ? 'h5' : 'body1'} color="inherit" sx={{ my: 'auto' }}>
-                            {(menu.title!)}
+                            {t(menu.title!)}
                         </Typography>
                     }
                     secondary={
                         menu.caption && (
                             <Typography variant="caption" display="block" gutterBottom>
-                                {menu.caption}
+                                {t(menu.caption.toString())}
                             </Typography>
                         )
                     }

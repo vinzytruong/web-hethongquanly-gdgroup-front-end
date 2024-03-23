@@ -38,6 +38,8 @@ const LocalizationSection = () => {
         lng: string
     ) => {
         setLanguage(lng);
+        
+        
         onChangeLocale(lng);
         setOpen(false);
     };

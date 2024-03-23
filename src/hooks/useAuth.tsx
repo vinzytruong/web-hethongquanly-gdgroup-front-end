@@ -1,12 +1,11 @@
 import { getCurrentUser, isUserLoggedIn, logOutAccount, signInWithEmailPassword, signInWithGooglePopup } from "@/services/authentication";
 import { auth } from "@/services/firebase";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { SAVE_USER } from "@/store/user/action";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const useAuth = () => {
-    const user = useAppSelector((state) => state.user);
+    const user = useAppSelector((state) => state.auth);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
     const dispatch = useAppDispatch();
