@@ -24,11 +24,6 @@ export const AuthProvider = ({ children }: any) => {
     const [accessToken, setAccessToken] = useState(null);
     const router = useRouter();
 
-    const headers = {
-        'Content-Type': 'application/json',
-
-    }
-
     const login = async (username: string, password: string) => {
         const data = {
             "tenDangNhap": username,
@@ -36,7 +31,7 @@ export const AuthProvider = ({ children }: any) => {
         }
         const dataJson = JSON.stringify(data)
         try {
-            const response = await axios.post('http://192.168.50.238:8899/api/NguoiDung/DangNhap', dataJson, { headers: headers });
+            const response = await axios.post('http://192.168.50.238:8899/api/NguoiDung/DangNhap', dataJson, { headers: {'Content-Type': 'application/json'} });
             const accessToken = response.data.token;
             setSession(accessToken);
             dispatch(LOGIN({
