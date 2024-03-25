@@ -14,16 +14,15 @@ export default function AdminHome() {
     const router = useRouter()
     const { t } = useTranslation();
     const { mode, onChangeMode} = useConfig();
-    console.log("HELLO",mode);
+
 const theme=useTheme()
+console.log("123456789", theme.palette.mode);
     return (
         <AdminLayout>
-
             <Box padding="12px">
-            {theme.palette.mode}
-                Giao diện {t('Home')}
+                
+          
             </Box>
-
         </AdminLayout>
 
     );

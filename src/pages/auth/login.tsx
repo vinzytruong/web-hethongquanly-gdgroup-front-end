@@ -17,10 +17,11 @@ import { FormHelperText, IconButton, InputAdornment, Stack } from '@mui/material
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import RHFTextField from '@/components/hook-form/RHFTextField';
 import AnimateButton from '@/components/button/AnimateButton';
-import useAuth from '@/hooks/useAuth';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useAuth } from '@/contexts/JWTContext';
 
 export default function AuthLogin({ loginProp, ...others }: { loginProp?: number }) {
-  const { logIn } = useAuth();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loginCount, setLoginCount] = useState(0);
   const [isCountdown, setCountdown] = useState(false);
@@ -36,8 +37,16 @@ export default function AuthLogin({ loginProp, ...others }: { loginProp?: number
     event.preventDefault()!;
   };
 
-  const onSubmit = (data: any) => {
-    logIn(data.email, data.passsword)
+  const onSubmit = async (data: any) => {
+    
+    
+    try {
+      console.log(data);
+      await login(data.username, data.password);
+    } catch (error) {
+      console.error(error);
+      // reset();
+    }
   };
 
   const handleLogin = () => {
@@ -49,15 +58,14 @@ export default function AuthLogin({ loginProp, ...others }: { loginProp?: number
   };
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Vui lòng nhập đúng email').required('Email không thể bỏ trống'),
+    username: Yup.string().required('Tài khoản không thể bỏ trống'),
     password: Yup.string().required('Mật khẩu không thể bỏ trống'),
   });
 
   const defaultValues = {
-    email: 'vinhtruong.dev@gmail.com',
+    username: '',
     password: '',
     remember: false,
-    submit: null
   };
 
   const {
@@ -72,7 +80,7 @@ export default function AuthLogin({ loginProp, ...others }: { loginProp?: number
     watch
   } = useForm({
     mode: "onChange",
-    // resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(LoginSchema),
     defaultValues
   });
 
@@ -101,7 +109,7 @@ export default function AuthLogin({ loginProp, ...others }: { loginProp?: number
   return (
     <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
       <Stack spacing={3}>
-        <RHFTextField name="email" label="Email" control={control} />
+        <RHFTextField name="username" label="Tài khoản" control={control} />
         <RHFTextField name="password" label="Mật khẩu" control={control}
           type={showPassword ? 'text' : 'password'}
           endAdornment={

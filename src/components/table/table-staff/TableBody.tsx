@@ -1,17 +1,16 @@
-/* eslint-disable jsx-a11y/alt-text */
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { StyledButton } from '../styled-button';
+import { StyledButton } from '../../styled-button';
+import { Rating } from '@mui/material';
 import { useRouter } from 'next/router';
-import EditSitesDialog from '../dialog/SitesDialog';
-import { useState } from 'react';
-import SnackbarAlert from '../alert';
-import DeleteDialog from '../dialog/SiteDeleteDialog';
-import SiteDeleteDialog from '../dialog/SiteDeleteDialog';
+import { AlertDialog, CustomDialog } from '../../dialog';
+import ProductDialog from '../../dialog/ProductDialog';
+import SnackbarAlert from '../../alert';
+import ProductDeleteDialog from '../../dialog/ProductDeleteDialog';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
@@ -24,14 +23,13 @@ interface BodyDataProps {
     isAdmin: boolean
 }
 
-
-const TableBodySites = (props: BodyDataProps) => {
+const TableBodyStaff = (props: BodyDataProps) => {
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
-    const [openDeleteDialog, setOpenDeleteDialog]=useState(false);
-    const [openAlert, setOpenAlert] = useState(false);
+    const [openAlert, setOpenAlert] = React.useState(false);
     const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
     const router = useRouter()
+
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         handleView(id);
         router.push(`${viewLink}?id=${id}`);
@@ -51,20 +49,23 @@ const TableBodySites = (props: BodyDataProps) => {
                     <StyledTableCell padding="normal">
                         {page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}
                     </StyledTableCell>
-                    <StyledTableCell align="left">
-                        <img src={row.photo} width='60px' height='40px' />
-                    </StyledTableCell>
                     <StyledTableCell padding='none'>{row.name}</StyledTableCell>
-                    <StyledTableCell align="left">{row.category}</StyledTableCell>
+                    <StyledTableCell align="left">{row.author}</StyledTableCell>
                     <StyledTableCell align="left">{row.address}</StyledTableCell>
+                    <StyledTableCell align="right">
+                        <Rating
+                            name="read-only"
+                            value={row.star}
+                            readOnly
+                        />
+                    </StyledTableCell>
                     <StyledTableCell align="left">{row.createdTime}</StyledTableCell>
-
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
                             {isAdmin === true ?
                                 <>
-                                    <EditSitesDialog
-                                        title={'Cập nhật địa điểm'}
+                                    <ProductDialog
+                                        title={'Cập nhật sản phẩm'}
                                         defaulValue={row}
                                         buttonText={'Chỉnh sửa'}
                                         action={'Lưu'}
@@ -72,7 +73,7 @@ const TableBodySites = (props: BodyDataProps) => {
                                         handleAlertContent={setAlertContent}
                                         handleOpenAlert={setOpenAlert}
                                     />
-                                    <SiteDeleteDialog
+                                      <ProductDeleteDialog
                                         title={row.name}
                                         buttonText={'Xoá'}
                                         action={'Xoá'}
@@ -93,7 +94,7 @@ const TableBodySites = (props: BodyDataProps) => {
                     </StyledTableCell>
                 </StyledTableRow>
             ))}
-            {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert}/>}
+            {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
             {emptyRows > 0 && (
                 <StyledTableRow style={{ height: 53 * emptyRows }}>
                     <StyledTableCell colSpan={6} />
@@ -102,7 +103,7 @@ const TableBodySites = (props: BodyDataProps) => {
         </TableBody>
     )
 }
-export default TableBodySites;
+export default TableBodyStaff;
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:last-child td, &:last-child th': {

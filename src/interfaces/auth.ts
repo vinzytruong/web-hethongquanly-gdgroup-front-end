@@ -31,12 +31,13 @@ export interface JWTDataProps {
     userId: string;
 }
 
-export type JWTContextType = {
-    isLoggedIn: boolean;
-    account?: Account;
+export interface AuthContextType {
+    login: (username: string, password: string) => Promise<any>;
     logout: () => void;
-    login: (email: string, password: string) => Promise<void>;
-};
+    isAuthenticated: () => boolean;
+    apiCall: (url: any, method?: string, data?: null) => Promise<any>;
+}
+
 export interface Account {
     username:string
     role:string

@@ -95,9 +95,10 @@ const NotificationSection = () => {
                         variant="rounded"
                         sx={{
                             border: '1px solid',
+                            transition: 'all .2s ease-in-out',
                             borderColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
                             background: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
-                            color: theme.palette.primary.dark,
+                            color: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
                             '&[aria-controls="menu-list-grow"],&:hover': {
                                 borderColor: theme.palette.primary.main,
                                 background: theme.palette.primary.main,

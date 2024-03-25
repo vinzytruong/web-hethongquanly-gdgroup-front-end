@@ -3,10 +3,11 @@ import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableContainer from '@mui/material/TableContainer';
 import { Product } from '@/interfaces/product';
-import { TablePagination, useTheme } from '@mui/material';
-import TableHeader from './table-head';
-import { Sites } from '@/interfaces/site';
-import TableBodySites from './table-body-sites';
+import { useTheme } from '@mui/material';
+import TableHeader from '../TableHeader';
+import TableBodyProduct from './TableBody';
+import TableCustomizePagination from '../TablePagination';
+import TableBodyStaff from './TableBody';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -44,50 +45,58 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
     return stabilizedThis?.map((el) => el[0]);
 }
 
+interface ProductProps {
+    rows: any,
+    isAdmin: boolean,
+}
+
 interface HeadCell {
     disablePadding: boolean;
-    id: keyof Sites;
+    id: keyof any;
     label: string;
     numeric: boolean;
 }
 
 const headCells: readonly HeadCell[] = [
     {
-        id: 'photo',
+        id: 'image',
         numeric: false,
         disablePadding: true,
         label: 'Hình ảnh',
     },
     {
+        id: 'codeNumber',
+        numeric: false,
+        disablePadding: true,
+        label: 'Mã số nhân viên',
+    },
+    {
         id: 'name',
         numeric: false,
-        disablePadding: false,
-        label: 'Tên',
+        disablePadding: true,
+        label: 'Họ và tên',
     },
     {
-        id: 'category',
+        id: 'gender',
         numeric: false,
         disablePadding: false,
-        label: 'Loại',
+        label: 'Giới tính',
     },
     {
-        id: 'address',
+        id: 'position',
         numeric: false,
         disablePadding: false,
-        label: 'Địa chỉ',
+        label: 'Chức vụ',
     },
     {
-        id: 'createdTime',
+        id: 'department',
         numeric: false,
         disablePadding: false,
-        label: 'Thời gian',
-    }
+        label: 'Phòng ban',
+    },
+    
 ];
-interface SitesProps {
-    rows: any,
-    isAdmin: boolean
-}
-const TableSites = ({ rows, isAdmin }: SitesProps) => {
+const TableStaff = ({ rows, isAdmin }: ProductProps) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Product>('name');
     const [page, setPage] = React.useState(0);
@@ -96,27 +105,18 @@ const TableSites = ({ rows, isAdmin }: SitesProps) => {
     const [editId, setEditId] = React.useState(0)
     const theme = useTheme()
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
-
     const visibleRows = React.useMemo(
         () =>
             stableSort(rows, getComparator(order, orderBy))?.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [order, orderBy, page, rowsPerPage, rows],
+        [order, orderBy, page, rows, rowsPerPage],
     );
 
     return (
-        <Box sx={{ overflow: "auto", py: 3 }}>
-            <Box sx={{ borderRadius: '6px',width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
+        <Box sx={{ overflow: "auto", py: 3, width: '100%' }}>
+            <Box sx={{ borderRadius: '6px', width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
                 <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
                     <Table
                         sx={{ minWidth: 750, border: 0 }}
@@ -128,10 +128,11 @@ const TableSites = ({ rows, isAdmin }: SitesProps) => {
                             orderBy={orderBy}
                             handleOrder={setOrder}
                             handleOrderBy={setOrderBy}
-                            rowCount={rows.length}
+                            rowCount={rows?.length}
                             headerCells={headCells}
+                            action={isAdmin}
                         />
-                        <TableBodySites
+                        <TableBodyStaff
                             data={visibleRows}
                             handleView={setViewId}
                             handleEdit={setEditId}
@@ -143,20 +144,16 @@ const TableSites = ({ rows, isAdmin }: SitesProps) => {
                         />
                     </Table>
                 </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows?.length}
-                    rowsPerPage={rowsPerPage}
+                <TableCustomizePagination
+                    handlePage={setPage}
+                    handleRowsPerPage={setRowsPerPage}
                     page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    labelRowsPerPage={<span>Hiển thị số dòng</span>}
-                    labelDisplayedRows={({ from, to, count }: any) => <span>{from}-{to} trong số {count} sản phẩm</span>}
+                    rowsPerPage={rowsPerPage}
+                    rows={rows}
                 />
             </Box>
         </Box>
     );
 }
-export default TableSites
+export default TableStaff
 

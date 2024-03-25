@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Box, Typography } from '@mui/material'
-import { BRAND_NAME } from '@/constant'
+import { BRAND_NAME, META_DATA } from '@/constant'
 
 interface Props {
   onClick?: () => void
@@ -10,7 +10,7 @@ interface Props {
 const Logo: FC<Props> = ({ onClick, variant }) => {
   return (
     <Box onClick={onClick} sx={{ width: '100%', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: 1 }}>
-      <img width={30} height={30} src='/favicon/favicon-32x32.png' alt='logo'/>
+      <img width={30} height={30} src={META_DATA.icon} alt='logo'/>
       <Typography
         variant="h5"
         textTransform='uppercase'

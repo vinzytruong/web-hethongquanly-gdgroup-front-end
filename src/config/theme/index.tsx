@@ -18,16 +18,17 @@ export default function ThemeCustomization({ children }: Props) {
 
 
     // const darkMode = mode === 'dark'
-    console.log("1234", mode === 'dark');
+    
     // const palette = darkMode ? { ...paletteBase, ...paletteDark } : { ...paletteBase, ...paletteLight }
     const palette = useMemo(() => { return mode === 'dark' ? { ...paletteBase, ...paletteDark } : { ...paletteBase, ...paletteLight } }, [mode]);
+    
     const themeOptions: ThemeOptions = useMemo(
         () => ({
             palette: palette,
             typography: typography,
             customShadows: shadows,
         }),
-        [shadows, typography]
+        [palette]
     );
 
     const themes: Theme = createTheme(themeOptions);

@@ -50,7 +50,7 @@ const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => (
   border: '1px solid',
   borderColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
   background: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
-  color: theme.palette.primary.dark,
+  color: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
   '&:hover': {
       borderColor: theme.palette.primary.main,
       background: theme.palette.primary.main,

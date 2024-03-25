@@ -46,7 +46,7 @@ const Header = () => {
             border: '1px solid',
             borderColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
             background: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
-            color: theme.palette.primary.dark,
+            color: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
             '&[aria-controls="menu-list-grow"],&:hover': {
               borderColor: theme.palette.primary.main,
               background: theme.palette.primary.main,
@@ -58,20 +58,16 @@ const Header = () => {
         >
           <IconMenu2 stroke={1.5} size="20px" />
         </Avatar>
-
-
       </Box>
       <Box display='flex' width='100%' justifyContent='space-between' alignItems='center'>
         <SearchSection />
         <Box display='flex' width='100%' justifyContent='flex-end' alignItems='center' gap={2}>
           <LocalizationSection />
           <NotificationSection />
-          <ProfileSection />
           <ThemeModeSection />
+          <ProfileSection />
         </Box>
       </Box>
-
-
       <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <MobileSection />
       </Box>

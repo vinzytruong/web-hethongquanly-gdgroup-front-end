@@ -15,10 +15,11 @@ interface EnhancedTableProps {
     orderBy: string;
     rowCount: number;
     headerCells: any;
+    action:boolean
 }
 
 const TableHeader = (props: EnhancedTableProps) => {
-    const { order, orderBy, handleOrderBy, handleOrder, headerCells } = props;
+    const { order, orderBy, handleOrderBy, handleOrder, headerCells, action } = props;
     const handleRequestSort = (e: any, property: any) => {
         const isAsc = orderBy === property && order === 'asc';
         handleOrder(isAsc ? 'desc' : 'asc');
@@ -46,7 +47,7 @@ const TableHeader = (props: EnhancedTableProps) => {
                         </TableSortLabel>
                     </StyledTableCell>
                 ))}
-                <StyledTableCell align='center'>Hành động</StyledTableCell>
+                {action && <StyledTableCell align='center'>Hành động</StyledTableCell>}
             </TableRow>
         </TableHead>
     );

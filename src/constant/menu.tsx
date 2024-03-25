@@ -29,7 +29,7 @@ const dashboardAdmin = [
                         id: 'staff-information',
                         title: "Staff information",
                         type: 'item',
-                        url: '#',
+                        url: 'staff',
                         icon: <IconHome />,
                         breadcrumbs: false
                     },

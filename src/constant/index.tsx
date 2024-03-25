@@ -14,8 +14,8 @@ export const BRAND_IMAGE = 'Template nextjs material-ui'
 
 export const META_DATA = {
     title:'Hệ thống quản lý GDGroup',
-    image:'/favicon/android-chrome-192x192.png',
-    icon:'/favicon/android-chrome-192x192.png',
+    image:'/favicon/logo-gd-group-300x300.png',
+    icon:'/favicon/logo-gd-group-300x300.png',
     description:'Hệ thông quản lý Hệ thống sinh thái giáo dục GDGroup',
     url:''
 }

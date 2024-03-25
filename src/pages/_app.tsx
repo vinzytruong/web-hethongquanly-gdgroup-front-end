@@ -15,6 +15,7 @@ import moment from 'moment';
 import { ConfigProvider } from '@/contexts/ConfigContext';
 import { useTranslation } from 'react-i18next';
 import useConfig from '@/hooks/useConfig';
+import { AuthProvider } from '@/contexts/JWTContext';
 
 export default function App({ Component, pageProps }: AppProps) {
   moment.locale('vi')
@@ -40,7 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <ConfigProvider>
-          <Component {...pageProps} />
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
         </ConfigProvider>
       </Provider>
     </>
