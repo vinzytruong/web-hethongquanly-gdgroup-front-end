@@ -1,6 +1,6 @@
 
 import { AuthContextType } from '@/interfaces/auth';
-import { LOGIN } from '@/store/auth/action';
+import { LOGIN, LOGOUT } from '@/store/auth/action';
 import { useAppDispatch } from '@/store/hook';
 import { setSession } from '@/utils/jwt';
 import axios from 'axios';
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: any) => {
         }
         const dataJson = JSON.stringify(data)
         try {
-            const response = await axios.post('http://192.168.50.238:8899/api/NguoiDung/DangNhap', dataJson, { headers: {'Content-Type': 'application/json'} });
+            const response = await axios.post('http://192.168.50.238:8899/api/NguoiDung/DangNhap', dataJson, { headers: { 'Content-Type': 'application/json' } });
             const accessToken = response.data.token;
             setSession(accessToken);
             dispatch(LOGIN({
@@ -47,7 +47,12 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const logout = () => {
-        setAccessToken(null);
+        setSession(null);
+        dispatch(LOGOUT({
+            isLoggedIn: false,
+        }));
+        localStorage.removeItem('accessToken');
+        router.push('/auth')
     };
 
     const isAuthenticated = () => {
@@ -72,10 +77,13 @@ export const AuthProvider = ({ children }: any) => {
         }
     };
 
-    return <AuthContext.Provider value={{
-        login,
-        logout,
-        isAuthenticated,
-        apiCall,
-    }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider
+        value={{
+            login,
+            logout,
+            isAuthenticated,
+            apiCall,
+        }}>
+        {children}
+    </AuthContext.Provider>;
 };

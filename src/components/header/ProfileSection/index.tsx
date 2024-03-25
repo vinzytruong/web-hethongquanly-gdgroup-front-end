@@ -29,11 +29,11 @@ const ProfileSection = () => {
 
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
-    const { logOut } = useAuth()
+    const { logout } = useAuth()
     const anchorRef = useRef<any>(null);
     const handleLogout = async () => {
         try {
-            logOut();
+            logout();
         } catch (err) {
             console.error(err);
         }
