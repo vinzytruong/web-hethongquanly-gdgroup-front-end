@@ -7,10 +7,11 @@ import TableRow from '@mui/material/TableRow';
 import { StyledButton } from '../../styled-button';
 import { Rating } from '@mui/material';
 import { useRouter } from 'next/router';
-import { AlertDialog, CustomDialog } from '../../dialog';
-import ProductDialog from '../../dialog/ProductDialog';
 import SnackbarAlert from '../../alert';
-import ProductDeleteDialog from '../../dialog/ProductDeleteDialog';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import StyledIconButton from '@/components/styled-button/StyledIconButton';
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
@@ -49,47 +50,40 @@ const TableBodyStaff = (props: BodyDataProps) => {
                     <StyledTableCell padding="normal">
                         {page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}
                     </StyledTableCell>
-                    <StyledTableCell padding='none'>{row.name}</StyledTableCell>
-                    <StyledTableCell align="left">{row.author}</StyledTableCell>
-                    <StyledTableCell align="left">{row.address}</StyledTableCell>
-                    <StyledTableCell align="right">
-                        <Rating
-                            name="read-only"
-                            value={row.star}
-                            readOnly
-                        />
-                    </StyledTableCell>
-                    <StyledTableCell align="left">{row.createdTime}</StyledTableCell>
+                    <StyledTableCell align="left">{row.hinhAnh ? row.hinhAnh : 'Chưa cập nhật'}</StyledTableCell>
+                    <StyledTableCell align="left">NV{row.nhanVienID}</StyledTableCell>
+                    <StyledTableCell align="left">{row.tenNhanVien}</StyledTableCell>
+                    <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa cập nhật'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.phongBan ? row.phongBan : 'Chưa cập nhật'}</StyledTableCell>
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                            {isAdmin === true ?
-                                <>
-                                    <ProductDialog
-                                        title={'Cập nhật sản phẩm'}
-                                        defaulValue={row}
-                                        buttonText={'Chỉnh sửa'}
-                                        action={'Lưu'}
-                                        isEdit
-                                        handleAlertContent={setAlertContent}
-                                        handleOpenAlert={setOpenAlert}
-                                    />
-                                      <ProductDeleteDialog
-                                        title={row.name}
-                                        buttonText={'Xoá'}
-                                        action={'Xoá'}
-                                        id={row.id}
-                                        handleAlertContent={setAlertContent}
-                                        handleOpenAlert={setOpenAlert}
-                                    />
-                                </>
-                                :
-                                <StyledButton
-                                    variant='contained'
-                                    onClick={(e: any) => handleViewItem(e, row.id)}
-                                >
-                                    Xem
-                                </StyledButton>
+                            <StyledIconButton
+                                variant='contained'
+                                color='default'
+                                onClick={(e: any) => handleViewItem(e, row.id)}
+                            >
+                                <VisibilityOutlinedIcon/>
+                            </StyledIconButton>
+                            {isAdmin &&
+                                <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
+                                    <StyledIconButton
+                                        variant='contained'
+                                        color='primary'
+                                        onClick={(e: any) => handleViewItem(e, row.id)}
+                                    >
+                                        <ModeEditOutlinedIcon/>
+                                    </StyledIconButton>
+                                    <StyledIconButton
+                                        variant='contained'   
+                                        color='secondary'
+                                        onClick={(e: any) => handleViewItem(e, row.id)}
+                                    >
+                                        <DeleteOutlineOutlinedIcon/>
+                                    </StyledIconButton>
+                                </Box>
                             }
+
+
                         </Box>
                     </StyledTableCell>
                 </StyledTableRow>

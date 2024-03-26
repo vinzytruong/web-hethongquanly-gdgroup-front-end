@@ -67,20 +67,14 @@ const headCells: readonly HeadCell[] = [
     {
         id: 'codeNumber',
         numeric: false,
-        disablePadding: true,
+        disablePadding: false,
         label: 'Mã số nhân viên',
     },
     {
         id: 'name',
         numeric: false,
-        disablePadding: true,
-        label: 'Họ và tên',
-    },
-    {
-        id: 'gender',
-        numeric: false,
         disablePadding: false,
-        label: 'Giới tính',
+        label: 'Họ và tên',
     },
     {
         id: 'position',

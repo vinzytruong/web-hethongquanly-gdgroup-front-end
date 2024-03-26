@@ -4,3 +4,20 @@ export interface User {
     email?: string | null,
     photoURL?: string | null
 }
+export interface Staff {
+    nhanVienID: number,
+    tenNhanVien: string,
+    gioiTinh: boolean,
+    ngaySinh: Date,
+    soDienThoai: string,
+    email: string,
+    trangThai: boolean,
+    userID: string,
+    user: any,
+    fileDinhKem?: any,
+    tuongTac?: any,
+    lichSuDuToan?: any,
+    chucVu: string,
+    lsGiaoViec?: any,
+    lsThucHienCongViec?: any 
+}

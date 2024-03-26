@@ -40,7 +40,8 @@ export interface AuthContextType {
 
 export interface Account {
     username:string
-    role:string
+    role:string,
+    userId:number
 }
 export type AWSCognitoContextType = {
     isLoggedIn: boolean;

@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { LOGIN, LOGOUT } from './action'
-import { Account } from './type'
 
 export const initialState = {
     account: {

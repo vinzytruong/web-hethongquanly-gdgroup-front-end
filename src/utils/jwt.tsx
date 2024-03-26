@@ -37,9 +37,10 @@ const handleTokenExpired = (exp:any) => {
   }, timeLeft);
 };
 
-const setSession = (accessToken:any) => {
+const setSession = (accessToken:any, accountObject:any) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('account', accountObject);
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     axios.defaults.headers.post['Content-Type'] = "*/*";
     axios.defaults.headers.post['Accept'] = "*/*";
@@ -50,6 +51,7 @@ const setSession = (accessToken:any) => {
     handleTokenExpired(exp);
   } else {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('account');
     delete axios.defaults.headers.common.Authorization;
   }
 };

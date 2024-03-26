@@ -5,7 +5,7 @@ import { useAppDispatch } from '@/store/hook';
 import { setSession } from '@/utils/jwt';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 
 // Khởi tạo Context với giá trị mặc định
@@ -24,19 +24,50 @@ export const AuthProvider = ({ children }: any) => {
     const [accessToken, setAccessToken] = useState(null);
     const router = useRouter();
 
+    useEffect(() => {
+        const init = async () => {
+            try {
+                const accessToken = window.localStorage.getItem('accessToken');
+                const account: any = localStorage.getItem('account');
+
+                if (accessToken) {
+                    setSession(accessToken, account);
+                    dispatch(LOGIN({
+                        isLoggedIn: true,
+                        account: {
+                            username: account.username,
+                            role: 'admin',
+                            userId: account.userID
+                        }
+                    }));
+                    // accountObject.role === 'admin' ? router.push('/admin') : router.push('/customer')
+                }
+                else {
+                    logout();
+                }
+            } catch (err) {
+                console.error(err);
+                logout();
+            }
+        };
+        init();
+    }, []);
+
     const login = async (username: string, password: string) => {
-        const data = {
-            "tenDangNhap": username,
-            "matKhau": password
-        }
-        const dataJson = JSON.stringify(data)
+        const dataJson = JSON.stringify({ "tenDangNhap": username, "matKhau": password})
         try {
             const response = await axios.post('http://192.168.50.238:8899/api/NguoiDung/DangNhap', dataJson, { headers: { 'Content-Type': 'application/json' } });
             const accessToken = response.data.token;
-            setSession(accessToken);
+            const userID = response.data.userID
+            const username = response.data.hoVaTen
+            setSession(accessToken, JSON.stringify({ userID: userID, username:username }));
             dispatch(LOGIN({
                 isLoggedIn: true,
-                account: accessToken
+                account: {
+                    username: username,
+                    role: 'admin',
+                    userId: userID
+                }
             }));
             router.push('/home')
 
@@ -47,7 +78,7 @@ export const AuthProvider = ({ children }: any) => {
     };
 
     const logout = () => {
-        setSession(null);
+        setSession(null,null);
         dispatch(LOGOUT({
             isLoggedIn: false,
         }));
