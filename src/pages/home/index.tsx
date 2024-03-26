@@ -52,7 +52,7 @@ export default function AdminHome() {
                         <TotalGrowthBarChart />
                     </Grid>
                     <Grid item md={3}>
-                        <PopularCard isLoading={false} />
+                        <PopularCard />
                     </Grid>
                 </Grid>
             </Box>
