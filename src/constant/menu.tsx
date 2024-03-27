@@ -37,7 +37,7 @@ const dashboardAdmin = [
                         id: 'time-keeping',
                         title: "Timekeeping",
                         type: 'item',
-                        url: '#',
+                        url: 'checking',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },

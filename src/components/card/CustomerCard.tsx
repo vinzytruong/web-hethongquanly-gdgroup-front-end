@@ -87,7 +87,7 @@ const CustomerCard = ({ isLoading,data }:any) => {
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $200.00
+                            15.900.000 VNĐ
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -111,7 +111,7 @@ const CustomerCard = ({ isLoading,data }:any) => {
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle2" sx={{ color: theme.palette.success.dark }}>
-                      10% Profit
+                    19 sản phẩm
                     </Typography>
                   </Grid>
                 </Grid>
@@ -128,7 +128,7 @@ const CustomerCard = ({ isLoading,data }:any) => {
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $189.00
+                            5.200.000 VNĐ
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -154,7 +154,7 @@ const CustomerCard = ({ isLoading,data }:any) => {
                     <Typography variant="subtitle2" sx={{ 
                       // color: theme.palette.orange.dark 
                       }}>
-                      10% loss
+                      12 sản phẩm
                     </Typography>
                   </Grid>
                 </Grid>
@@ -171,7 +171,7 @@ const CustomerCard = ({ isLoading,data }:any) => {
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $189.00
+                            5.900.000 VNĐ
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -197,7 +197,7 @@ const CustomerCard = ({ isLoading,data }:any) => {
                     <Typography variant="subtitle2" sx={{ 
                       // color: theme.palette.orange.dark 
                       }}>
-                      10% loss
+                      10 sản phẩm
                     </Typography>
                   </Grid>
                 </Grid>

@@ -43,7 +43,7 @@ const data = {
   datasets: [
     {
       fill: true,
-      label: 'Dataset 2',
+      label: 'Khách hàng',
       data: labels.map(() =>  faker.number.int({min:0,max:90})),
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
