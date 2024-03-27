@@ -2,14 +2,10 @@ import React, { FC, useMemo } from 'react'
 import Image from 'next/image'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { Sites } from '@/interfaces/site'
 
 
-interface Props {
-  item: Sites
-}
 
-const DefaultCardItem: FC<Props> = ({ item }) => {
+const DefaultCardItem =({ item }:any) => {
   const renderDescription = useMemo(() => item.description!.length > 200 ? (item.description?.slice(0, 200) + "...") : item.description, [])
   return (
     <Box>

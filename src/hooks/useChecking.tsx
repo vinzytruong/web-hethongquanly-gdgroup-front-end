@@ -44,19 +44,14 @@ export default function useChecking() {
     const getAllChecking = async () => {
 
         try {
-            await axios(config)
-                .then(function (response) {
-                    // console.log(JSON.stringify(response.data.data));
-                    dispatch(GET_DATA_CHECKING(response.data.data));
-                    console.log("acbd",response.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-                setIsLoading(false)
+            const response = await axios(config)
+
+            dispatch(GET_DATA_CHECKING(response.data.data));
+
+            setIsLoading(false)
             return true;
         } catch (error) {
-           
+
             setIsLoading(false)
             return false;
         }
