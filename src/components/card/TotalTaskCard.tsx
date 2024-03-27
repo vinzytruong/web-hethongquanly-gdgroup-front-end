@@ -43,7 +43,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
 
-const CardTask = ({isLoading,data}:any) => {
+const TotalTaskCard = ({isLoading,data}:any) => {
   const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -106,4 +106,4 @@ const CardTask = ({isLoading,data}:any) => {
   );
 };
 
-export default CardTask;
+export default TotalTaskCard;

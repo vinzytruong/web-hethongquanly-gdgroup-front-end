@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '@/services/firebase';
 import { useRouter } from 'next/router';
-import { Box, Container, Grid, Skeleton, useTheme } from '@mui/material';
+import { Box, CardContent, Container, Grid, Skeleton, useTheme } from '@mui/material';
 import { AdminLayout } from '@/components/layout';
 import { useTranslation } from 'react-i18next';
 import useConfig from '@/hooks/useConfig';
 import useStaff from '@/hooks/useStaff';
-import CardStaff from '../../components/card/TotalStaffCard';
-import CardTask from '../../components/card/TotalTaskCard';
-import CardCustomer from '../../components/card/TotalCustomerCard';
-import CardProduct from '../../components/card/TotalProductCard';
-import TotalGrowthBarChart from '@/components/chart/TotalGrowthBarChart';
-import PopularCard from '@/components/card/PopularCard';
-// import PopularCard from '@/components/card/PopularCard';
-// import TotalGrowthBarChart from '@/components/chart/TotalGrowthBarChart';
+import PopularCard from '@/components/card/CustomerCard';
+import ProductChartCard from '@/components/chart/ProductChart';
+import TotalStaffCard from '@/components/card/TotalStaffCard';
+import CustomerCard from '@/components/card/CustomerCard';
+import ProductChart from '@/components/chart/ProductChart';
+import TotalTaskCard from '@/components/card/TotalTaskCard';
+import TotalCustomerCard from '@/components/card/TotalCustomerCard';
+import TotalProductCard from '@/components/card/TotalProductCard';
+import MainCard from '@/components/card/MainCard';
 
 export default function AdminHome() {
     const [uid, setUid] = useState<string>();
@@ -34,25 +35,29 @@ export default function AdminHome() {
             <Box padding="24px" width='100%'>
                 <Grid container spacing={3}>
                     <Grid item md={3}>
-                        <CardStaff isLoading={false} data={dataStaff} />
+                        <TotalStaffCard isLoading={false} data={dataStaff} />
                     </Grid>
                     <Grid item md={3}>
-                        <CardTask isLoading={false} data={dataStaff} />
+                        <TotalTaskCard isLoading={false} data={dataStaff} />
                     </Grid>
                     <Grid item md={3}>
-                        <CardCustomer isLoading={false} data={dataStaff} />
+                        <TotalProductCard isLoading={false} data={dataStaff} />
                     </Grid>
                     <Grid item md={3}>
-                        <CardProduct isLoading={false} data={dataStaff} />
+                        <TotalCustomerCard isLoading={false} data={dataStaff} />
                     </Grid>
                 </Grid>
 
                 <Grid container spacing={3} pt={3}>
                     <Grid item md={9}>
-                        <TotalGrowthBarChart />
+                        <MainCard content={false}>
+                            <CardContent>
+                                <ProductChart />
+                            </CardContent>
+                        </MainCard>
                     </Grid>
                     <Grid item md={3}>
-                        <PopularCard />
+                        <CustomerCard />
                     </Grid>
                 </Grid>
             </Box>

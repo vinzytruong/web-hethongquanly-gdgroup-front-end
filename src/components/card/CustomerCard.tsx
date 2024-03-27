@@ -7,11 +7,11 @@ import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutl
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import MainCard from './MainCard';
 import SkeletonPopularCard from '../skeleton/PopularCard';
-import BajajAreaChartCard from '../chart/BajajAreaChartCard';
+import BajajAreaChartCard from '../chart/CustomerChart';
 
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
-const PopularCard = ({ isLoading,data }:any) => {
+const CustomerCard = ({ isLoading,data }:any) => {
   const theme = useTheme();
   
 
@@ -26,9 +26,8 @@ const PopularCard = ({ isLoading,data }:any) => {
               <Grid item xs={12}>
                 <Grid container alignContent="center" justifyContent="space-between">
                   <Grid item>
-                    <Typography variant="h4">Popular Stocks</Typography>
+                    <Typography variant="h4">Khách hàng</Typography>
                   </Grid>
-                
                 </Grid>
               </Grid>
               <Grid item xs={12} sx={{ pt: '16px !important' }}>
@@ -47,7 +46,7 @@ const PopularCard = ({ isLoading,data }:any) => {
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $1839.00
+                              12.900.000 VNĐ
                             </Typography>
                           </Grid>
                           <Grid item>
@@ -71,50 +70,7 @@ const PopularCard = ({ isLoading,data }:any) => {
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle2" sx={{ color: 'success.dark' }}>
-                      10% Profit
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Divider sx={{ my: 1.5 }} />
-                <Grid container direction="column">
-                  <Grid item>
-                    <Grid container alignItems="center" justifyContent="space-between">
-                      <Grid item>
-                        <Typography variant="subtitle1" color="inherit">
-                          TTML
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Grid container alignItems="center" justifyContent="space-between">
-                          <Grid item>
-                            <Typography variant="subtitle1" color="inherit">
-                              $100.00
-                            </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Avatar
-                              variant="rounded"
-                              sx={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: '5px',
-                                // backgroundColor: theme.palette.orange.light,
-                                // color: theme.palette.orange.dark,
-                                marginLeft: 1.875
-                              }}
-                            >
-                              <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
-                            </Avatar>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle2" sx={{ 
-                      // color: theme.palette.orange.dark
-                       }}>
-                      10% loss
+                      15 sản phẩm
                     </Typography>
                   </Grid>
                 </Grid>
@@ -247,17 +203,11 @@ const PopularCard = ({ isLoading,data }:any) => {
                 </Grid>
               </Grid>
             </Grid>
-          </CardContent>
-          <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-            <Button size="small" disableElevation>
-              View All
-              <ChevronRightOutlinedIcon />
-            </Button>
-          </CardActions>
+          </CardContent> 
         </MainCard>
       )}
     </>
   );
 };
 
-export default PopularCard;
+export default CustomerCard;
