@@ -8,7 +8,7 @@ const paletteDark: PaletteOptions = {
     paper: '#222128',
   },
   text: {
-    primary: grey[100],
+    primary: '#fff',
     secondary: grey[200],
     disabled: grey[300],
   },

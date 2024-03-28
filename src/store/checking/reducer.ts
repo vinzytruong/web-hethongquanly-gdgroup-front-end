@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { GET_DATA_CHECKING } from './action'
-import { CheckingStateProps, RootStateProps } from '@/interfaces/checking'
+import { CheckingStateProps } from '@/interfaces/checking'
 
 export const initialState: CheckingStateProps = {
     dataChecking: [],
@@ -9,7 +9,7 @@ export const initialState: CheckingStateProps = {
 export default createReducer(initialState, (builder) =>
     builder
         .addCase(GET_DATA_CHECKING, (state, action) => {
-            console.log('action',action.payload.checking.dataChecking);
+            console.log('action',action.payload);
             
             state.dataChecking=action.payload.checking.dataChecking
         })

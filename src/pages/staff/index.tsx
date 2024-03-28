@@ -3,11 +3,11 @@ import { StyledButton } from "@/components/styled-button";
 import TableStaff from "@/components/table/table-staff/TableStaff";
 import { data } from "@/data/ocop-product.data";
 import useStaff from "@/hooks/useStaff";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useEffect } from "react";
 
 const StaffPage = () => {
-    const { getAllStaff, dataStaff } = useStaff()
+    const { getAllStaff, dataStaff, isLoadding } = useStaff()
     useEffect(() => {
         getAllStaff()
     }, [getAllStaff])
@@ -19,10 +19,17 @@ const StaffPage = () => {
                     <Typography variant="h3">
                         Quản lý nhân viên
                     </Typography>
-                    
+
                     <StyledButton size="large">Thêm nhân viên</StyledButton>
                 </Box>
-                <TableStaff rows={dataStaff} isAdmin={true} />
+                {isLoadding ?
+                    <Box display='flex' justifyContent='center' alignItems='center' width='100%'>
+                        <CircularProgress />
+                    </Box>
+                    :
+                    <TableStaff rows={dataStaff} isAdmin={true} />
+                }
+
             </Box>
         </AdminLayout>
 

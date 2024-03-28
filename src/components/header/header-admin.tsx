@@ -60,7 +60,7 @@ const Header = () => {
         </Avatar>
       </Box>
       <Box display='flex' width='100%' justifyContent='space-between' alignItems='center'>
-        <SearchSection />
+        {/* <SearchSection /> */}
         <Box display='flex' width='100%' justifyContent='flex-end' alignItems='center' gap={2}>
           <LocalizationSection />
           <NotificationSection />

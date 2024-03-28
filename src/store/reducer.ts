@@ -5,7 +5,8 @@ import { combineReducers } from 'redux';
 import menuReducer from './menu/reducer';
 import authReducer from './auth/reducer';
 import staffReducer from './staff/reducer';
-import checkingReducer from './staff/reducer';
+import checkingReducer from './checking/reducer';
+import departmentReducer from './department/reducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -13,6 +14,7 @@ const reducer = combineReducers({
     menu: menuReducer,
     auth: authReducer,
     staff:staffReducer,
-    checking:checkingReducer
+    checking:checkingReducer,
+    department:departmentReducer
 });
 export default reducer;

@@ -9,6 +9,8 @@ export default function useChecking() {
     const [isLoadding, setIsLoading] = useState(true);
     const dispatch = useAppDispatch();
 
+
+
     const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODkxNTQ1NjE3MDIwODg4MzQiLCJlbWFpbCI6ImluZm9AZ2R2aWV0bmFtLmNvbSIsImNsaWVudF9pZCI6IjdhYTllMDYzMDg0NmI4OWJhNzI3MGFjZWY5NWZkMmVhIiwidHlwZSI6ImF1dGhvcml6YXRpb25fY29kZSIsImlhdCI6MTcwNTAzMzcyMSwiZXhwIjoxNzM2NTY5NzIxfQ.5W9qdWS4lVuCx1XbJXHK5UDQKP5P7yGWM-WdAmOyI_I';
     const year = new Date().getFullYear()
     const month = new Date().getMonth() + 1
@@ -39,14 +41,14 @@ export default function useChecking() {
         },
         data: data
     };
-
-
+    
     const getAllChecking = async () => {
 
         try {
             const response = await axios(config)
+            console.log(response.data.data);
 
-            dispatch(GET_DATA_CHECKING(response.data.data));
+            dispatch(GET_DATA_CHECKING({ checking: { dataChecking: response.data.data, error: null } }));
 
             setIsLoading(false)
             return true;

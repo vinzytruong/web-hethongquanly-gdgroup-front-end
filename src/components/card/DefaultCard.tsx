@@ -2,11 +2,32 @@ import React, { FC, useMemo } from 'react'
 import Image from 'next/image'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import { format } from 'date-fns';
 
 
+const DefaultCardItem = ({ item }: any) => {
+  const timestampConverter = (timestamp: number) => {
 
-const DefaultCardItem =({ item }:any) => {
-  const renderDescription = useMemo(() => item.description!.length > 200 ? (item.description?.slice(0, 200) + "...") : item.description, [])
+    // Kiểm tra xem timestamp có hợp lệ không
+    if (!timestamp || isNaN(timestamp)) {
+      return 'Invalid timestamp'
+    }
+
+    // Tạo đối tượng Date chỉ khi timestamp hợp lệ
+    const dateObject = new Date(timestamp);
+
+    // Kiểm tra xem dateObject có hợp lệ không
+    if (isNaN(dateObject.getTime())) {
+      return 'Invalid date'
+    }
+
+    // Sử dụng date-fns để định dạng ngày giờ
+    const formattedDate = format(dateObject, 'dd/MM/yyyy HH:mm:ss');
+
+    return formattedDate
+    
+  };
+
   return (
     <Box>
       <Box
@@ -15,10 +36,10 @@ const DefaultCardItem =({ item }:any) => {
           backgroundColor: 'background.paper',
           borderRadius: 2,
           transition: 'transform .2s',
-          '&:hover': {
-            boxShadow: 2,
-            transform: 'scale(1.05)'
-          },
+          // '&:hover': {
+          //   boxShadow: 2,
+          //   transform: 'scale(1.05)'
+          // },
         }}
       >
         <Box
@@ -27,27 +48,29 @@ const DefaultCardItem =({ item }:any) => {
             overflow: 'hidden',
             borderRadius: 1,
             minHeight: 200,
-            mb: 2,
-            pt: 4,
-            pb: { xs: 8, md: 10 },
+           
             height: { xs: '200px', md: '200px' },
             width: '100%',
             backgroundSize: 'cover',
             objectFit: 'contain',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundImage: `url('${item.photo as string}')`,
+            backgroundImage: `url('${item.avatar as string}')`,
           }}
         >
 
         </Box>
-        <Box sx={{ mb: 2 }}>
-          <Typography component="h2" variant="h5" sx={{ fontSize: '1.3rem' }}>
-            {item.name}
+        <Box>
+          <Typography component="h2" variant="h5" py={2}>
+            {item.personName}
           </Typography>
-          <Typography sx={{ mb: 2, color: 'text.secondary' }}>{item.address}</Typography>
-          <Typography sx={{ mb: 2, color: 'text.secondary' }} variant="subtitle1" textAlign='justify'>
-            {renderDescription}
+          <Typography sx={{ color: 'text.secondary' }}> {item.title}</Typography>
+
+          <Typography sx={{ color: 'text.secondary' }} variant="subtitle1" textAlign='justify'>
+            {timestampConverter(Number(item.checkinTime))}
+          </Typography>
+          <Typography sx={{ color: 'text.secondary' }} variant="subtitle1" textAlign='justify'>
+            {item.place}
           </Typography>
         </Box>
       </Box>

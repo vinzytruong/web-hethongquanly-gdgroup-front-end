@@ -1,4 +1,4 @@
-import { CheckingStateProps, RootStateProps } from '@/interfaces/checking'
+import { CheckingStateProps } from '@/interfaces/checking'
 import { createAction } from '@reduxjs/toolkit'
 
 

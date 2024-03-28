@@ -8,7 +8,7 @@ import { fontFamily } from '@/config/theme/typography'
 interface BaseButtonProps extends Pick<ButtonProps, 'onClick' | 'type' | 'startIcon' | 'endIcon'> {
   variant?: 'contained' | 'outlined' | 'text'
   color?: 'default' | 'primary' | 'secondary' | 'dark' | 'light'
-  size?: 'small' | 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large'|'extra'
   disableHoverEffect?: boolean
 }
 interface StyledButtonRootProps extends BaseButtonProps {
@@ -79,6 +79,11 @@ const StyledButtonRoot = styled('button', {
     variant !== 'outlined' && {
       padding: '12px 20px',
       fontSize: 15,
+    }),
+    ...(size === 'extra' &&
+    variant !== 'outlined' && {
+      padding: '16px 28px',
+      fontSize: 16,
     }),
 
   // variants

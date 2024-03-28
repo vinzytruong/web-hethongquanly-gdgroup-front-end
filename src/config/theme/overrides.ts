@@ -7,21 +7,21 @@ export default function overrides(theme: Theme) {
             styleOverrides: {
                 root: {
                     ".MuiTab-root": {
-                        backgroundColor: theme.palette.background.paper,
+                        // backgroundColor: theme.palette.background.paper,
                         textTransform: 'none',
                         fontSize: 16,
-                        border: '1px solid',
-                        borderColor: theme.palette.primary.main,
-                        color: theme.palette.primary.main,
+                        // border: '1px solid',
+                        // borderColor: theme.palette.primary.main,
+                        color: theme.palette.text.primary,
                         "&:hover": {
-                            color: theme.palette.primary.main,
+                            color: theme.palette.text.primary,
                         },
                     },
                     ".Mui-selected": {
-                        backgroundColor: theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
+                        // backgroundColor: theme.palette.primary.main,
+                        color: theme.palette.primary.main,
                         "&:hover": {
-                            color: theme.palette.primary.contrastText,
+                            color: theme.palette.primary.main,
                         },
                     }
                 }
