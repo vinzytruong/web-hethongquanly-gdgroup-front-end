@@ -14,8 +14,8 @@ import useDepartment from "@/hooks/useDepartment";
 import { CheckingStateProps } from "@/interfaces/checking";
 
 const CheckingPage = () => {
-    const { getAllChecking, dataChecking, isLoadding } = useChecking()
-    const { dataDepartment, getAllDepartment, getPersonInDepartment } = useDepartment()
+    const { getAllChecking, dataChecking, isLoadding,getPersonInDepartment } = useChecking()
+    const { dataDepartment, getAllDepartment } = useDepartment()
     const [selected, setSelected] = useState<string>('');
     const [open, setOpen] = useState(false);
     const [filterData,setFilterData]=useState<CheckingStateProps>(dataChecking)
@@ -42,13 +42,14 @@ const CheckingPage = () => {
         id: number,
         name: string
     ) => {
-        getAllChecking()
+
         getPersonInDepartment(id, name)
         // console.log('vsdnbk',dataPersonByDepartment);
         // const filterData=filteredArrayUnique?.filter((item) => dataPersonByDepartment!.find((itemDepartment: any) => itemDepartment.personID === item.personID))
         // setFilterData({dataChecking:})
         setOpen(false);
         setSelected(name)
+        
     };
 
     return (

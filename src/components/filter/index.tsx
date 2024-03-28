@@ -31,8 +31,8 @@ const FilterSection = ({
     title
 }: PropsFilter) => {
     const theme = useTheme();
-    const { dataDepartment, getAllDepartment, isLoadding, getPersonInDepartment } = useDepartment()
-    const { dataChecking } = useChecking()
+    const { dataDepartment, getAllDepartment, isLoadding} = useDepartment()
+    const { dataChecking,getPersonInDepartment } = useChecking()
     const [value, setValue] = useState('');
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
     // const [open, setOpen] = useState(false);
