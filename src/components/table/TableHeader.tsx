@@ -43,11 +43,11 @@ const TableHeader = (props: EnhancedTableProps) => {
                             direction={orderBy === headCell.id ? order : 'asc'}
                             onClick={(e) => handleRequestSort(e, headCell.id)}
                         >
-                            <Typography>{headCell.label}</Typography>
+                            <Typography fontWeight='bold'>{headCell.label}</Typography>
                         </TableSortLabel>
                     </StyledTableCell>
                 ))}
-                {action && <StyledTableCell align='center'>Hành động</StyledTableCell>}
+                {action && <StyledTableCell align='center'><Typography fontWeight='bold'>Hành động</Typography></StyledTableCell>}
             </TableRow>
         </TableHead>
     );
@@ -56,12 +56,15 @@ export default TableHeader;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-        border: 0,
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        borderBottom: `1px solid ${theme.palette.text.secondary}`,
+        paddingBottom:'24px'
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
+        paddingTop:'24px',
+        paddingBottom:'24px'
     },
 }));
 

@@ -16,6 +16,7 @@ import { ConfigProvider } from '@/contexts/ConfigContext';
 import { useTranslation } from 'react-i18next';
 import useConfig from '@/hooks/useConfig';
 import { AuthProvider } from '@/contexts/JWTContext';
+import 'devextreme/dist/css/dx.light.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   moment.locale('vi')

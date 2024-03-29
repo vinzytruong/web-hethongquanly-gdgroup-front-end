@@ -45,7 +45,7 @@ const dashboardAdmin = [
                         id: 'Leave-of-absence',
                         title: "Leave of absence",
                         type: 'item',
-                        url: '#',
+                        url: 'be-on-leave',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },

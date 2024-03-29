@@ -9,7 +9,7 @@ const palette: PaletteOptions = {
   },
   text: {
     primary: '#212121',
-    secondary: '#717171', // grey[700],
+    secondary: 'rgb(224, 224, 224)', // grey[700],
     disabled: grey[500],
   },
 }

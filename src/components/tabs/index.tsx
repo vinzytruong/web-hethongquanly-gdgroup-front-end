@@ -62,10 +62,10 @@ const CustomizeTab = ({ dataTabs }: TabPropsArray) => {
                     // scrollButtons
                     allowScrollButtonsMobile
                     aria-label="secondary tabs example"
-                    sx={{ px: 4, py: 2 }}
+                    sx={{ px: 0, py: 3 }}
                 >
                     {dataTabs.map((item, idx) =>
-                        <Tab key={idx} sx={{ pt: 3, pb: 3 }} label={item.title + ` ${item.total ? `(${item.total})`:''}`} {...a11yProps(idx)} />
+                        <Tab key={idx} sx={{ pt: 0, pb: 2 }} label={item.title + ` ${item.total ? `(${item.total})`:''}`} {...a11yProps(idx)} />
                     )}
                 </Tabs>
             </Box>

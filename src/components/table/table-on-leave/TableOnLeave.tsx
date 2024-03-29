@@ -5,9 +5,9 @@ import TableContainer from '@mui/material/TableContainer';
 import { Product } from '@/interfaces/product';
 import { useTheme } from '@mui/material';
 import TableHeader from '../TableHeader';
-import TableBodyProduct from './TableBody';
 import TableCustomizePagination from '../TablePagination';
 import TableBodyStaff from './TableBody';
+import TableBodyOnLeave from './TableBody';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -59,38 +59,32 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
     {
-        id: 'image',
+        id: 'dateCreate',
         numeric: false,
         disablePadding: false,
-        label: 'Hình ảnh',
+        label: 'Ngày viết đơn',
     },
     {
-        id: 'codeNumber',
+        id: 'dateOff',
         numeric: false,
         disablePadding: false,
-        label: 'Mã số nhân viên',
+        label: 'Ngày nghỉ',
     },
     {
-        id: 'name',
+        id: 'dateConfirm',
         numeric: false,
         disablePadding: false,
-        label: 'Họ và tên',
+        label: 'Ngày duyệt',
     },
     {
-        id: 'position',
+        id: 'personCreate',
         numeric: false,
         disablePadding: false,
-        label: 'Chức vụ',
-    },
-    {
-        id: 'department',
-        numeric: false,
-        disablePadding: false,
-        label: 'Phòng ban',
+        label: 'Người viết đơn',
     },
     
 ];
-const TableStaff = ({ rows, isAdmin }: ProductProps) => {
+const TableOnLeave= ({ rows, isAdmin }: ProductProps) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Product>('name');
     const [page, setPage] = React.useState(0);
@@ -126,7 +120,7 @@ const TableStaff = ({ rows, isAdmin }: ProductProps) => {
                             headerCells={headCells}
                             action={isAdmin}
                         />
-                        <TableBodyStaff
+                        <TableBodyOnLeave
                             data={visibleRows}
                             handleView={setViewId}
                             handleEdit={setEditId}
@@ -149,5 +143,5 @@ const TableStaff = ({ rows, isAdmin }: ProductProps) => {
         </Box>
     );
 }
-export default TableStaff
+export default TableOnLeave
 

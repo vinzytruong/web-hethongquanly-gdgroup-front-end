@@ -16,6 +16,7 @@ import TotalTaskCard from '@/components/card/TotalTaskCard';
 import TotalCustomerCard from '@/components/card/TotalCustomerCard';
 import TotalProductCard from '@/components/card/TotalProductCard';
 import MainCard from '@/components/card/MainCard';
+import BajajAreaChartCard from '@/components/chart/CustomerChart';
 
 export default function AdminHome() {
     const [uid, setUid] = useState<string>();
@@ -52,12 +53,18 @@ export default function AdminHome() {
                     <Grid item md={9}>
                         <MainCard content={false}>
                             <CardContent>
-                                <ProductChart />
+                                <BajajAreaChartCard />
                             </CardContent>
                         </MainCard>
                     </Grid>
                     <Grid item md={3}>
-                        <CustomerCard />
+                        <MainCard content={false}>
+                            <CardContent>
+                                <ProductChart />
+
+                            </CardContent>
+                        </MainCard>
+
                     </Grid>
                 </Grid>
             </Box>

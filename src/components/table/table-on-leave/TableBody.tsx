@@ -4,8 +4,6 @@ import Box from '@mui/material/Box';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import { StyledButton } from '../../styled-button';
-import { Rating } from '@mui/material';
 import { useRouter } from 'next/router';
 import SnackbarAlert from '../../alert';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -24,7 +22,7 @@ interface BodyDataProps {
     isAdmin: boolean
 }
 
-const TableBodyStaff = (props: BodyDataProps) => {
+const TableBodyOnLeave = (props: BodyDataProps) => {
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
@@ -50,11 +48,10 @@ const TableBodyStaff = (props: BodyDataProps) => {
                     <StyledTableCell padding="normal">
                         {page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}
                     </StyledTableCell>
-                    <StyledTableCell align="left">{row.hinhAnh ? row.hinhAnh : 'Chưa cập nhật'}</StyledTableCell>
-                    <StyledTableCell align="left">NV{row.nhanVienID}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tenNhanVien}</StyledTableCell>
-                    <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa cập nhật'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.phongBan ? row.phongBan : 'Chưa cập nhật'}</StyledTableCell>
+                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>
+                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>
+                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>
+                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>        
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
                             <StyledIconButton
@@ -97,7 +94,7 @@ const TableBodyStaff = (props: BodyDataProps) => {
         </TableBody>
     )
 }
-export default TableBodyStaff;
+export default TableBodyOnLeave;
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:last-child td, &:last-child th': {

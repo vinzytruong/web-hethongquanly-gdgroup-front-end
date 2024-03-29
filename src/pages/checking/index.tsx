@@ -1,7 +1,7 @@
 import { DefaultCardItem } from "@/components/card";
 import FilterSection from "@/components/filter";
 import { AdminLayout } from "@/components/layout";
-import SearchSection from "@/components/search";
+import SearchSection from "@/components/search/SearrchSection";
 import { StyledButton } from "@/components/styled-button";
 import TableStaff from "@/components/table/table-staff/TableStaff";
 import CustomizeTab from "@/components/tabs";
