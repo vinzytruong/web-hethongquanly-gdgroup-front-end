@@ -24,8 +24,8 @@ const StyledButtonRoot = styled('button', {
   minWidth: 40,
   fontSize: 14,
   fontWeight: 500,
-  lineHeight: 1.5,
-  letterSpacing: 1,
+  // lineHeight: 1.5,
+  // letterSpacing: 1,
   borderRadius: Number(theme.shape.borderRadius) * 1,
 
   display: 'inline-flex',

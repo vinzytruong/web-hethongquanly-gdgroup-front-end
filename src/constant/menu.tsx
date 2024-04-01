@@ -118,10 +118,53 @@ const dashboardAdmin = [
             {
                 id: 'customer',
                 title: "Quản lý khách hàng",
-                type: 'item',
+                type: 'collapse',
                 url: '#',
                 icon: <IconMapPin />,
-                breadcrumbs: false
+                breadcrumbs: false,
+                children:[
+                    {
+                        id: 'budget',
+                        title: "Ngân sách",
+                        type: 'item',
+                        url: 'budget',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'interactive_history',
+                        title: "Quản lý tương tác",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'contractors',
+                        title: "Nhà thầu",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'supplier',
+                        title: "Nhà cung cấp",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'author',
+                        title: "Tác giả",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    
+                ]
             },
             {
                 id: 'customer',

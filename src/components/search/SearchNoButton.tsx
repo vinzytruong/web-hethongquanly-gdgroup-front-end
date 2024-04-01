@@ -28,9 +28,11 @@ const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
 }));
 
 const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
-//   width: 434,
-//   paddingLeft: 16,
-//   paddingRight: 16,
+  //   width: 434,
+  //   paddingLeft: 16,
+  //   paddingRight: 16,
+  height: 42,
+  fontSize:14,
   '& input': {
     background: 'transparent !important',
     paddingLeft: '4px !important'
@@ -118,49 +120,12 @@ const MobileSearch = ({ value, setValue, popupState }: Props) => {
 };
 
 // ==============================|| SEARCH INPUT ||============================== //
-
-const SearchNoButtonSection = () => {
+interface PropSearch {
+  contentSearch: string,
+  handleContentSearch: (e: any) => void
+}
+const SearchNoButtonSection = ({ contentSearch, handleContentSearch }: PropSearch) => {
   const theme = useTheme();
-  const { dataDepartment, getAllDepartment, isLoadding } = useDepartment()
-  const [value, setValue] = useState('');
-  const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
-  const [open, setOpen] = useState(false);
-  const anchorRef = useRef<any>(null);
-  const [staff, setStaff] = useState<string>();
-  const [guest, setGuest] = useState<string>();
-
-  useEffect(() => {
-    getAllDepartment()
-  }, [getAllDepartment])
-  console.log(dataDepartment);
-
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLDivElement, MouseEvent> | undefined,
-    lng: string
-  ) => {
-
-    setOpen(false);
-  };
-
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = (event: MouseEvent | TouchEvent) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-    setOpen(false);
-  };
-
-  const prevOpen = useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
-
 
   return (
     <>
@@ -168,18 +133,17 @@ const SearchNoButtonSection = () => {
         <Box display='flex' justifyContent='space-between' alignItems='center' gap={1} sx={{ backgroundColor: '#fff' }} >
           <OutlineInputStyle
             id="input-search-header"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={contentSearch}
+            onChange={(e) => handleContentSearch(e.target.value)}
             placeholder="Nhâp nội dung tìm kiếm"
             aria-describedby="search-helper-text"
             inputProps={{ 'aria-label': 'weight' }}
             startAdornment={
-                <InputAdornment position="start">
-                  <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
-                </InputAdornment>
-              }
+              <InputAdornment position="start">
+                <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+              </InputAdornment>
+            }
           />
-          {/* <StyledButton size='extra'>Tìm kiếm</StyledButton> */}
         </Box>
       </Box>
     </>

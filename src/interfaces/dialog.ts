@@ -11,26 +11,16 @@ interface Message {
 }
 export interface PropsDialog {
     title: string,
-    field?: Field[]
-    buttonText: string,
-    action: string,
-    defaulValue?: Product,
+    // field?: Field[]
+    // action: string,
+    defaulValue?: any,
     isInsert?: boolean
-    isEdit?: boolean
-    id?: any,
-    handleAlertContent: (e: Message) => void,
-    handleOpenAlert: (e: boolean) => void
-}
-export interface PropsDialogSites {
-    title: string,
-    field?: Field[]
-    buttonText: string,
-    action: string,
-    defaulValue?: Sites,
-    isInsert?: boolean
-    isEdit?: boolean,
-    handleAlertContent: (e: Message) => void,
-    handleOpenAlert: (e: boolean) => void
+    isUpdate?: boolean
+    // id?: any,
+    open:boolean,
+    handleOpen: (e: boolean) => void,
+    // handleAlertContent: (e: Message) => void,
+    // handleOpenAlert: (e: boolean) => void
 }
 export interface PropsDialogProducts {
     title: string,
