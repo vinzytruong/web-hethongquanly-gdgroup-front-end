@@ -45,7 +45,7 @@ const AuthorPage = () => {
             <Box padding="24px">
                 <Box display='flex' alignItems='center' justifyContent='space-between'>
                     <Typography variant="h3" color={theme.palette.primary.main} pb={2}>
-                        Quản lý nhà cung cấp
+                        Quản lý tác giả
                     </Typography>
                 </Box>
                 {/* {isLoadding ?
