@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Alert, Dialog, DialogActions, DialogContent, DialogTitle, FilledInput, FormControlLabel, Grid, IconButton, Input, InputBase, LinearProgress, MenuItem, OutlinedInput, Radio, RadioGroup, Rating, Select, Snackbar, Step, StepLabel, Stepper, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -8,29 +9,32 @@ import { LoadingButton } from '@mui/lab';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import useDistrict from '@/hooks/useDistrict';
 import useProvince from '@/hooks/useProvince';
-import { Organization } from '@/interfaces/organization';
-import useOrganization from '@/hooks/useOrganization';
+import { Author } from '@/interfaces/author';
+import useAuthor from '@/hooks/useAuthor';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+import moment from 'moment';
 
-export default function OrganizationDialog(props: PropsDialog) {
+
+export default function AuthorDialog(props: PropsDialog) {
     const { title, defaulValue, isInsert, handleOpen, open, isUpdate } = props
     const theme = useTheme()
-    const [formData, setFormData] = useState<Organization>();
+    const [formData, setFormData] = useState<Author>();
     const { getAllProvince, dataProvince } = useProvince()
-    const { getDistrictByProvinceId, dataDistrict } = useDistrict()
-    const { addOrganization,updateOrganization } = useOrganization()
+    const { addAuthor, updateAuthor } = useAuthor()
     const [loading, setLoaing] = useState<boolean>(false)
+console.log(formData);
 
-    console.log("update", formData);
-    useEffect(() => {
-        getAllProvince()
-        if (formData?.tinhID) getDistrictByProvinceId(formData?.tinhID)
-    }, [formData?.tinhID])
 
     useEffect(() => {
         if (defaulValue) setFormData(defaulValue)
     }, [defaulValue])
 
     const handleChange = (e: any) => {
+       
         if (e.target) {
             console.log(e.target.name);
             setFormData((prevState: any) => ({
@@ -38,20 +42,30 @@ export default function OrganizationDialog(props: PropsDialog) {
                 [e.target.name]: e.target.value
             }));
         }
+        else {
+            console.log(dayjs(e).format('MM/DD/YYYY')); 
+            setFormData((prevState: any) => ({
+                ...prevState,
+                ['ngaySinh']: dayjs(e).format('MM/DD/YYYY')
+            }));
+        }
     };
     const handleAdd = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        console.log(formData);
-        if (formData) addOrganization(formData)
+        
+        
+        if (formData) addAuthor(formData)
         setLoaing(false);
         handleOpen(false)
     }
-
+     
     const handleUpdate = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        if (formData) updateOrganization(formData)
+        // console.log(formData); 
+        
+        if (formData) updateAuthor(formData)
         setLoaing(false);
         handleOpen(false)
     }
@@ -89,10 +103,10 @@ export default function OrganizationDialog(props: PropsDialog) {
                         <Grid container spacing={3}>
                             <Grid item md={4}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Mã số thuế</Typography>
+                                    <Typography>Tên tác giả</Typography>
                                     <OutlinedInput
-                                        name='maSoThue'
-                                        value={formData?.maSoThue}
+                                        name='tenTacGia'
+                                        value={formData?.tenTacGia}
                                         onChange={handleChange}
                                         style={{ width: '100%' }}
                                     />
@@ -100,10 +114,10 @@ export default function OrganizationDialog(props: PropsDialog) {
                             </Grid>
                             <Grid item md={8}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Tên cơ quan</Typography>
+                                    <Typography>CCCD</Typography>
                                     <OutlinedInput
-                                        name='tenCoQuan'
-                                        value={formData?.tenCoQuan}
+                                        name='cccd'
+                                        value={formData?.cccd}
                                         onChange={handleChange}
                                         style={{ width: '100%' }}
                                     />
@@ -111,60 +125,90 @@ export default function OrganizationDialog(props: PropsDialog) {
                             </Grid>
                         </Grid>
                         <Box style={{ width: '100%' }}>
-                            <Typography>Địa chỉ</Typography>
+                            <Typography>Email</Typography>
                             <OutlinedInput
-                                name='diaChi'
+                                name='email'
                                 style={{ width: '100%' }}
-                                value={formData?.diaChi}
+                                value={formData?.email}
                                 onChange={handleChange}
                             />
                         </Box>
                         <Grid container spacing={3}>
                             <Grid item md={6}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Tỉnh</Typography>
-                                    <Select
-                                        defaultValue={defaulValue?.tinhID}
-                                        name='tinhID'
-                                        value={formData?.tinhID}
+                                    <Typography>Chức vụ</Typography>
+                                    <OutlinedInput
+                                        name='chucVuTacGia'
+                                        style={{ width: '100%' }}
+                                        value={formData?.chucVuTacGia}
                                         onChange={handleChange}
-                                        fullWidth
-                                    >
-                                        {dataProvince.map((item, index) => (
-                                            <MenuItem key={index} defaultValue={formData?.tinhID} value={item.tinhID}>{item.tenTinh}</MenuItem>
-                                        ))}
-                                    </Select>
+                                    />
                                 </Box>
                             </Grid>
                             <Grid item md={6}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Huyện</Typography>
-                                    <Select
-                                        defaultValue={defaulValue?.huyenID}
-                                        name='huyenID'
-                                        value={formData?.huyenID}
+                                    <Typography>Đơn vị công tác</Typography>
+                                    <OutlinedInput
+                                        name='donViCongTac'
+                                        style={{ width: '100%' }}
+                                        value={formData?.donViCongTac}
                                         onChange={handleChange}
-                                        fullWidth
-                                    >
-                                        {dataDistrict.length > 0 ?
-                                            dataDistrict.map((item, index) => (
-                                                <MenuItem key={index} value={item.huyenID}>{item.tenHuyen}</MenuItem>
-                                            ))
-                                            :
-                                            <MenuItem value={undefined}>Vui lòng chọn tỉnh thành trước</MenuItem>
-                                        }
-                                    </Select>
+                                    />
                                 </Box>
                             </Grid>
 
                         </Grid>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Môn chuyên ngành</Typography>
+                            <OutlinedInput
+                                name='monChuyenNghanh'
+                                style={{ width: '100%' }}
+                                value={formData?.monChuyenNghanh}
+                                onChange={handleChange}
+                            />
+                        </Box>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Ngày sinh</Typography>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                               
+                                    <DatePicker
+                                        format="DD/MM/YYYY"
+                                        // defaultValue={formData?.ngaySinh}
+                                        name='ngaySinh'
+                                        sx={{ width: '100%' }}
+                                        value={dayjs(formData?.ngaySinh)}
+                                        onChange={handleChange}
+                                    />
+                                
+                            </LocalizationProvider>
+
+                        </Box>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Số điện thoại</Typography>
+                            <TextField
+
+                                name='soDienThoai'
+                                style={{ width: '100%' }}
+                                value={formData?.soDienThoai}
+                                onChange={handleChange}
+                            />
+                        </Box>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Giới tính</Typography>
+                            <RadioGroup
+                                name='gioiTinh'
+                                defaultValue={defaulValue?.gioiTinh}
+                                value={formData?.gioiTinh}
+                                onChange={handleChange}
+                                row
+                            >
+                                <FormControlLabel value={1} control={<Radio />} label="Nam" />
+                                <FormControlLabel value={0} control={<Radio />} label="Nữ" />
+                            </RadioGroup>
+                        </Box>
                     </Box>
-
-
-
                 </DialogContent>
                 <DialogActions sx={{ p: 3 }}>
-
                     {isInsert &&
                         <LoadingButton
                             sx={{ p: '12px 24px' }}
@@ -173,7 +217,7 @@ export default function OrganizationDialog(props: PropsDialog) {
                             variant="contained"
                             size='large'
                         >
-                            Thêm cơ quan
+                            Thêm tác giả
                         </LoadingButton>
                     }
                     {isUpdate &&
@@ -184,13 +228,11 @@ export default function OrganizationDialog(props: PropsDialog) {
                             variant="contained"
                             size='large'
                         >
-                            Cập nhật cơ quan
+                            Cập nhật tác giả
                         </LoadingButton>
                     }
                 </DialogActions>
             </Dialog >
-
-
         </>
     );
 }

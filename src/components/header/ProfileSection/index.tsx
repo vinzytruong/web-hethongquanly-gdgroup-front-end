@@ -77,7 +77,7 @@ const ProfileSection = () => {
                 sx={{
                     height: '48px',
                     alignItems: 'center',
-                    borderRadius: '8px',
+                    borderRadius: '4px',
                     border: 1,
                     borderColor: theme.palette.primary.contrastText,
                     transition: 'all .2s ease-in-out',

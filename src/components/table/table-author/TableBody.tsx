@@ -12,14 +12,14 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import StyledIconButton from '@/components/styled-button/StyledIconButton';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import useOrganization from '@/hooks/useOrganization';
-import { Organization } from '@/interfaces/organization';
-import OrganizationDialog from '@/components/dialog/OrganizationDialog';
+import useAuthor from '@/hooks/useAuthor';
+import { Author } from '@/interfaces/author';
+import AuthorDialog from '@/components/dialog/AuthorDialog';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
     handleEdit?: (e: any) => void;
-    data: Organization[];
+    data: Author[];
     page: number;
     rowsPerPage: number
     editLink?: string
@@ -27,8 +27,8 @@ interface BodyDataProps {
     isAdmin: boolean
 }
 
-const TableBodyBudget = (props: BodyDataProps) => {
-    const { deleteOrganization,updateOrganization } = useOrganization()
+const TableBodyAuthor = (props: BodyDataProps) => {
+    const { deleteAuthor,updateAuthor } = useAuthor()
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -44,7 +44,7 @@ const TableBodyBudget = (props: BodyDataProps) => {
     }
 
     const handleDeleteItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        deleteOrganization(id)
+        deleteAuthor(id)
     }
     const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {    
         setSelectedID(id)
@@ -55,21 +55,20 @@ const TableBodyBudget = (props: BodyDataProps) => {
 
     return (
         <TableBody>
-            {data?.map((row: Organization, index: any) => (
+            {data?.map((row: Author, index: any) => (
                 <StyledTableRow
                     hover
-                    onClick={(e: any) => handleViewItem(e, row.coQuanID)}
+                    onClick={(e: any) => handleViewItem(e, row.tacGiaID)}
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.coQuanID}
+                    key={row.tacGiaID}
                     sx={{ cursor: 'pointer' }}
                 >
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tenCoQuan ? row.tenCoQuan : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.maSoThue ? row.maSoThue : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.huyenID ? row.huyenID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tinhID ? row.tinhID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.diaChi ? row.diaChi : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.tenTacGia ? row.tenTacGia : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.chucVuTacGia ? row.chucVuTacGia : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.donViCongTac ? row.donViCongTac: 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.monChuyenNghanh ? row.monChuyenNghanh : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
                             
@@ -78,7 +77,7 @@ const TableBodyBudget = (props: BodyDataProps) => {
                                     <StyledIconButton
                                         variant='contained'
                                         color='primary'
-                                        onClick={(e: any) => handleEditItem(e, row.coQuanID)}
+                                        onClick={(e: any) => handleEditItem(e, row.tacGiaID)}
                                     >
                                         <ModeEditOutlinedIcon />
                                         
@@ -86,7 +85,7 @@ const TableBodyBudget = (props: BodyDataProps) => {
                                     <StyledIconButton
                                         variant='contained'
                                         color='secondary'
-                                        onClick={(e: any) => handleDeleteItem(e, row.coQuanID)}
+                                        onClick={(e: any) => handleDeleteItem(e, row.tacGiaID)}
                                     >
                                         <DeleteOutlineOutlinedIcon />
                                     </StyledIconButton>
@@ -104,11 +103,11 @@ const TableBodyBudget = (props: BodyDataProps) => {
                     <StyledTableCell colSpan={6} />
                 </StyledTableRow>
             )}
-            <OrganizationDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.coQuanID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>
+            <AuthorDialog title="Cập nhật tác giả" defaulValue={data.find(item => item.tacGiaID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>
         </TableBody>
     )
 }
-export default TableBodyBudget;
+export default TableBodyAuthor;
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:last-child td, &:last-child th': {

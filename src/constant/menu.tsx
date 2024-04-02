@@ -102,18 +102,62 @@ const dashboardAdmin = [
             {
                 id: 'work',
                 title: "Quản lý công việc",
-                type: 'item',
+                type: 'collapse',
                 url: '#',
                 icon: <IconMapPin />,
-                breadcrumbs: false
+                breadcrumbs: false,
+                children:[
+                    {
+                        id: 'task',
+                        title: "Công việc",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'schedule',
+                        title: "Lịch trình",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'report-task',
+                        title: "Báo cáo công việc",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                ]
             },
             {
                 id: 'product',
                 title: "Quản lý sản phẩm",
-                type: 'item',
+                type: 'collapse',
                 url: '#',
                 icon: <IconMapPin />,
-                breadcrumbs: false
+                breadcrumbs: false,
+                children:[
+                    {
+                        id: 'product-by',
+                        title: "Sản phẩm theo thông tư",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'estimate',
+                        title: "Dự toán",
+                        type: 'item',
+                        url: '#',
+                        icon: <IconCheese />,
+                        breadcrumbs: false
+                    },
+                ]
             },
             {
                 id: 'customer',
@@ -143,7 +187,7 @@ const dashboardAdmin = [
                         id: 'contractors',
                         title: "Nhà thầu",
                         type: 'item',
-                        url: '#',
+                        url: '/customer/contractors',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },
@@ -151,7 +195,7 @@ const dashboardAdmin = [
                         id: 'supplier',
                         title: "Nhà cung cấp",
                         type: 'item',
-                        url: '#',
+                        url: '/customer/supplier',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },
@@ -159,7 +203,7 @@ const dashboardAdmin = [
                         id: 'author',
                         title: "Tác giả",
                         type: 'item',
-                        url: '#',
+                        url: '/customer/author',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },

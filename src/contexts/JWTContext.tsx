@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }: any) => {
             const accessToken = response.data.token;
             const userID = response.data.userID
             const username = response.data.hoVaTen
+            // const avartar = response.data.avartar
             setSession(accessToken, JSON.stringify({ userID: userID, username:username }));
             dispatch(LOGIN({
                 isLoggedIn: true,

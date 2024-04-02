@@ -1,9 +1,5 @@
 import { AuthContext } from "@/contexts/JWTContext";
-import { getCurrentUser, isUserLoggedIn, logOutAccount, signInWithEmailPassword, signInWithGooglePopup } from "@/services/authentication";
-import { auth } from "@/services/firebase";
-import { useAppDispatch, useAppSelector } from "@/store/hook";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 const useAuth = () => {
     const context = useContext(AuthContext);

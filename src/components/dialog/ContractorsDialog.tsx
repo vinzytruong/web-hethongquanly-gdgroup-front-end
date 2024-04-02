@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Alert, Dialog, DialogActions, DialogContent, DialogTitle, FilledInput, FormControlLabel, Grid, IconButton, Input, InputBase, LinearProgress, MenuItem, OutlinedInput, Radio, RadioGroup, Rating, Select, Snackbar, Step, StepLabel, Stepper, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -8,22 +9,20 @@ import { LoadingButton } from '@mui/lab';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import useDistrict from '@/hooks/useDistrict';
 import useProvince from '@/hooks/useProvince';
-import { Organization } from '@/interfaces/organization';
-import useOrganization from '@/hooks/useOrganization';
+import { Contractors } from '@/interfaces/contractors';
+import useContractors from '@/hooks/useContractors';
 
-export default function OrganizationDialog(props: PropsDialog) {
+export default function ContractorsDialog(props: PropsDialog) {
     const { title, defaulValue, isInsert, handleOpen, open, isUpdate } = props
     const theme = useTheme()
-    const [formData, setFormData] = useState<Organization>();
+    const [formData, setFormData] = useState<Contractors>();
     const { getAllProvince, dataProvince } = useProvince()
-    const { getDistrictByProvinceId, dataDistrict } = useDistrict()
-    const { addOrganization,updateOrganization } = useOrganization()
+    const { addContractors, updateContractors } = useContractors()
     const [loading, setLoaing] = useState<boolean>(false)
 
     console.log("update", formData);
     useEffect(() => {
         getAllProvince()
-        if (formData?.tinhID) getDistrictByProvinceId(formData?.tinhID)
     }, [formData?.tinhID])
 
     useEffect(() => {
@@ -43,7 +42,7 @@ export default function OrganizationDialog(props: PropsDialog) {
         e.preventDefault();
         setLoaing(true);
         console.log(formData);
-        if (formData) addOrganization(formData)
+        if (formData) addContractors(formData)
         setLoaing(false);
         handleOpen(false)
     }
@@ -51,7 +50,7 @@ export default function OrganizationDialog(props: PropsDialog) {
     const handleUpdate = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        if (formData) updateOrganization(formData)
+        if (formData) updateContractors(formData)
         setLoaing(false);
         handleOpen(false)
     }
@@ -100,10 +99,10 @@ export default function OrganizationDialog(props: PropsDialog) {
                             </Grid>
                             <Grid item md={8}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Tên cơ quan</Typography>
+                                    <Typography>Tên công ty</Typography>
                                     <OutlinedInput
-                                        name='tenCoQuan'
-                                        value={formData?.tenCoQuan}
+                                        name='tenCongTy'
+                                        value={formData?.tenCongTy}
                                         onChange={handleChange}
                                         style={{ width: '100%' }}
                                     />
@@ -138,33 +137,29 @@ export default function OrganizationDialog(props: PropsDialog) {
                             </Grid>
                             <Grid item md={6}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Huyện</Typography>
-                                    <Select
-                                        defaultValue={defaulValue?.huyenID}
-                                        name='huyenID'
-                                        value={formData?.huyenID}
+                                    <Typography>Người đại diện</Typography>
+                                    <OutlinedInput
+                                        name='nguoiDaiDien'
+                                        style={{ width: '100%' }}
+                                        value={formData?.nguoiDaiDien}
                                         onChange={handleChange}
-                                        fullWidth
-                                    >
-                                        {dataDistrict.length > 0 ?
-                                            dataDistrict.map((item, index) => (
-                                                <MenuItem key={index} value={item.huyenID}>{item.tenHuyen}</MenuItem>
-                                            ))
-                                            :
-                                            <MenuItem value={undefined}>Vui lòng chọn tỉnh thành trước</MenuItem>
-                                        }
-                                    </Select>
+                                    />
                                 </Box>
                             </Grid>
 
                         </Grid>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Thông tin thêm</Typography>
+                            <OutlinedInput
+                                name='thongTinThem'
+                                style={{ width: '100%' }}
+                                value={formData?.thongTinThem}
+                                onChange={handleChange}
+                            />
+                        </Box>
                     </Box>
-
-
-
                 </DialogContent>
                 <DialogActions sx={{ p: 3 }}>
-
                     {isInsert &&
                         <LoadingButton
                             sx={{ p: '12px 24px' }}
@@ -173,7 +168,7 @@ export default function OrganizationDialog(props: PropsDialog) {
                             variant="contained"
                             size='large'
                         >
-                            Thêm cơ quan
+                            Thêm nhà thầu
                         </LoadingButton>
                     }
                     {isUpdate &&
@@ -184,13 +179,11 @@ export default function OrganizationDialog(props: PropsDialog) {
                             variant="contained"
                             size='large'
                         >
-                            Cập nhật cơ quan
+                            Cập nhật nhà thầu
                         </LoadingButton>
                     }
                 </DialogActions>
             </Dialog >
-
-
         </>
     );
 }
