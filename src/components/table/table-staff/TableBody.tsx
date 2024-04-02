@@ -50,7 +50,7 @@ const TableBodyStaff = (props: BodyDataProps) => {
                     <StyledTableCell padding="normal">
                         {page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}
                     </StyledTableCell>
-                    <StyledTableCell align="left">{row.hinhAnh ? row.hinhAnh : 'Chưa cập nhật'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.avartar ? <img src={row.avartar} alt='no-image' height={40} width={40}/> : 'Chưa cập nhật'}</StyledTableCell>
                     <StyledTableCell align="left">NV{row.nhanVienID}</StyledTableCell>
                     <StyledTableCell align="left">{row.tenNhanVien}</StyledTableCell>
                     <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa cập nhật'}</StyledTableCell>

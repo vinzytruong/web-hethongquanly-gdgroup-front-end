@@ -11,7 +11,7 @@ const StaffPage = () => {
     const { getAllStaff, dataStaff, isLoadding } = useStaff()
     useEffect(() => {
         getAllStaff()
-    }, [getAllStaff])
+    }, [])
     const theme = useTheme()
     return (
         <AdminLayout>
@@ -39,7 +39,9 @@ const StaffPage = () => {
                         py={3}
                     >
                         <Box display='flex' justifyContent='space-between' alignItems='center' width='100%'>
-                            <SearchNoButtonSection />
+                            <SearchNoButtonSection contentSearch={""} handleContentSearch={function (e: any): void {
+                                throw new Error("Function not implemented.");
+                            } } />
                             <StyledButton size="large">Thêm nhân viên</StyledButton>
                         </Box>
 

@@ -8,6 +8,7 @@ import TableHeader from '../TableHeader';
 import TableCustomizePagination from '../TablePagination';
 import TableBodyBudget from './TableBody';
 import { Officers } from '@/interfaces/officers';
+import TableBodyOfficers from './TableBody';
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -25,15 +26,15 @@ function getComparator<Key extends keyof any>(
     order: Order,
     orderBy: Key,
 ): (
-    a: { [key in Key]: number | string },
-    b: { [key in Key]: number | string },
+    a: { [key in Key]: any },
+    b: { [key in Key]: any },
 ) => number {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(array: any[], comparator: (a: T, b: T) => number) {
     const stabilizedThis = array?.map((el, index) => [el, index] as [T, number]);
     stabilizedThis?.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -70,28 +71,33 @@ const headCells: readonly HeadCell[] = [
         label: 'Mã số cán bộ',
     },
     {
-        id: 'district',
+        id: 'gender',
         numeric: false,
         disablePadding: false,
-        label: 'Huyện',
+        label: 'Giới tính',
     },
     {
-        id: 'province',
+        id: 'position',
         numeric: false,
         disablePadding: false,
-        label: 'Tỉnh',
+        label: 'Chức vụ',
     },
     {
-        id: 'address',
+        id: 'phone',
         numeric: false,
         disablePadding: false,
-        label: 'Địa chỉ',
+        label: 'Số điện thoại',
     },
-    
+    {
+        id: 'email',
+        numeric: false,
+        disablePadding: false,
+        label: 'Email',
+    },
 ];
 const TableOfficers = ({ rows, isAdmin }: Props) => {
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Officers>('hoVaTen');
+    const [orderBy, setOrderBy] = React.useState<keyof Officers>('canBoID');
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [viewId, setViewId] = React.useState(0)
@@ -125,7 +131,7 @@ const TableOfficers = ({ rows, isAdmin }: Props) => {
                             headerCells={headCells}
                             action={isAdmin}
                         />
-                        <TableBodyBudget
+                        <TableBodyOfficers
                             data={visibleRows}
                             handleView={setViewId}
                             handleEdit={setEditId}

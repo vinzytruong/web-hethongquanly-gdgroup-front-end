@@ -1,27 +1,31 @@
 
+import OfficersDialog from "@/components/dialog/OfficersDialog"
 import OrganizationDialog from "@/components/dialog/OrganizationDialog"
 import { AdminLayout } from "@/components/layout"
 import SearchNoButtonSection from "@/components/search/SearchNoButton"
 import { StyledButton } from "@/components/styled-button"
 import TableBudget from "@/components/table/table-budget/TableBudget"
 import TableOfficers from "@/components/table/table-officers/TableoOfficers"
+import useOfficers from "@/hooks/useOfficers"
 import useOrganization from "@/hooks/useOrganization"
 import { Box, CircularProgress, Grid, Typography, useTheme } from "@mui/material"
 import { useEffect, useMemo, useState } from "react"
 
 const OfficersPage = (id: any) => {
-    const { getAllOrganization, addOrganization, dataOrganization, isLoadding } = useOrganization()
+    const { getAllOrganization, addOrganization, dataOrganization } = useOrganization()
+    const { getAllOfficers, addOfficers, dataOfficers } = useOfficers()
     const [open, setOpen] = useState(false);
     const theme = useTheme()
     const [contentSearch, setContentSearch] = useState<string>('')
 
     useEffect(() => {
         getAllOrganization()
+        getAllOfficers()
     }, [])
 
     const filterDataOrganization = useMemo(() => {
-        return dataOrganization.filter((item) => item.tenCoQuan.includes(contentSearch))
-    }, [contentSearch, dataOrganization])
+        return dataOfficers.filter((item) => item.hoVaTen?.includes(contentSearch))
+    }, [contentSearch, dataOfficers])
 
 
     const dataOrganizationByID = dataOrganization.find(item => item.coQuanID === Number(id.id))
@@ -126,6 +130,7 @@ const OfficersPage = (id: any) => {
                             <Box display='flex' justifyContent='space-between' alignItems='center' width='100%'>
                                 
                                 <SearchNoButtonSection handleContentSearch={setContentSearch} contentSearch={contentSearch} />
+                                
                                 <StyledButton
                                     onClick={() => setOpen(true)}
                                     variant='contained'
@@ -133,7 +138,7 @@ const OfficersPage = (id: any) => {
                                 >
                                     Thêm cán bộ
                                 </StyledButton>
-                                {/* <OrganizationDialog title="Thêm cơ quan" defaulValue={null} isInsert handleOpen={setOpen} open={open} /> */}
+                                <OfficersDialog title="Thêm cán bộ" defaulValue={null} id={id.id} isInsert handleOpen={setOpen} open={open} />
                             </Box>
                             <TableOfficers rows={filterDataOrganization} isAdmin={true} />
                         </Box>

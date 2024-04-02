@@ -10,6 +10,7 @@ import departmentReducer from './department/reducer';
 import organizationReducer from './organization/reducer';
 import provinceReducer from './province/reducer';
 import districtReducer from './district/reducer';
+import officersReducer from './officers/reducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     department:departmentReducer,
     organization:organizationReducer,
     province:provinceReducer,
-    district:districtReducer
+    district:districtReducer,
+    officers:officersReducer
 });
 export default reducer;

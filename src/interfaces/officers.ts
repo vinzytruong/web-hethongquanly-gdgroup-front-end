@@ -7,5 +7,5 @@ export interface Officers{
     email: string,
     coQuanID: number,
     active: boolean,
-    nsCoQuan: any
+    nsCoQuan?: any
 }

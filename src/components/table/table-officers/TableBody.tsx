@@ -13,13 +13,15 @@ import StyledIconButton from '@/components/styled-button/StyledIconButton';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import useOrganization from '@/hooks/useOrganization';
-import { Organization } from '@/interfaces/organization';
 import OrganizationDialog from '@/components/dialog/OrganizationDialog';
+import { Officers } from '@/interfaces/officers';
+import useOfficers from '@/hooks/useOfficers';
+import OfficersDialog from '@/components/dialog/OfficersDialog';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
     handleEdit?: (e: any) => void;
-    data: Organization[];
+    data: Officers[];
     page: number;
     rowsPerPage: number
     editLink?: string
@@ -27,8 +29,8 @@ interface BodyDataProps {
     isAdmin: boolean
 }
 
-const TableBodyBudget = (props: BodyDataProps) => {
-    const { deleteOrganization,updateOrganization } = useOrganization()
+const TableBodyOfficers = (props: BodyDataProps) => {
+    const { deleteOfficers, updateOfficers } = useOfficers()
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -38,61 +40,63 @@ const TableBodyBudget = (props: BodyDataProps) => {
     const [selectedID, setSelectedID] = React.useState<number>()
 
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        console.log("view",id);
-        
-        router.push(`${viewLink}?id=${id}`);
+        console.log("view", id);
+
+        // router.push(`${viewLink}?id=${id}`);
     }
 
     const handleDeleteItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        deleteOrganization(id)
+        deleteOfficers(id)
     }
-    const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {    
+    const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         setSelectedID(id)
-        setOpen(true)   
+        setOpen(true)
     }
 
 
 
     return (
         <TableBody>
-            {data?.map((row: any, index: any) => (
+            {data?.map((row: Officers, index: any) => (
                 <StyledTableRow
                     hover
-                    onClick={(e: any) => handleViewItem(e, row.coQuanID)}
+                    onClick={(e: any) => handleViewItem(e, row.canBoID)}
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.coQuanID}
+                    key={row.canBoID}
                     sx={{ cursor: 'pointer' }}
                 >
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tenCoQuan ? row.tenCoQuan : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.maSoThue ? row.maSoThue : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.huyenID ? row.huyenID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tinhID ? row.tinhID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.diaChi ? row.diaChi : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.hoVaTen ? row.hoVaTen : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.canBoID ? row.canBoID : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.gioiTinh ? row.gioiTinh : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.soDienThoai ? row.soDienThoai : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.email ? row.email : 'Chưa có dữ liệu'}</StyledTableCell>
+
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                            <StyledIconButton
+                            {/* <StyledIconButton
                                 variant='contained'
                                 color='default'
-                                onClick={(e: any) => handleViewItem(e, row.coQuanID)}
+                                onClick={(e: any) => handleViewItem(e, row.canBoID)}
                             >
                                 <VisibilityOutlinedIcon />
-                            </StyledIconButton>
+                            </StyledIconButton> */}
                             {isAdmin &&
                                 <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
                                     <StyledIconButton
                                         variant='contained'
                                         color='primary'
-                                        onClick={(e: any) => handleEditItem(e, row.coQuanID)}
+                                        onClick={(e: any) => handleEditItem(e, row.canBoID)}
                                     >
                                         <ModeEditOutlinedIcon />
-                                        
+
                                     </StyledIconButton>
                                     <StyledIconButton
                                         variant='contained'
                                         color='secondary'
-                                        onClick={(e: any) => handleDeleteItem(e, row.coQuanID)}
+                                        onClick={(e: any) => handleDeleteItem(e, row.canBoID)}
                                     >
                                         <DeleteOutlineOutlinedIcon />
                                     </StyledIconButton>
@@ -110,11 +114,11 @@ const TableBodyBudget = (props: BodyDataProps) => {
                     <StyledTableCell colSpan={6} />
                 </StyledTableRow>
             )}
-            <OrganizationDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.coQuanID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>
+            <OfficersDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.canBoID === selectedID)} handleOpen={setOpen} open={open} isUpdate />
         </TableBody>
     )
 }
-export default TableBodyBudget;
+export default TableBodyOfficers;
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:last-child td, &:last-child th': {

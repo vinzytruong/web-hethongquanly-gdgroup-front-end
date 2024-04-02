@@ -55,7 +55,7 @@ const TableBodyBudget = (props: BodyDataProps) => {
 
     return (
         <TableBody>
-            {data?.map((row: any, index: any) => (
+            {data?.map((row: Organization, index: any) => (
                 <StyledTableRow
                     hover
                     onClick={(e: any) => handleViewItem(e, row.coQuanID)}

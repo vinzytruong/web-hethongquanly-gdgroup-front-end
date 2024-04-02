@@ -21,7 +21,7 @@ const dashboardAdmin = [
                 id: 'administrative_personnel',
                 title: "Administrative personnel",
                 type: 'collapse',
-                url: '#',
+                url: '/administrative-personnel',
                 icon: <IconCheese />,
                 breadcrumbs: false,
                 children:[
@@ -29,7 +29,7 @@ const dashboardAdmin = [
                         id: 'staff-information',
                         title: "Staff information",
                         type: 'item',
-                        url: 'staff',
+                        url: '/administrative-personnel/staff',
                         icon: <IconHome />,
                         breadcrumbs: false
                     },
@@ -37,7 +37,7 @@ const dashboardAdmin = [
                         id: 'time-keeping',
                         title: "Timekeeping",
                         type: 'item',
-                        url: 'checking',
+                        url: '/administrative-personnel/checking',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },
@@ -45,7 +45,7 @@ const dashboardAdmin = [
                         id: 'Leave-of-absence',
                         title: "Leave of absence",
                         type: 'item',
-                        url: 'be-on-leave',
+                        url: '/administrative-personnel/be-on-leave',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },
@@ -119,7 +119,7 @@ const dashboardAdmin = [
                 id: 'customer',
                 title: "Quản lý khách hàng",
                 type: 'collapse',
-                url: '#',
+                url: '/customer',
                 icon: <IconMapPin />,
                 breadcrumbs: false,
                 children:[
@@ -127,7 +127,7 @@ const dashboardAdmin = [
                         id: 'budget',
                         title: "Ngân sách",
                         type: 'item',
-                        url: 'budget',
+                        url: '/customer/budget',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },
@@ -167,7 +167,7 @@ const dashboardAdmin = [
                 ]
             },
             {
-                id: 'customer',
+                id: 'warehouse',
                 title: "Quản lý kho",
                 type: 'item',
                 url: '#',

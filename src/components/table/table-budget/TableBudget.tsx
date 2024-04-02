@@ -133,7 +133,7 @@ const TableBudget = ({ rows, isAdmin }: Props) => {
                             handleEdit={setEditId}
                             page={page}
                             rowsPerPage={rowsPerPage}
-                            viewLink='officers'
+                            viewLink='budget/officers'
                             editLink=''
                             isAdmin={isAdmin}
                         />

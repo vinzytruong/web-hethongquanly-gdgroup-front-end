@@ -15,9 +15,10 @@ export default function useStaff() {
                 Authorization: `Bearer ${accessToken}`
             };
             const response = await axios.get('http://192.168.50.238:8899/api/NhanVien/GetNhanVien', { headers });
-            
+
             dispatch(GET_ALL({ staff: response.data }))
-           
+            console.log("staff", response.data);
+
             setIsLoading(false)
         } catch (e) {
             console.error("Error adding document: ", e);
