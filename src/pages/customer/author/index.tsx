@@ -3,20 +3,24 @@ import UploadFileDialog from "@/components/dialog/UploadFileDialog"
 import { AdminLayout } from "@/components/layout"
 import SearchNoButtonSection from "@/components/search/SearchNoButton"
 import { StyledButton } from "@/components/styled-button"
-import TableBudget from "@/components/table/table-budget/TableBudget"
 import useImportFile from "@/hooks/useImportFile"
 import useAuthor from "@/hooks/useAuthor"
-import { Box, CircularProgress, Typography, useTheme } from "@mui/material"
+import { Box, Typography, useTheme } from "@mui/material"
 import { useEffect, useMemo, useState } from "react"
 import TableAuthor from "@/components/table/table-author/TableAuthor"
+import InfoCard from "@/components/card/InfoCard"
 
 const AuthorPage = () => {
-    const { getAllAuthor, addAuthor, dataAuthor, isLoadding } = useAuthor()
+    const theme = useTheme()
+    const { uploadFileAuthor } = useImportFile();
+    const { getAllAuthor, addAuthor, dataAuthor, isLoadding, deleteAuthor, updateAuthor } = useAuthor()
     const [openAdd, setOpenAdd] = useState(false);
     const [openUpload, setOpenUpload] = useState(false);
     const [contentSearch, setContentSearch] = useState<string>('');
-    const { uploadFileCustomer,uploadFileAuthor } = useImportFile()
-    const theme = useTheme()
+    const [viewId, setViewId] = useState<number>(0);
+    const [openCard, setOpenCard] = useState<boolean>(false);
+    const [openDialog, setOpenDialog] = useState(false);  
+
 
     useEffect(() => {
         getAllAuthor()
@@ -37,9 +41,57 @@ const AuthorPage = () => {
     };
     const handleSaveFileImport = (file: File | null) => {
         console.log("file", file);
-        if(file) uploadFileAuthor(file)
+        if (file) uploadFileAuthor(file)
 
     }
+    const infoByID = dataAuthor.find((item) => item.tacGiaID === viewId)
+
+    const dataCard = [
+        {
+            key: 'Họ và tên',
+            value: infoByID?.tenTacGia
+        },
+        {
+            key: 'Ngày sinh',
+            value: infoByID?.ngaySinh
+        },
+        {
+            key: 'Giới tính',
+            value: infoByID?.gioiTinh === 0 ? 'Nữ' : 'Nam'
+        },
+        {
+            key: 'Số điện thoại',
+            value: infoByID?.soDienThoai
+        },
+        {
+            key: 'Email',
+            value: infoByID?.email
+        },
+        {
+            key: 'CCCD',
+            value: infoByID?.cccd
+        },
+        {
+            key: 'Chức vụ',
+            value: infoByID?.chucVuTacGia
+        },
+        {
+            key: 'Môn chuyên ngành',
+            value: infoByID?.monChuyenNghanh
+        },
+        {
+            key: 'Đơn vị công tác',
+            value: infoByID?.donViCongTac
+        }
+    ]
+
+    const handleDeleteItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined) => {
+        deleteAuthor(viewId)
+    }
+    const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined) => {
+        setOpenDialog(true)
+    }
+
     return (
         <AdminLayout>
             <Box padding="24px">
@@ -48,11 +100,6 @@ const AuthorPage = () => {
                         Quản lý tác giả
                     </Typography>
                 </Box>
-                {/* {isLoadding ?
-                    <Box display='flex' justifyContent='center' alignItems='center' width='100%'>
-                        <CircularProgress />
-                    </Box>
-                    : */}
                 <Box
                     display='flex'
                     flexDirection='column'
@@ -98,9 +145,38 @@ const AuthorPage = () => {
                             handlSaveFile={handleSaveFileImport}
                         />
                     </Box>
-                    <TableAuthor rows={filterDataAuthor} isAdmin={true} />
                 </Box>
-                {/* } */}
+                <Box
+                    display='flex'
+                    justifyContent='center'
+                    alignItems='flex-start'
+                    width='100%'
+                    my={3}
+                    gap={3}
+                >
+                    <TableAuthor
+                        rows={filterDataAuthor}
+                        isAdmin={true}
+                        handleViewId={setViewId}
+                        handleOpenCard={setOpenCard}
+                    />
+                    <InfoCard
+                        id={viewId}
+                        title="Thông tin cá nhân tác giả"
+                        data={dataCard}
+                        handleOpen={setOpenCard}
+                        open={openCard}
+                        handleDelete={handleDeleteItem}
+                        handleEdit={handleEditItem}
+                    />
+                </Box>
+                <AuthorDialog
+                    title="Cập nhật tác giả"
+                    defaulValue={dataAuthor.find(item => item.tacGiaID === viewId)}
+                    handleOpen={setOpenDialog}
+                    open={openDialog}
+                    isUpdate
+                />
             </Box>
         </AdminLayout>
     )

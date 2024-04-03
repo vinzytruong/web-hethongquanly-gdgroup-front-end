@@ -15,10 +15,12 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import useAuthor from '@/hooks/useAuthor';
 import { Author } from '@/interfaces/author';
 import AuthorDialog from '@/components/dialog/AuthorDialog';
+import { IconChevronRight } from '@tabler/icons-react';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
     handleEdit?: (e: any) => void;
+    handleOpenCard:(e:any)=>void;
     data: Author[];
     page: number;
     rowsPerPage: number
@@ -31,16 +33,16 @@ const TableBodyAuthor = (props: BodyDataProps) => {
     const { deleteAuthor,updateAuthor } = useAuthor()
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
-    const [open, setOpen] = React.useState(false);
-    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
+
+    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin,handleOpenCard } = props
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
     const router = useRouter();
     const [selectedID, setSelectedID] = React.useState<number>()
 
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        console.log("view",id);
-        
-        router.push(`${viewLink}?id=${id}`);
+        handleView(id);
+        handleOpenCard(true)
+        // router.push(`${viewLink}?id=${id}`);
     }
 
     const handleDeleteItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
@@ -48,7 +50,6 @@ const TableBodyAuthor = (props: BodyDataProps) => {
     }
     const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {    
         setSelectedID(id)
-        setOpen(true)   
     }
 
 
@@ -72,25 +73,23 @@ const TableBodyAuthor = (props: BodyDataProps) => {
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
                             
-                            {isAdmin &&
-                                <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                                    <StyledIconButton
-                                        variant='contained'
+                            
+                                
+                                    <StyledButton
+                                        variant='outlined'
                                         color='primary'
-                                        onClick={(e: any) => handleEditItem(e, row.tacGiaID)}
+                                        onClick={(e: any) => handleViewItem(e, row.tacGiaID)}
+                                        endIcon={
+                                            <IconChevronRight stroke={1} />
+                                        }
+
                                     >
-                                        <ModeEditOutlinedIcon />
+                                        Xem chi tiết
                                         
-                                    </StyledIconButton>
-                                    <StyledIconButton
-                                        variant='contained'
-                                        color='secondary'
-                                        onClick={(e: any) => handleDeleteItem(e, row.tacGiaID)}
-                                    >
-                                        <DeleteOutlineOutlinedIcon />
-                                    </StyledIconButton>
-                                </Box>
-                            }
+                                    </StyledButton>
+                                    
+                               
+                          
 
 
                         </Box>
@@ -103,7 +102,7 @@ const TableBodyAuthor = (props: BodyDataProps) => {
                     <StyledTableCell colSpan={6} />
                 </StyledTableRow>
             )}
-            <AuthorDialog title="Cập nhật tác giả" defaulValue={data.find(item => item.tacGiaID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>
+           
         </TableBody>
     )
 }

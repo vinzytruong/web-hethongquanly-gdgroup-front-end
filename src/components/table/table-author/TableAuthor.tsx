@@ -51,6 +51,8 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 interface Props {
     rows: Author[],
     isAdmin: boolean,
+    handleViewId: (e: any) => void
+    handleOpenCard: (e: any) => void
 }
 
 interface HeadCell {
@@ -85,12 +87,11 @@ const headCells: readonly HeadCell[] = [
         label: 'Môn chuyên ngành',
     },
 ];
-const TableAuthor = ({ rows, isAdmin }: Props) => {
+const TableAuthor = ({ rows, isAdmin, handleViewId, handleOpenCard }: Props) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Author>('tenTacGia');
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [viewId, setViewId] = React.useState(0)
     const [editId, setEditId] = React.useState(0)
     const theme = useTheme()
 
@@ -103,44 +104,58 @@ const TableAuthor = ({ rows, isAdmin }: Props) => {
         [order, orderBy, page, rows, rowsPerPage],
     );
 
+
+
+
     return (
-        <Box sx={{ overflow: "auto", py: 3, width: '100%' }}>
-            <Box sx={{ borderRadius: '6px', width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
-                <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
-                    <Table
-                        sx={{ minWidth: 750, border: 0 }}
-                        aria-labelledby="tableTitle"
-                        size='medium'
-                    >
-                        <TableHeader
-                            order={order}
-                            orderBy={orderBy}
-                            handleOrder={setOrder}
-                            handleOrderBy={setOrderBy}
-                            rowCount={rows?.length}
-                            headerCells={headCells}
-                            action={isAdmin}
-                        />
-                        <TableBodyAuthor
-                            data={visibleRows}
-                            handleView={setViewId}
-                            handleEdit={setEditId}
-                            page={page}
-                            rowsPerPage={rowsPerPage}
-                            viewLink=''
-                            editLink=''
-                            isAdmin={isAdmin}
-                        />
-                    </Table>
-                </TableContainer>
-                <TableCustomizePagination
-                    handlePage={setPage}
-                    handleRowsPerPage={setRowsPerPage}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    rows={rows}
-                />
+        <Box
+            display='flex'
+            width='100%'
+            bgcolor={theme.palette.background.paper}
+            px={3}
+            py={3}
+            height='66vh'
+        >
+            <Box sx={{ overflow: "auto", width: '100%' }}>
+                <Box sx={{ borderRadius: '6px', width: '100%', display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
+                    <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
+                        <Table
+                            sx={{ minWidth: 750, border: 0 }}
+                            aria-labelledby="tableTitle"
+                            size='medium'
+                        >
+                            <TableHeader
+                                order={order}
+                                orderBy={orderBy}
+                                handleOrder={setOrder}
+                                handleOrderBy={setOrderBy}
+                                rowCount={rows?.length}
+                                headerCells={headCells}
+                                action={true}
+                            />
+                            <TableBodyAuthor
+                                data={visibleRows}
+                                handleView={handleViewId}
+                                handleOpenCard={handleOpenCard}
+                                handleEdit={setEditId}
+                                page={page}
+                                rowsPerPage={rowsPerPage}
+                                viewLink=''
+                                editLink=''
+                                isAdmin={isAdmin}
+                            />
+                        </Table>
+                    </TableContainer>
+                    <TableCustomizePagination
+                        handlePage={setPage}
+                        handleRowsPerPage={setRowsPerPage}
+                        page={page}
+                        rowsPerPage={rowsPerPage}
+                        rows={rows}
+                    />
+                </Box>
             </Box>
+
         </Box>
     );
 }

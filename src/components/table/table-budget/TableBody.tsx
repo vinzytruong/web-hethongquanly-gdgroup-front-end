@@ -15,6 +15,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import useOrganization from '@/hooks/useOrganization';
 import { Organization } from '@/interfaces/organization';
 import OrganizationDialog from '@/components/dialog/OrganizationDialog';
+import zIndex from '@mui/material/styles/zIndex';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
@@ -28,7 +29,7 @@ interface BodyDataProps {
 }
 
 const TableBodyBudget = (props: BodyDataProps) => {
-    const { deleteOrganization,updateOrganization } = useOrganization()
+    const { deleteOrganization, updateOrganization } = useOrganization()
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -38,17 +39,17 @@ const TableBodyBudget = (props: BodyDataProps) => {
     const [selectedID, setSelectedID] = React.useState<number>()
 
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        console.log("view",id);
-        
+        console.log("view", id);
+
         router.push(`${viewLink}?id=${id}`);
     }
 
     const handleDeleteItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         deleteOrganization(id)
     }
-    const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {    
+    const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         setSelectedID(id)
-        setOpen(true)   
+        setOpen(true)
     }
 
 
@@ -58,7 +59,7 @@ const TableBodyBudget = (props: BodyDataProps) => {
             {data?.map((row: Organization, index: any) => (
                 <StyledTableRow
                     hover
-                    onClick={(e: any) => handleViewItem(e, row.coQuanID)}
+                    // onClick={(e: any) => handleViewItem(e, row.coQuanID)}
                     role="checkbox"
                     tabIndex={-1}
                     key={row.coQuanID}
@@ -72,16 +73,25 @@ const TableBodyBudget = (props: BodyDataProps) => {
                     <StyledTableCell align="left">{row.diaChi ? row.diaChi : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                            
+                            <StyledIconButton
+                                variant='contained'
+                                color='default'
+                                onClick={(e: any) => handleViewItem(e, row.coQuanID)}
+
+                            >
+                                <VisibilityOutlinedIcon />
+
+                            </StyledIconButton>
                             {isAdmin &&
-                                <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
+                                <Box display='flex' gap={2} alignItems='center' justifyContent='center' zIndex={3}>
                                     <StyledIconButton
                                         variant='contained'
                                         color='primary'
                                         onClick={(e: any) => handleEditItem(e, row.coQuanID)}
+
                                     >
                                         <ModeEditOutlinedIcon />
-                                        
+
                                     </StyledIconButton>
                                     <StyledIconButton
                                         variant='contained'
@@ -104,7 +114,7 @@ const TableBodyBudget = (props: BodyDataProps) => {
                     <StyledTableCell colSpan={6} />
                 </StyledTableRow>
             )}
-            <OrganizationDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.coQuanID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>
+            <OrganizationDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.coQuanID === selectedID)} handleOpen={setOpen} open={open} isUpdate />
         </TableBody>
     )
 }

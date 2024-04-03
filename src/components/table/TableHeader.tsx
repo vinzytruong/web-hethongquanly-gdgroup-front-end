@@ -59,7 +59,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
         borderBottom: `1px solid ${theme.palette.text.secondary}`,
-        paddingBottom:'24px'
+        paddingBottom:'24px',
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,

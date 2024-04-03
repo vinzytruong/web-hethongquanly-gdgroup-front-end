@@ -90,12 +90,12 @@ const headCells: readonly HeadCell[] = [
         disablePadding: false,
         label: 'Địa chỉ',
     },
-    {
-        id: 'more',
-        numeric: false,
-        disablePadding: false,
-        label: 'Thông tin thêm',
-    },
+    // {
+    //     id: 'more',
+    //     numeric: false,
+    //     disablePadding: false,
+    //     label: 'Thông tin thêm',
+    // },
     
 ];
 const TableSupplier = ({ rows, isAdmin }: Props) => {

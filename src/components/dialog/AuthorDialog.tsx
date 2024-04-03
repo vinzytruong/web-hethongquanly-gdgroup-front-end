@@ -20,21 +20,19 @@ import moment from 'moment';
 
 
 export default function AuthorDialog(props: PropsDialog) {
-    const { title, defaulValue, isInsert, handleOpen, open, isUpdate } = props
     const theme = useTheme()
-    const [formData, setFormData] = useState<Author>();
-    const { getAllProvince, dataProvince } = useProvince()
     const { addAuthor, updateAuthor } = useAuthor()
+    const { title, defaulValue, isInsert, handleOpen, open, isUpdate } = props
+    const [formData, setFormData] = useState<Author>();
     const [loading, setLoaing] = useState<boolean>(false)
-console.log(formData);
-
+    const [selectedDate, setDateChange] = useState(formData?.ngaySinh);
 
     useEffect(() => {
         if (defaulValue) setFormData(defaulValue)
     }, [defaulValue])
 
     const handleChange = (e: any) => {
-       
+
         if (e.target) {
             console.log(e.target.name);
             setFormData((prevState: any) => ({
@@ -43,28 +41,27 @@ console.log(formData);
             }));
         }
         else {
-            console.log(dayjs(e).format('MM/DD/YYYY')); 
+            setDateChange(e)
             setFormData((prevState: any) => ({
                 ...prevState,
-                ['ngaySinh']: dayjs(e).format('MM/DD/YYYY')
+                ['ngaySinh']: dayjs(e).format('DD/MM/YYYY'),
+                ['active']: true
             }));
         }
     };
     const handleAdd = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        
-        
+        console.log(formData);
+
         if (formData) addAuthor(formData)
         setLoaing(false);
         handleOpen(false)
     }
-     
+
     const handleUpdate = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        // console.log(formData); 
-        
         if (formData) updateAuthor(formData)
         setLoaing(false);
         handleOpen(false)
@@ -72,7 +69,6 @@ console.log(formData);
 
     return (
         <>
-
             <Dialog
                 maxWidth='md'
                 fullWidth
@@ -80,7 +76,6 @@ console.log(formData);
                 onClose={() => handleOpen(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-
             >
                 <DialogTitle sx={{ m: 0, p: 3 }} id="customized-dialog-title">
                     <Typography variant='h3'>{title}</Typography>
@@ -97,8 +92,6 @@ console.log(formData);
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ p: 3 }} >
-
-
                     <Box display='flex' flexDirection='column' justifyContent='space-between' alignItems='center' gap='12px'>
                         <Grid container spacing={3}>
                             <Grid item md={4}>
@@ -170,23 +163,20 @@ console.log(formData);
                         <Box style={{ width: '100%' }}>
                             <Typography>Ngày sinh</Typography>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                               
-                                    <DatePicker
-                                        format="DD/MM/YYYY"
-                                        // defaultValue={formData?.ngaySinh}
-                                        name='ngaySinh'
-                                        sx={{ width: '100%' }}
-                                        value={dayjs(formData?.ngaySinh)}
-                                        onChange={handleChange}
-                                    />
-                                
+                                <DatePicker
+                                    name='ngaySinh'
+                                    sx={{ width: '100%' }}
+                                    
+                                    value={selectedDate}
+                                    onChange={handleChange}
+                                    disableFuture={true}
+                                    format="DD/MM/YYYY"
+                                />
                             </LocalizationProvider>
-
                         </Box>
                         <Box style={{ width: '100%' }}>
                             <Typography>Số điện thoại</Typography>
                             <TextField
-
                                 name='soDienThoai'
                                 style={{ width: '100%' }}
                                 value={formData?.soDienThoai}

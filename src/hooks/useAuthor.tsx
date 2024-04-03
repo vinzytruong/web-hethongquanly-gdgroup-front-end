@@ -31,7 +31,10 @@ export default function useAuthor() {
                 Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             };
+            console.log("before",author);
             const response = await axios.post('http://192.168.50.238:8899/api/TacGia/AddTacGia',author, { headers });
+            console.log("after",response.data);
+            
             dispatch(ADD_AUTHOR({ author: response.data }))
             setIsLoading(false)
         } catch (e) {

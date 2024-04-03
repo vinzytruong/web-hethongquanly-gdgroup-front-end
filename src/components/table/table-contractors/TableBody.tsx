@@ -70,7 +70,7 @@ const TableBodyContractors = (props: BodyDataProps) => {
                     <StyledTableCell align="left">{row.nguoiDaiDien ? row.nguoiDaiDien : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.tinhID ? row.tinhID : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.diaChi ? row.diaChi : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.thongTinThem ? row.thongTinThem : 'Chưa có dữ liệu'}</StyledTableCell>
+                    {/* <StyledTableCell align="left">{row.thongTinThem ? row.thongTinThem : 'Chưa có dữ liệu'}</StyledTableCell> */}
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
                             

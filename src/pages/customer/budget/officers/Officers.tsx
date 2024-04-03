@@ -12,6 +12,7 @@ import { Box, Button, CircularProgress, Grid, IconButton, Typography, useTheme }
 import { useEffect, useMemo, useState } from "react"
 import { IconArrowNarrowLeft } from '@tabler/icons-react';
 import { useRouter } from "next/router"
+import { IconChevronLeft } from '@tabler/icons-react';
 
 const OfficersPage = (id: any) => {
     const { getAllOrganization, addOrganization, dataOrganization } = useOrganization()
@@ -39,7 +40,7 @@ const OfficersPage = (id: any) => {
                 <Box display='flex' alignItems='center' justifyContent='flex-start'>
                     <IconButton color="primary" onClick={()=>router.back()}>
                  
-                        <IconArrowNarrowLeft stroke={2} />
+                    <IconChevronLeft stroke={3} />
                     
                     </IconButton>
                     <Typography variant="h3" color={theme.palette.primary.main} py={2}>
