@@ -114,7 +114,6 @@ const TableInteraction = ({ rows, isAdmin, handleViewId, handleOpenCard }: Props
             bgcolor={theme.palette.background.paper}
             px={3}
             py={3}
-            height='66vh'
         >
             <Box sx={{ overflow: "auto", width: '100%' }}>
                 <Box sx={{ borderRadius: '6px', width: '100%', display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>

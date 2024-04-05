@@ -97,9 +97,9 @@ const TableBodyAuthor = (props: BodyDataProps) => {
                 </StyledTableRow>
             ))}
             {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
-            {emptyRows > 0 && (
-                <StyledTableRow style={{ height: 53 * emptyRows }}>
-                    <StyledTableCell colSpan={6} />
+            {data.length===0 && (
+                <StyledTableRow style={{ height:100 }}>
+                    <StyledTableCell align='center' colSpan={6}>Chưa có dữ liệu</StyledTableCell>
                 </StyledTableRow>
             )}
            

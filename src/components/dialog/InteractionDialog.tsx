@@ -35,8 +35,11 @@ export default function InteractionDialog(props: PropsDialog) {
         getAllStaff()
         getAllOrganization()
         getOfficersByOrganizationID(formData?.coQuanID)
-        if (defaulValue) setFormData(defaulValue)
     }, [formData?.coQuanID])
+
+    useEffect(() => {
+        if (defaulValue) setFormData(defaulValue)
+    }, [defaulValue])
 
     const handleChange = (e: any) => {
 
@@ -120,16 +123,21 @@ export default function InteractionDialog(props: PropsDialog) {
                             <Grid item md={8}>
                                 <Box style={{ width: '100%' }}>
                                     <Typography>Cơ quan</Typography>
+                                    
                                     <Select
-                                        defaultValue={formData?.coQuanID}
+                                        defaultValue={defaulValue?.coQuanID}
                                         name='coQuanID'
-                                        value={formData?.nhanVienID}
+                                        value={formData?.coQuanID}
                                         onChange={handleChange}
                                         fullWidth
+                                        required
                                     >
                                         {dataOrganization.map((item, index) => (
                                             <MenuItem key={index} defaultValue={formData?.coQuanID} value={item.coQuanID}>{item.tenCoQuan}</MenuItem>
                                         ))}
+                                         {dataOrganization.length===0 &&
+                                            <MenuItem value={undefined}>Không có dữ liệu</MenuItem>
+                                        }
                                     </Select>
                                 </Box>
                             </Grid>
@@ -194,7 +202,7 @@ export default function InteractionDialog(props: PropsDialog) {
                                 <DatePicker
                                     name='thoiGian'
                                     sx={{ width: '100%' }}
-
+                                    defaultValue={dayjs(defaulValue?.thoiGian)}
                                     value={selectedDate}
                                     onChange={handleChange}
                                     disableFuture={true}

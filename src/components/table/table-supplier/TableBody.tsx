@@ -100,9 +100,9 @@ const TableBodySupplier = (props: BodyDataProps) => {
                 </StyledTableRow>
             ))}
             {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
-            {emptyRows > 0 && (
-                <StyledTableRow style={{ height: 53 * emptyRows }}>
-                    <StyledTableCell colSpan={6} />
+            {data.length===0 && (
+                <StyledTableRow style={{ height:100 }}>
+                    <StyledTableCell align='center' colSpan={6}>Chưa có dữ liệu</StyledTableCell>
                 </StyledTableRow>
             )}
             <SupplierDialog title="Cập nhật nhà cung cấp" defaulValue={data.find(item => item.nhaCungCapID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>

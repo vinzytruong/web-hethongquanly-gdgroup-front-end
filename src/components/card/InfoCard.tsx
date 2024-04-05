@@ -6,14 +6,14 @@ interface PropsCard {
     title: string,
     open: boolean,
     data: any,
-    id:number,
+    id: number,
     handleOpen: (e: boolean) => void,
     handleEdit?: (e: any) => void;
     handleDelete?: (e: any) => void;
 }
 
 export default function InfoCard(props: PropsCard) {
-    const { open, handleOpen, data, title, handleDelete, handleEdit,id } = props
+    const { open, handleOpen, data, title, handleDelete, handleEdit, id } = props
     const theme = useTheme()
 
     return (
@@ -24,7 +24,7 @@ export default function InfoCard(props: PropsCard) {
             display={`${open ? 'flex' : 'none'}`}
             width='600px'
             height='66vh'
-            justifyContent='space-between' 
+            justifyContent='space-between'
             alignItems='center'
             flexDirection='column'
 
@@ -34,7 +34,6 @@ export default function InfoCard(props: PropsCard) {
                 <IconButton
                     aria-label="close"
                     onClick={() => handleOpen(false)}
-
                 >
                     <CloseIcon />
                 </IconButton>
@@ -65,7 +64,6 @@ export default function InfoCard(props: PropsCard) {
                     variant='outlined'
                     color='primary'
                     onClick={() => handleDelete!(id)}
-                   
                 >
                     Xoá
                 </StyledButton>

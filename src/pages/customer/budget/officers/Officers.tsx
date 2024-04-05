@@ -29,7 +29,7 @@ const OfficersPage = (id: any) => {
     useEffect(() => {
         getAllOrganization()
         getOfficersByOrganizationID(id.id)
-    }, [])
+    }, [getOfficersByOrganizationID])
 
     useEffect(() => {
         getAllProvince()

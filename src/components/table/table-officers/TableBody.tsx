@@ -69,7 +69,7 @@ const TableBodyOfficers = (props: BodyDataProps) => {
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
                     <StyledTableCell align="left">{row.hoVaTen ? row.hoVaTen : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.canBoID ? row.canBoID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.gioiTinh ? row.gioiTinh : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.gioiTinh === 0 ? 'Nữ' : 'Nam'}</StyledTableCell>
                     <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.soDienThoai ? row.soDienThoai : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.email ? row.email : 'Chưa có dữ liệu'}</StyledTableCell>
@@ -109,9 +109,9 @@ const TableBodyOfficers = (props: BodyDataProps) => {
                 </StyledTableRow>
             ))}
             {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
-            {emptyRows > 0 && (
-                <StyledTableRow style={{ height: 53 * emptyRows }}>
-                    <StyledTableCell colSpan={6} />
+            {data.length === 0 && (
+                <StyledTableRow style={{ height: 100 }}>
+                    <StyledTableCell align='center' colSpan={6}>Chưa có dữ liệu</StyledTableCell>
                 </StyledTableRow>
             )}
             <OfficersDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.canBoID === selectedID)} handleOpen={setOpen} open={open} isUpdate />

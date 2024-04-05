@@ -21,13 +21,24 @@ export default function SignIn() {
 
   return (
     <AuthWrapper1>
-      <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
-        <Grid item xs={12}>
+      <Grid container direction="row" justifyContent="space-between" sx={{ minHeight: '100vh' }}>
+        <Grid item xs={6}>
+
+          <Box id="hero" sx={{
+            height: { xs: '200px', md: '100vh' },
+            p:0
+          }}>
+            <img src='/images/cover/login-3d.png' alt='login' height='100%' width='100%' />
+          </Box>
+
+
+        </Grid>
+        <Grid item xs={6}>
           <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
             <Grid item sx={{ m: { xs: 1, sm: 3 }, mb: 0 }}>
               <AuthCardWrapper>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
-                  
+
                   <Grid item xs={12}>
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
                       <Grid item>
@@ -35,7 +46,7 @@ export default function SignIn() {
                           <Typography color={theme.palette.primary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
                             Đăng nhập
                           </Typography>
-                          
+
                         </Stack>
                       </Grid>
                     </Grid>
@@ -58,7 +69,6 @@ export default function SignIn() {
             </Grid>
           </Grid>
         </Grid>
-
 
       </Grid>
     </AuthWrapper1>

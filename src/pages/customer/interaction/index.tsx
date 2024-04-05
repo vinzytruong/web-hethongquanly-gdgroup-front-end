@@ -27,7 +27,7 @@ const InteractionPage = () => {
     useEffect(() => {
         getAllInteraction()
         
-    }, [])
+    }, [getAllInteraction])
 
     // const filterDataInteraction = useMemo(() => {
     //     return dataInteraction.filter((item) => item.nhanVienID.includes(contentSearch))
@@ -160,6 +160,7 @@ const InteractionPage = () => {
                     width='100%'
                     my={3}
                     gap={3}
+          
                 >
                     <TableInteraction
                         rows={dataInteraction}
