@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { importKhachHang, importNhaCungCap, importNhaThau, importTacGia } from '@/constant/api';
 
 export default function useImportFile() {
     const [isLoadding, setIsLoading] = useState(true);
@@ -9,16 +10,13 @@ export default function useImportFile() {
             const formData = new FormData();
             formData.append('formFile', file);
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'multipart/form-data'
-            };
-            const response = await axios.post('http://192.168.50.238:8899/api/Import/importKhachHang', formData, { headers });
-            console.log("aaaaaaaa", response);
-
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' };
+            const response = await axios.post(importKhachHang, formData, { headers });
+            console.log(response);
+            
             setIsLoading(false)
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error: ", e);
         } finally {
             setIsLoading(false)
         }
@@ -28,15 +26,11 @@ export default function useImportFile() {
             const formData = new FormData();
             formData.append('formFile', file);
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'multipart/form-data'
-            };
-            await axios.post('http://192.168.50.238:8899/api/Import/importNhaThau', formData, { headers });
-
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' };
+            await axios.post(importNhaThau, formData, { headers });
             setIsLoading(false)
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error: ", e);
         } finally {
             setIsLoading(false)
         }
@@ -47,15 +41,11 @@ export default function useImportFile() {
             const formData = new FormData();
             formData.append('formFile', file);
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'multipart/form-data'
-            };
-            await axios.post('http://192.168.50.238:8899/api/Import/importNhaCungCap', formData, { headers });
-
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' };
+            await axios.post(importNhaCungCap, formData, { headers });
             setIsLoading(false)
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error: ", e);
         } finally {
             setIsLoading(false)
         }
@@ -66,21 +56,17 @@ export default function useImportFile() {
             const formData = new FormData();
             formData.append('formFile', file);
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'multipart/form-data'
-            };
-            await axios.post('http://192.168.50.238:8899/api/Import/importNhaTacGia', formData, { headers });
-
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'multipart/form-data' };
+            await axios.post(importTacGia, formData, { headers });
             setIsLoading(false)
         } catch (e) {
-            console.error("Error adding document: ", e);
+            console.error("Error: ", e);
         } finally {
             setIsLoading(false)
         }
     }
 
     return {
-        isLoadding, uploadFileCustomer, uploadFileContractors, uploadFileSupplier,uploadFileAuthor
+        isLoadding, uploadFileCustomer, uploadFileContractors, uploadFileSupplier, uploadFileAuthor
     };
 }

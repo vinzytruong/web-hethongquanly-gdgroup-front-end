@@ -47,7 +47,7 @@ const TableHeader = (props: EnhancedTableProps) => {
                         </TableSortLabel>
                     </StyledTableCell>
                 ))}
-                
+                  {action && <StyledTableCell align='center'><Typography fontWeight='bold'>Hành động</Typography></StyledTableCell>}
             </TableRow>
         </TableHead>
     );

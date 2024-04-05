@@ -6,15 +6,12 @@ import "slick-carousel/slick/slick.css";
 import '@/styles/globals.css'
 import '@/styles/react-slick.css'
 import '../config/locale/i18n';
-import ThemeCustomization from '@/config/theme'
 import { Provider } from 'react-redux'
 import { store } from '@/store'
 import { META_DATA } from '@/constant';
 import 'moment/locale/vi';
 import moment from 'moment';
 import { ConfigProvider } from '@/contexts/ConfigContext';
-import { useTranslation } from 'react-i18next';
-import useConfig from '@/hooks/useConfig';
 import { AuthProvider } from '@/contexts/JWTContext';
 import 'devextreme/dist/css/dx.light.css';
 

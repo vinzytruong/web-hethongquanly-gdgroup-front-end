@@ -33,9 +33,9 @@ export default function UploadFileDialog(props: PropsDialog) {
     const { title, defaulValue, isInsert, handleOpen, open, isUpdate, id, handlSaveFile } = props
     const theme = useTheme()
     const [file, setFile] = useState<File | null>(null);
+
     return (
         <>
-
             <Dialog
                 maxWidth='md'
                 fullWidth
@@ -43,7 +43,6 @@ export default function UploadFileDialog(props: PropsDialog) {
                 onClose={() => handleOpen(false)}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-
             >
                 <DialogTitle sx={{ m: 0, p: 3 }} id="customized-dialog-title">
                     <Typography variant='h3'>{title}</Typography>
@@ -60,8 +59,6 @@ export default function UploadFileDialog(props: PropsDialog) {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ px: 3 }} >
-
-
                     <Box sx={{ width: '100%', }}>
                         <Box sx={{
                             height: { xs: '80px', md: '220px' },
@@ -83,10 +80,8 @@ export default function UploadFileDialog(props: PropsDialog) {
                                 :
                                 <Typography>Chưa có tệp được chọn</Typography>
                             }
-
                         </Box>
                         <form className='form'>
-
                             <input
                                 accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                                 style={{ display: 'none' }}
@@ -97,13 +92,10 @@ export default function UploadFileDialog(props: PropsDialog) {
                             />
                         </form>
                     </Box>
-
                 </DialogContent>
                 <DialogActions sx={{ px: 3, pb: 4 }}>
                     <Box sx={{ width: '100%' }} >
-
                         {file ?
-
                             <Button variant="contained" size='large' fullWidth component='span' onClick={() => handlSaveFile!(file)}>
                                 Lưu
                             </Button>

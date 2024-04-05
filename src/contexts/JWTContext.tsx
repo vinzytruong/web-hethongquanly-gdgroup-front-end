@@ -1,4 +1,5 @@
 
+import { authDangNhap } from '@/constant/api';
 import { AuthContextType } from '@/interfaces/auth';
 import { LOGIN, LOGOUT } from '@/store/auth/action';
 import { useAppDispatch } from '@/store/hook';
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }: any) => {
     const login = async (username: string, password: string) => {
         const dataJson = JSON.stringify({ "tenDangNhap": username, "matKhau": password})
         try {
-            const response = await axios.post('http://192.168.50.238:8899/api/NguoiDung/DangNhap', dataJson, { headers: { 'Content-Type': 'application/json' } });
+            const response = await axios.post(authDangNhap, dataJson, { headers: { 'Content-Type': 'application/json' } });
             const accessToken = response.data.token;
             const userID = response.data.userID
             const username = response.data.hoVaTen
