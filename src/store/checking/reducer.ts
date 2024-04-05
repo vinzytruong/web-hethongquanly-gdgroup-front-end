@@ -9,8 +9,7 @@ export const initialState: CheckingStateProps = {
 export default createReducer(initialState, (builder) =>
     builder
         .addCase(GET_DATA_CHECKING, (state, action) => {
-            console.log('action',action.payload);
-            
             state.dataChecking=action.payload.checking.dataChecking
         })
+      
 )

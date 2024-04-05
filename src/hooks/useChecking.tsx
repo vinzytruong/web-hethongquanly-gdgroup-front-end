@@ -106,9 +106,9 @@ export default function useChecking() {
         }
     }
 
-    const getCheckInFromDateToDate = async (personID:string,fromTimeStamp:any,toTimeStamp:any) => {
+    const getCheckInFromDateToDate = async (personIDs: string, fromTimeStamp: any, toTimeStamp: any) => {
         const accessToken = localStorage.getItem('accessTokenCheckIn');
-console.log(fromTimeStamp,toTimeStamp);
+
 
         try {
             if (accessToken) {
@@ -122,8 +122,9 @@ console.log(fromTimeStamp,toTimeStamp);
                 // urlencoded.append("exDevices", "<deviceID1, deivceID2,>");
                 urlencoded.append("type", "0");
                 // urlencoded.append("aliasID", "<aliasID>");
-                urlencoded.append("personID", personID);
-                // urlencoded.append("personIDs", "<personID1,personID2,personID3,..>");
+                // urlencoded.append("personID", personID);
+
+                urlencoded.append("personIDs", personIDs)
                 // urlencoded.append("aliasIDs", "<aliasID1,aliasID2, aliasID3,....>");
                 urlencoded.append("page", "1");
                 urlencoded.append("size", "500");
@@ -137,7 +138,6 @@ console.log(fromTimeStamp,toTimeStamp);
                 fetch("https://partner.hanet.ai/person/getCheckinByPlaceIdInTimestamp", requestOptions)
                     .then(async response => {
                         const dataResponse = await response.json()
-                        console.log("timeStamp", dataResponse);
                         dispatch(GET_DATA_CHECKING({ checking: { dataChecking: dataResponse.data, error: null } }));
                     })
                     .then(result => console.log(result))
@@ -147,10 +147,11 @@ console.log(fromTimeStamp,toTimeStamp);
             }
 
         } catch (error) {
-
             setIsLoading(false)
             return false;
         }
+
+
     }
 
     const getPersonInDepartment = async (id: number, name: string) => {
@@ -180,6 +181,6 @@ console.log(fromTimeStamp,toTimeStamp);
     }
 
     return {
-        isLoadding, dataChecking, getCheckInNow, getPersonInDepartment, getToken,getCheckInFromDateToDate
+        isLoadding, dataChecking, getCheckInNow, getPersonInDepartment, getToken, getCheckInFromDateToDate
     };
 }
