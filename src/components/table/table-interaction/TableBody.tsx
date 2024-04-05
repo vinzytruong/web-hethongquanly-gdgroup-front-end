@@ -48,9 +48,9 @@ const TableBodyInteraction = (props: BodyDataProps) => {
                     sx={{ cursor: 'pointer' }}
                 >
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
-                    <StyledTableCell align="left">{row.nhanVienID ? row.nhanVienID : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.tenNhanVien ? row.tenNhanVien : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.canBoTiepXuc ? row.canBoTiepXuc : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.coQuanID ? row.coQuanID : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.tenCoQuan ? row.tenCoQuan : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.thoiGian ? row.thoiGian : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.nhomHangQuanTam ? row.nhomHangQuanTam : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="center">

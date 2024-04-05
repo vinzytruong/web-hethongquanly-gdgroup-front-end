@@ -33,7 +33,7 @@ const TableBodyContractors = (props: BodyDataProps) => {
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
     const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+   
     const router = useRouter();
     const [selectedID, setSelectedID] = React.useState<number>()
 
@@ -100,9 +100,9 @@ const TableBodyContractors = (props: BodyDataProps) => {
                 </StyledTableRow>
             ))}
             {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
-            {emptyRows > 0 && (
-                <StyledTableRow style={{ height: 53 * emptyRows }}>
-                    <StyledTableCell colSpan={6} />
+            {data.length===0 && (
+                <StyledTableRow style={{ height: 83 }}>
+                    <StyledTableCell align='center' colSpan={6}>Chưa có dữ liệu</StyledTableCell>
                 </StyledTableRow>
             )}
             <ContractorsDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.nhaThauID === selectedID)} handleOpen={setOpen} open={open} isUpdate/>

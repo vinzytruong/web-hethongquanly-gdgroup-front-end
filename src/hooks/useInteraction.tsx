@@ -16,6 +16,8 @@ export default function useInteraction() {
             const headers = {Authorization: `Bearer ${accessToken}`};
             const response = await axios.get(getQuanLyTuongTac, { headers });
             dispatch(GET_ALL({ interaction: response.data }))
+            console.log("interaction",response.data);
+            
             setIsLoading(false)
         } catch (e) {
             console.error("Error: ", e);

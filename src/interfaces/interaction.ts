@@ -8,5 +8,8 @@ export interface Interaction{
     canBoTiepXuc: string,
     nhomHangQuanTam: string,
     ghiChu: string,
-    nhanVienID: number
+    nhanVienID: number,
+    tenCoQuan:string,
+    tenNhanVien:string,
+    tenTinh:string
   }

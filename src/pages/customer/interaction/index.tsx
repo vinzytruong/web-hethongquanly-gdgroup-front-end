@@ -52,7 +52,7 @@ const InteractionPage = () => {
     const dataCard = [
         {
             key: 'Nhân viên',
-            value: infoByID?.nhanVienID
+            value: infoByID?.tenNhanVien
         },
         {
             key: 'Cán bộ tiếp xúc',
@@ -60,7 +60,11 @@ const InteractionPage = () => {
         },
         {
             key: 'Cơ quan',
-            value: infoByID?.coQuanID
+            value: infoByID?.tenCoQuan
+        },
+        {
+            key: 'Tỉnh',
+            value: infoByID?.tenTinh
         },
         {
             key: 'Thời gian',

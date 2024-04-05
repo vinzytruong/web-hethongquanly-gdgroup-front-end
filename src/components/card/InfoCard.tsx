@@ -67,7 +67,7 @@ export default function InfoCard(props: PropsCard) {
                     onClick={() => handleDelete!(id)}
                    
                 >
-                    Xoá tác giả
+                    Xoá
                 </StyledButton>
             </Box>
         </Box>

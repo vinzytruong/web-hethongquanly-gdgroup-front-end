@@ -17,19 +17,20 @@ export default function OrganizationDialog(props: PropsDialog) {
     const [formData, setFormData] = useState<Organization>();
     const { getAllProvince, dataProvince } = useProvince()
     const { getDistrictByProvinceId, dataDistrict } = useDistrict()
-    const { addOrganization,updateOrganization } = useOrganization()
+    const { addOrganization, updateOrganization } = useOrganization()
     const [loading, setLoaing] = useState<boolean>(false)
 
     useEffect(() => {
-        getAllProvince()
         if (formData?.tinhID) getDistrictByProvinceId(formData?.tinhID)
+    }, [formData?.tinhID])
+
+    useEffect(() => {
+        getAllProvince()
     }, [formData?.tinhID])
 
     useEffect(() => {
         if (defaulValue) setFormData(defaulValue)
     }, [defaulValue])
-
-
 
     const handleChange = (e: any) => {
         if (e.target) {
@@ -125,7 +126,7 @@ export default function OrganizationDialog(props: PropsDialog) {
                                 <Box style={{ width: '100%' }}>
                                     <Typography>Tỉnh</Typography>
                                     <Select
-                                    defaultValue={formData?.tinhID}
+                                        defaultValue={defaulValue?.tinhID}
                                         name='tinhID'
                                         value={formData?.tinhID}
                                         onChange={handleChange}
@@ -141,7 +142,7 @@ export default function OrganizationDialog(props: PropsDialog) {
                                 <Box style={{ width: '100%' }}>
                                     <Typography>Huyện</Typography>
                                     <Select
-                                        
+                                        defaultValue={defaulValue?.huyenID}
                                         name='huyenID'
                                         value={formData?.huyenID}
                                         onChange={handleChange}

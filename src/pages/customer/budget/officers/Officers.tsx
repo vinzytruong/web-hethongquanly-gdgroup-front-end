@@ -13,35 +13,49 @@ import { useEffect, useMemo, useState } from "react"
 import { IconArrowNarrowLeft } from '@tabler/icons-react';
 import { useRouter } from "next/router"
 import { IconChevronLeft } from '@tabler/icons-react';
+import useProvince from "@/hooks/useProvince"
+import useDistrict from "@/hooks/useDistrict"
 
 const OfficersPage = (id: any) => {
     const { getAllOrganization, addOrganization, dataOrganization } = useOrganization()
-    const { getAllOfficers, addOfficers, dataOfficers,getOfficersByOrganizationID } = useOfficers()
+    const { getAllOfficers, addOfficers, dataOfficers, getOfficersByOrganizationID } = useOfficers()
+    const { dataProvince, getAllProvince } = useProvince()
+    const { dataDistrict, getDistrictByProvinceId, getDistrictByID } = useDistrict()
     const [open, setOpen] = useState(false);
     const [contentSearch, setContentSearch] = useState<string>('')
     const theme = useTheme()
-    const router=useRouter()
+    const router = useRouter()
 
     useEffect(() => {
         getAllOrganization()
         getOfficersByOrganizationID(id.id)
     }, [])
 
+    useEffect(() => {
+        getAllProvince()
+    }, [])
+
+    useEffect(() => {
+        if (dataOrganizationByID) getDistrictByID(dataOrganizationByID?.huyenID)
+    }, [])
+
     const filterDataOrganization = useMemo(() => {
         return dataOfficers.filter((item) => item.hoVaTen?.includes(contentSearch))
     }, [contentSearch, dataOfficers])
 
-
     const dataOrganizationByID = dataOrganization.find(item => item.coQuanID === Number(id.id))
-    console.log("param", dataOrganizationByID);
+
+    const renderDataTinh = (tinhID: number) => dataProvince.find((item) => item.tinhID === tinhID)?.tenTinh
+    const renderDataHuyen = (huyenID: number) => dataDistrict.find((item) => item.huyenID === huyenID)?.tenHuyen
+
     return (
         <AdminLayout>
             <Box padding="24px">
                 <Box display='flex' alignItems='center' justifyContent='flex-start'>
-                    <IconButton color="primary" onClick={()=>router.back()}>
-                 
-                    <IconChevronLeft stroke={3} />
-                    
+                    <IconButton color="primary" onClick={() => router.back()}>
+
+                        <IconChevronLeft stroke={3} />
+
                     </IconButton>
                     <Typography variant="h3" color={theme.palette.primary.main} py={2}>
                         Quản lý cán bộ
@@ -95,7 +109,7 @@ const OfficersPage = (id: any) => {
                                 width='100%'
                             >
                                 <Typography color={theme.palette.text.primary} fontWeight='bold'>Huyện</Typography>
-                                <Typography fontSize={14}>{dataOrganizationByID?.huyenID}</Typography>
+                                <Typography fontSize={14}>{renderDataHuyen(dataOrganizationByID?.huyenID!)}</Typography>
                             </Box>
                             <Box
                                 display='flex'
@@ -104,7 +118,7 @@ const OfficersPage = (id: any) => {
                                 width='100%'
                             >
                                 <Typography color={theme.palette.text.primary} fontWeight='bold'>Tỉnh</Typography>
-                                <Typography fontSize={14}>{dataOrganizationByID?.tinhID}</Typography>
+                                <Typography fontSize={14}>{renderDataTinh(dataOrganizationByID?.tinhID!)}</Typography>
                             </Box>
                             <Box
                                 display='flex'
