@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hook';
 import axios from 'axios';
-import { ADD_ORGANIZATION, DELETE_ORGANIZATION, GET_ALL, UPDATE_ORGANIZATION } from '@/store/organization/action';
+import { ADD_ORGANIZATION, DELETE_ORGANIZATION, GET_ALL_ORGANIZATION, UPDATE_ORGANIZATION } from '@/store/organization/action';
 import { Organization } from '@/interfaces/organization';
 import { addCoQuan, deleteCoQuan, getCoQuan, updateCoQuan } from '@/constant/api';
 
@@ -15,7 +15,7 @@ export default function useOrganization() {
             const accessToken = window.localStorage.getItem('accessToken');
             const headers = {Authorization: `Bearer ${accessToken}`};
             const response = await axios.get(getCoQuan, { headers });
-            dispatch(GET_ALL({ organization: response.data }))
+            dispatch(GET_ALL_ORGANIZATION({ organization: response.data }))
             console.log("getAllCoQuan",response.data);
             
             setIsLoading(false)
@@ -53,6 +53,8 @@ export default function useOrganization() {
     }
     const deleteOrganization = async (id: number) => {
         try {
+            const accessToken = window.localStorage.getItem('accessToken');
+            const headers = {Authorization: `Bearer ${accessToken}`,'Content-Type': 'application/json'};
             await axios.delete(deleteCoQuan, { params: { id } });
             dispatch(DELETE_ORGANIZATION({ id }))
             setIsLoading(false)

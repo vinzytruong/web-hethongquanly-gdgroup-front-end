@@ -16,6 +16,8 @@ import useOrganization from '@/hooks/useOrganization';
 import { Organization } from '@/interfaces/organization';
 import OrganizationDialog from '@/components/dialog/OrganizationDialog';
 import zIndex from '@mui/material/styles/zIndex';
+import useProvince from '@/hooks/useProvince';
+import useDistrict from '@/hooks/useDistrict';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
@@ -30,6 +32,8 @@ interface BodyDataProps {
 
 const TableBodyBudget = (props: BodyDataProps) => {
     const { deleteOrganization, updateOrganization } = useOrganization()
+    const { dataProvince, getAllProvince } = useProvince()
+    const { dataDistrict, getDistrictByProvinceId, getDistrictByID } = useDistrict()
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -38,9 +42,14 @@ const TableBodyBudget = (props: BodyDataProps) => {
     const router = useRouter();
     const [selectedID, setSelectedID] = React.useState<number>()
 
-    const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        console.log("view", id);
+    React.useEffect(() => {
+        getAllProvince()
+    }, [])
+    React.useEffect(() => {
+        data.map(item => getDistrictByID(item.huyenID))
+    }, [])
 
+    const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         router.push(`${viewLink}?id=${id}`);
     }
 
@@ -51,9 +60,8 @@ const TableBodyBudget = (props: BodyDataProps) => {
         setSelectedID(id)
         setOpen(true)
     }
-
-
-
+    const renderDataTinh = (tinhID: number) => dataProvince.find((item) => item.tinhID === tinhID)?.tenTinh
+    const renderDataHuyen = (huyenID: number) => dataDistrict.find((item) => item.huyenID === huyenID)?.tenHuyen
     return (
         <TableBody>
             {data?.map((row: Organization, index: any) => (
@@ -68,8 +76,8 @@ const TableBodyBudget = (props: BodyDataProps) => {
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
                     <StyledTableCell align="left">{row.tenCoQuan ? row.tenCoQuan : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.maSoThue ? row.maSoThue : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.huyenID ? row.huyenID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tinhID ? row.tinhID : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.huyenID ? renderDataHuyen(row.huyenID) : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.tinhID ? renderDataTinh(row.tinhID) : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.diaChi ? row.diaChi : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>

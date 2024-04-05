@@ -14,6 +14,7 @@ import officersReducer from './officers/reducer';
 import contractorsReducer from './contractors/reducer';
 import supplierReducer from './supplier/reducer';
 import authorReducer from './author/reducer';
+import interactionReducer from './interaction/reducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -29,6 +30,7 @@ const reducer = combineReducers({
     officers:officersReducer,
     contractors:contractorsReducer,
     supplier:supplierReducer,
-    author:authorReducer
+    author:authorReducer,
+    interaction:interactionReducer
 });
 export default reducer;

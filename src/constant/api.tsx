@@ -13,6 +13,7 @@ export const getTinh = apiPort + "/api/Tinh/GetTinh"
 
 //Huyen
 export const getHuyenByTinhID = apiPort + "/api/Huyen/GetHuyenByTinhID"
+export const getHuyenByID = apiPort + "/api/Huyen/GetHuyenById"
 
 // Nhan vien
 export const getNhanVien = apiPort + "/api/NhanVien/GetNhanVien"
@@ -22,6 +23,7 @@ export const importKhachHang = apiPort + "/api/Import/importKhachHang"
 export const importNhaThau = apiPort + "/api/Import/importNhaThau"
 export const importNhaCungCap = apiPort + "/api/Import/importNhaCungCap"
 export const importTacGia = apiPort + "/api/Import/importNhaTacGia"
+export const importBaoCaoTiepXuc = apiPort + "/api/Import/importBaoCaoTiepXuc"
 
 //Tac gia
 export const getTacGia = apiPort + "/api/TacGia/GetTacGia"
@@ -43,6 +45,7 @@ export const deleteNhaCungCap = apiPort + "/api/NhaCungCap/DeleteNhaCungCap"
 
 //Can bo
 export const getCanBo = apiPort + "/api/NSCanBo/GetCanBo"
+export const getCanBoByCoQuanID = apiPort + "/api/NSCanBo/GetNSCanBoByCoQuan"
 export const addCanBo = apiPort + "/api/NSCanBo/AddCanBo"
 export const updateCanBo = apiPort + "/api/NSCanBo/UpdateCanBo"
 export const deleteCanBo = apiPort + "/api/NSCanBo/DeleteNSCanBo"
@@ -52,3 +55,9 @@ export const getCoQuan = apiPort + "/api/NSCoQuan/GetCoQuan"
 export const addCoQuan = apiPort + "/api/NSCoQuan/AddCoQuan"
 export const updateCoQuan = apiPort + "/api/NSCoQuan/UpdateCoQuan"
 export const deleteCoQuan = apiPort + "/api/NSCoQuan/DeleteCoQuan"
+
+//Quan ly tuong tac
+export const getQuanLyTuongTac = apiPort + "/api/QuanLyTuongTac/GetQuanLyTuongTac"
+export const addQuanLyTuongTac = apiPort + "/api/QuanLyTuongTac/AddQuanLyTuongTac"
+export const updateQuanLyTuongTac = apiPort + "/api/QuanLyTuongTac/UpdateQuanLyTuongTac"
+export const deleteQuanLyTuongTac = apiPort + "/api/QuanLyTuongTac/DeleteQuanLyTuongTac"

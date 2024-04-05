@@ -19,10 +19,10 @@ const BudgetPage = () => {
 
     useEffect(() => {
         getAllOrganization()
-    }, [])
+    }, [dataOrganization])
 
     const filterDataOrganization = useMemo(() => {
-        return dataOrganization.filter((item) => item.tenCoQuan.includes(contentSearch))
+        return dataOrganization.length>0 && dataOrganization?.filter((item) => item.tenCoQuan.includes(contentSearch)) 
     }, [contentSearch, dataOrganization])
 
     const handleDownload = () => {
@@ -36,7 +36,8 @@ const BudgetPage = () => {
     };
     const handleSaveFileImport = (file: File | null) => {
         console.log("file", file);
-        if(file) uploadFileCustomer(file)
+        setOpenUpload(false)
+        if (file) uploadFileCustomer(file)
 
     }
     return (
@@ -97,7 +98,7 @@ const BudgetPage = () => {
                             handlSaveFile={handleSaveFileImport}
                         />
                     </Box>
-                    <TableBudget rows={filterDataOrganization} isAdmin={true} />
+                    {filterDataOrganization && <TableBudget rows={filterDataOrganization} isAdmin={true} />}
                 </Box>
                 {/* } */}
             </Box>

@@ -16,7 +16,7 @@ import { IconChevronLeft } from '@tabler/icons-react';
 
 const OfficersPage = (id: any) => {
     const { getAllOrganization, addOrganization, dataOrganization } = useOrganization()
-    const { getAllOfficers, addOfficers, dataOfficers } = useOfficers()
+    const { getAllOfficers, addOfficers, dataOfficers,getOfficersByOrganizationID } = useOfficers()
     const [open, setOpen] = useState(false);
     const [contentSearch, setContentSearch] = useState<string>('')
     const theme = useTheme()
@@ -24,7 +24,7 @@ const OfficersPage = (id: any) => {
 
     useEffect(() => {
         getAllOrganization()
-        getAllOfficers()
+        getOfficersByOrganizationID(id.id)
     }, [])
 
     const filterDataOrganization = useMemo(() => {

@@ -27,10 +27,10 @@ const ContractorsPage = () => {
     }, [contentSearch, dataContractors])
 
     const handleDownload = () => {
-        const filePath = '/data/ThongTinKhachHang.xlsx';
+        const filePath = '/data/NhaThau.xlsx';
         const a = document.createElement('a');
         a.href = filePath;
-        a.download = 'ThongTinKhachHang.xlsx'; // Tên của tệp tin khi được tải xuống
+        a.download = 'NhaThau.xlsx'; // Tên của tệp tin khi được tải xuống
         document.body.appendChild(a); // Thêm liên kết vào body
         a.click(); // Kích hoạt sự kiện click trên liên kết ẩn
         document.body.removeChild(a); // Sau khi click, xóa liên kết ra khỏi body

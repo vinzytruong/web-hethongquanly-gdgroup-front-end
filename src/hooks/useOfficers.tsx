@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../store/hook';
 import axios from 'axios';
 import { ADD_OFFICERS, DELETE_OFFICERS, GET_ALL, UPDATE_OFFICERS } from '@/store/officers/action';
 import { Officers } from '@/interfaces/officers';
-import { addCanBo, deleteCanBo, getCanBo, updateCanBo } from '@/constant/api';
+import { addCanBo, deleteCanBo, getCanBo, getCanBoByCoQuanID, updateCanBo } from '@/constant/api';
 
 export default function useOfficers() {
     const dataOfficers = useAppSelector((state) => state.officers)
@@ -13,7 +13,7 @@ export default function useOfficers() {
     const getAllOfficers = async () => {
         try {
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = { Authorization: `Bearer ${accessToken}`};
+            const headers = { Authorization: `Bearer ${accessToken}` };
             const response = await axios.get(getCanBo, { headers });
             dispatch(GET_ALL({ officers: response.data }))
             setIsLoading(false)
@@ -23,6 +23,22 @@ export default function useOfficers() {
             setIsLoading(false)
         }
     }
+    const getOfficersByOrganizationID = async (id: any) => {
+        try {
+            const accessToken = window.localStorage.getItem('accessToken');
+            const headers = { Authorization: `Bearer ${accessToken}` };
+            const response = await axios.get(getCanBoByCoQuanID + `/${id}`, { headers });
+            console.log("getOfficersByOrganizationID",response.data);
+            
+            dispatch(GET_ALL({ officers: response.data }))
+            setIsLoading(false)
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
     const addOfficers = async (officers: Officers, coQuanID: number | undefined) => {
         try {
             const objOfficers = {
@@ -32,8 +48,8 @@ export default function useOfficers() {
                 nsCoQuan: null
             }
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {Authorization: `Bearer ${accessToken}`,'Content-Type': 'application/json'};
-            const response = await axios.post(addCanBo,objOfficers, { headers });
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+            const response = await axios.post(addCanBo, objOfficers, { headers });
             dispatch(ADD_OFFICERS({ officers: response.data }))
             setIsLoading(false)
         } catch (e) {
@@ -45,8 +61,8 @@ export default function useOfficers() {
     const updateOfficers = async (officers: Officers) => {
         try {
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = { Authorization: `Bearer ${accessToken}`,'Content-Type': 'application/json'};
-            const response = await axios.put(updateCanBo,officers, { headers });
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+            const response = await axios.put(updateCanBo, officers, { headers });
             dispatch(UPDATE_OFFICERS({ officers: response.data, id: response.data.coQuanID }))
             setIsLoading(false)
         } catch (e) {
@@ -69,6 +85,6 @@ export default function useOfficers() {
     }
 
     return {
-        isLoadding, dataOfficers, getAllOfficers, addOfficers, updateOfficers, deleteOfficers
+        isLoadding, dataOfficers, getAllOfficers, addOfficers, updateOfficers, deleteOfficers, getOfficersByOrganizationID
     };
 }

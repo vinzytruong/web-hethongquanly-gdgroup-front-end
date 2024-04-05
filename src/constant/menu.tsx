@@ -179,7 +179,7 @@ const dashboardAdmin = [
                         id: 'interactive_history',
                         title: "Quản lý tương tác",
                         type: 'item',
-                        url: '#',
+                        url: '/customer/interaction',
                         icon: <IconCheese />,
                         breadcrumbs: false
                     },

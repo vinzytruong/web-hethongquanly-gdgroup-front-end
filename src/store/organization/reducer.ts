@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { ADD_ORGANIZATION, DELETE_ORGANIZATION, GET_ALL, UPDATE_ORGANIZATION } from './action'
+import { ADD_ORGANIZATION, DELETE_ORGANIZATION, GET_ALL_ORGANIZATION, UPDATE_ORGANIZATION } from './action'
 import { Organization } from '@/interfaces/organization';
 
 export const initialState: Organization[] = []
 export default createReducer(initialState, (builder) =>
     builder
-        .addCase(GET_ALL, (state, action) => {
+        .addCase(GET_ALL_ORGANIZATION, (state, action) => {
             return action.payload.organization;
         })
         .addCase(ADD_ORGANIZATION, (state, action) => {
