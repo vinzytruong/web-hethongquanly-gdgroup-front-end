@@ -68,8 +68,8 @@ const TableBodyOfficers = (props: BodyDataProps) => {
                 >
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
                     <StyledTableCell align="left">{row.hoVaTen ? row.hoVaTen : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.canBoID ? row.canBoID : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.gioiTinh === 0 ? 'Nữ' : 'Nam'}</StyledTableCell>
+                    <StyledTableCell align="center">{row.canBoID ? row.canBoID : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="center">{row.gioiTinh === 0 ? 'Nữ' : 'Nam'}</StyledTableCell>
                     <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.soDienThoai ? row.soDienThoai : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.email ? row.email : 'Chưa có dữ liệu'}</StyledTableCell>

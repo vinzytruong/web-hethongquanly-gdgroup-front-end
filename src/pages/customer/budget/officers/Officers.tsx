@@ -1,16 +1,13 @@
 
 import OfficersDialog from "@/components/dialog/OfficersDialog"
-import OrganizationDialog from "@/components/dialog/OrganizationDialog"
 import { AdminLayout } from "@/components/layout"
 import SearchNoButtonSection from "@/components/search/SearchNoButton"
 import { StyledButton } from "@/components/styled-button"
-import TableBudget from "@/components/table/table-budget/TableBudget"
 import TableOfficers from "@/components/table/table-officers/TableoOfficers"
 import useOfficers from "@/hooks/useOfficers"
 import useOrganization from "@/hooks/useOrganization"
 import { Box, Button, CircularProgress, Grid, IconButton, Typography, useTheme } from "@mui/material"
 import { useEffect, useMemo, useState } from "react"
-import { IconArrowNarrowLeft } from '@tabler/icons-react';
 import { useRouter } from "next/router"
 import { IconChevronLeft } from '@tabler/icons-react';
 import useProvince from "@/hooks/useProvince"
@@ -28,8 +25,12 @@ const OfficersPage = (id: any) => {
 
     useEffect(() => {
         getAllOrganization()
+        
+    }, [])
+    useEffect(() => {
+        
         getOfficersByOrganizationID(id.id)
-    }, [getOfficersByOrganizationID])
+    }, [getOfficersByOrganizationID, id.id])
 
     useEffect(() => {
         getAllProvince()
@@ -53,9 +54,7 @@ const OfficersPage = (id: any) => {
             <Box padding="24px">
                 <Box display='flex' alignItems='center' justifyContent='flex-start'>
                     <IconButton color="primary" onClick={() => router.back()}>
-
                         <IconChevronLeft stroke={3} />
-
                     </IconButton>
                     <Typography variant="h3" color={theme.palette.primary.main} py={2}>
                         Quản lý cán bộ
@@ -63,7 +62,6 @@ const OfficersPage = (id: any) => {
                 </Box>
                 <Grid container spacing={3}>
                     <Grid item md={12} lg={12} xl={3} >
-
                         <Box
                             display='flex'
                             flexDirection='column'
@@ -79,8 +77,7 @@ const OfficersPage = (id: any) => {
                                 display='flex'
                                 justifyContent='space-between'
                                 alignItems='center'
-                                width='100%'
-                            >
+                                width='100%'>
                                 <Typography variant="h5" color={theme.palette.primary.main}>Thông tin cơ quan</Typography>
                             </Box>
 
@@ -151,9 +148,7 @@ const OfficersPage = (id: any) => {
                                 <Typography pb={3} variant="h5" color={theme.palette.primary.main}>Thông tin cán bộ</Typography>
                             </Box>
                             <Box display='flex' justifyContent='space-between' alignItems='center' width='100%'>
-
                                 <SearchNoButtonSection handleContentSearch={setContentSearch} contentSearch={contentSearch} />
-
                                 <StyledButton
                                     onClick={() => setOpen(true)}
                                     variant='contained'
@@ -166,7 +161,6 @@ const OfficersPage = (id: any) => {
                             <TableOfficers rows={filterDataOrganization} isAdmin={true} />
                         </Box>
                     </Grid>
-
                 </Grid>
             </Box>
         </AdminLayout>

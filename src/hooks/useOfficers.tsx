@@ -9,6 +9,8 @@ export default function useOfficers() {
     const dataOfficers = useAppSelector((state) => state.officers)
     const [isLoadding, setIsLoading] = useState(true);
     const dispatch = useAppDispatch();
+    
+
 
     const getAllOfficers = async () => {
         try {
@@ -23,13 +25,14 @@ export default function useOfficers() {
             setIsLoading(false)
         }
     }
+
     const getOfficersByOrganizationID = async (id: any) => {
         try {
             const accessToken = window.localStorage.getItem('accessToken');
             const headers = { Authorization: `Bearer ${accessToken}` };
             const response = await axios.get(getCanBoByCoQuanID + `/${id}`, { headers });
-            console.log("getOfficersByOrganizationID",response.data);
-            
+            console.log("getOfficersByOrganizationID", response.data);
+
             dispatch(GET_ALL({ officers: response.data }))
             setIsLoading(false)
         } catch (e) {
