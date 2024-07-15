@@ -12,17 +12,17 @@ export default createReducer(initialState, (builder) =>
             state.push(action.payload.contractors)
         })
         .addCase(UPDATE_CONTRACTORS, (state, action) => {
-            state = state.map(obj => {
-                if (obj.nhaThauID === action.payload.id) {
-                  obj.tenCongTy = action.payload.contractors.tenCongTy;
-                  obj.diaChi=action.payload.contractors.diaChi;
-                  obj.maSoThue=action.payload.contractors.maSoThue;
-                  obj.nguoiDaiDien=action.payload.contractors.nguoiDaiDien;
-                  obj.tinhID=action.payload.contractors.tinhID;
-                  obj.thongTinThem=action.payload.contractors.thongTinThem;
+            console.log("updatedItems_action",action.payload.contractors);
+            const updatedItems = state.map(item => {
+                if (item.nhaThauID === action.payload.id) {
+                    return { ...item, ...action.payload.contractors };
                 }
-                return obj;
-              });
+                return item;
+            });
+            
+
+            return updatedItems
+
         })
         .addCase(DELETE_CONTRACTORS, (state, action) => {
             return state.filter(item => item.nhaThauID !== action.payload.id)

@@ -15,6 +15,9 @@ interface MainStyleProps {
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }: MainStyleProps) => ({
     width: '100%',
+    backgroundColor:theme.palette.background.default,
+    minHeight:'100vh',
+    borderRadius:8,
     ...(!open && {
       width: '100%',
       borderBottomLeftRadius: 0,
@@ -23,20 +26,16 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.shorter
       }),
+      
       [theme.breakpoints.up('md')]: {
-        marginLeft: -(drawerWidth - 20),
+        marginLeft: -(drawerWidth),
         width: '100%',
       },
       [theme.breakpoints.down('md')]: {
-        marginLeft: '20px',
         width: '100%',
-        padding: '16px'
       },
       [theme.breakpoints.down('sm')]: {
-        marginLeft: '10px',
         width: '100%',
-        padding: '16px',
-        marginRight: '10px'
       }
     }),
     ...(open && {
@@ -49,10 +48,10 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
       borderBottomRightRadius: 0,
       width: `calc(100% - ${drawerWidth}px)`,
       [theme.breakpoints.down('md')]: {
-        marginLeft: '20px'
+        marginLeft: '0px'
       },
       [theme.breakpoints.down('sm')]: {
-        marginLeft: '10px'
+        marginLeft: '0px'
       }
     })
   })
@@ -92,7 +91,7 @@ const AdminLayout: FC<Props> = ({ children }) => {
         color="inherit"
         elevation={0}
         sx={{
-          bgcolor: theme.palette.background.default,
+          bgcolor: theme.palette.background.paper,
           transition: drawerOpen ? theme.transitions.create('width') : 'none'
         }}
       >

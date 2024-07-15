@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Collapse, Icon, List, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { Box, Collapse, Icon, List, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import NavItem from '../nav-item';
 import { NavGroupProps } from '../nav-group';
 import { IconChevronDown, IconChevronUp, IconHome } from '@tabler/icons-react';
@@ -75,31 +74,59 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
         <>
             <ListItemButton
                 sx={{
-
-                    mb: 0.5,
-                    alignItems: 'flex-start',
+                    display: 'flex',
+                    // mb: 0.5,
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                     backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
                     py: level > 1 ? 1 : 1.25,
-                    pl: `${level * 18}px`
+                    pl: `${level * 18}px`,
+                    borderRadius:"8px"
                 }}
                 selected={selected === menu.id}
                 onClick={handleClick}
             >
-
-                <ListItemText
-                    primary={
-                        <Typography variant={selected === menu.id ? 'h5' : 'body1'} color="inherit" sx={{ my: 'auto' }}>
-                            {t(menu.title!)}
-                        </Typography>
-                    }
-                    secondary={
-                        menu.caption && (
-                            <Typography variant="caption" display="block" gutterBottom>
-                                {t(menu.caption.toString())}
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                }}>
+                    <ListItemIcon
+                        sx={{
+                            fontSize: 12, minWidth: '38px',
+                            color: 
+                            selected === menu.id ? 
+                            (theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main) 
+                            : 
+                            theme.palette.text.primary
+                        }}>
+                        {menu.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                        primary={
+                            <Typography
+                                variant={'body1'}
+                                color={
+                                    selected === menu.id ? 
+                                    (theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main) 
+                                    :
+                                    theme.palette.text.primary
+                                }
+                                sx={{ my: 'auto' }}
+                            >
+                                {t(menu.title!)}
                             </Typography>
-                        )
-                    }
-                />
+                        }
+                        secondary={
+                            menu.caption && (
+                                <Typography variant="caption" display="block" gutterBottom>
+                                    {t(menu.caption.toString())}
+                                </Typography>
+                            )
+                        }
+                    />
+                </Box>
+
                 {open ? (
                     <IconChevronUp stroke={1.5} size="16px" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
                 ) : (
@@ -113,16 +140,16 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
                         disablePadding
                         sx={{
                             position: 'relative',
-                            '&:after': {
-                                content: "''",
-                                position: 'absolute',
-                                left: '32px',
-                                top: 0,
-                                height: '100%',
-                                width: '1px',
-                                opacity: theme.palette.mode === 'dark' ? 0.2 : 1,
-                                background: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.light
-                            }
+                            // '&:after': {
+                            //     content: "''",
+                            //     position: 'absolute',
+                            //     left: '32px',
+                            //     top: 0,
+                            //     height: '100%',
+                            //     width: '1px',
+                            //     opacity: theme.palette.mode === 'dark' ? 0.2 : 1,
+                            //     background: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.light
+                            // }
                         }}
                     >
                         {menus}

@@ -70,8 +70,11 @@ const TotalProductCard = ({isLoading,data}:any) => {
                     <Avatar
                       variant="rounded"
                       sx={{
+                        [theme.breakpoints.down('sm')]: {
+                          display: 'none'
+                        },
                         backgroundColor: 'rgb(54, 65, 82)',
-                        mt: 1
+                        mt: 0
                       }}
                     >
                       <GroupOutlinedIcon/>
@@ -83,12 +86,12 @@ const TotalProductCard = ({isLoading,data}:any) => {
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '2.5rem', fontWeight: 500, mr: 1, mt: 0.5, mb: 0.5 }}>{data.length}</Typography>
+                    <Typography sx={{ fontSize: '2.25rem', fontWeight: 500 }}>{data.length}</Typography>
                   </Grid>
                   
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
+              <Grid item>
                 <Typography
                   sx={{
                     fontSize: '1rem',

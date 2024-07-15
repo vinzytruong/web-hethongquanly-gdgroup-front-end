@@ -94,6 +94,7 @@ const NotificationSection = () => {
                     <Avatar
                         variant="rounded"
                         sx={{
+                            borderRadius: '8px',
                             border: '1px solid',
                             transition: 'all .2s ease-in-out',
                             borderColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,

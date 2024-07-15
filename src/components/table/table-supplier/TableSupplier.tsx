@@ -90,13 +90,13 @@ const headCells: readonly HeadCell[] = [
         disablePadding: false,
         label: 'Địa chỉ',
     },
-    // {
-    //     id: 'more',
-    //     numeric: false,
-    //     disablePadding: false,
-    //     label: 'Thông tin thêm',
-    // },
-    
+    {
+        id: 'createdPerson',
+        numeric: false,
+        disablePadding: false,
+        label: 'Người nhập',
+    },
+
 ];
 const TableSupplier = ({ rows, isAdmin }: Props) => {
     const [order, setOrder] = React.useState<Order>('asc');
@@ -115,46 +115,57 @@ const TableSupplier = ({ rows, isAdmin }: Props) => {
             ),
         [order, orderBy, page, rows, rowsPerPage],
     );
-
+    React.useEffect(() => {
+        setPage(0);
+    }, [rows]);
     return (
-        <Box sx={{ overflow: "auto", py: 3, width: '100%' }}>
-            <Box sx={{ borderRadius: '6px', width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
-                <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
-                    <Table
-                        sx={{ minWidth: 750, border: 0 }}
-                        aria-labelledby="tableTitle"
-                        size='medium'
-                    >
-                        <TableHeader
-                            order={order}
-                            orderBy={orderBy}
-                            handleOrder={setOrder}
-                            handleOrderBy={setOrderBy}
-                            rowCount={rows?.length}
-                            headerCells={headCells}
-                            action={isAdmin}
-                        />
-                        <TableBodySupplier
-                            data={visibleRows}
-                            handleView={setViewId}
-                            handleEdit={setEditId}
-                            page={page}
-                            rowsPerPage={rowsPerPage}
-                            viewLink=''
-                            editLink=''
-                            isAdmin={isAdmin}
-                        />
-                    </Table>
-                </TableContainer>
-                <TableCustomizePagination
-                    handlePage={setPage}
-                    handleRowsPerPage={setRowsPerPage}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    rows={rows}
-                />
+        <Box
+            display='flex'
+            width='100%'
+            bgcolor={theme.palette.background.paper}
+            px={3}
+            py={3}
+        >
+            <Box sx={{ overflow: "auto", width: '100%' }}>
+                <Box sx={{ borderRadius: '6px', width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
+                    <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
+                        <Table
+                            sx={{ minWidth: 750, border: 0 }}
+                            aria-labelledby="tableTitle"
+                            size='medium'
+                        >
+                            <TableHeader
+                                order={order}
+                                orderBy={orderBy}
+                                handleOrder={setOrder}
+                                handleOrderBy={setOrderBy}
+                                rowCount={rows?.length}
+                                headerCells={headCells}
+                                action={isAdmin}
+                            />
+                            <TableBodySupplier
+                                data={visibleRows}
+                                handleView={setViewId}
+                                handleEdit={setEditId}
+                                page={page}
+                                rowsPerPage={rowsPerPage}
+                                viewLink=''
+                                editLink=''
+                                isAdmin={isAdmin}
+                            />
+                        </Table>
+                    </TableContainer>
+                    <TableCustomizePagination
+                        handlePage={setPage}
+                        handleRowsPerPage={setRowsPerPage}
+                        page={page}
+                        rowsPerPage={rowsPerPage}
+                        rows={rows}
+                    />
+                </Box>
             </Box>
         </Box>
+
     );
 }
 export default TableSupplier

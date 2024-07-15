@@ -1,27 +1,21 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Alert, Dialog, DialogActions, DialogContent, DialogTitle, FilledInput, FormControlLabel, Grid, IconButton, Input, InputBase, LinearProgress, MenuItem, OutlinedInput, Radio, RadioGroup, Rating, Select, Snackbar, Step, StepLabel, Stepper, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { PropsDialog } from '@/interfaces/dialog';
 import { LoadingButton } from '@mui/lab';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import useOrganization from '@/hooks/useOrganization';
+import { useEffect, useState } from 'react';
 import { Officers } from '@/interfaces/officers';
 import useOfficers from '@/hooks/useOfficers';
+import { toast } from 'react-toastify';
 
 export default function OfficersDialog(props: PropsDialog) {
-    const { title, defaulValue, isInsert, handleOpen, open, isUpdate, id } = props
     const theme = useTheme()
+    const { title, defaulValue, isInsert, handleOpen, open, isUpdate, id, idParent } = props 
+    const { addOfficers, updateOfficers, getOfficersByOrganizationID } = useOfficers()
     const [formData, setFormData] = useState<Officers>();
-    const { addOrganization, updateOrganization, getAllOrganization, dataOrganization } = useOrganization()
-    const { addOfficers, updateOfficers, getAllOfficers, dataOfficers } = useOfficers()
     const [loading, setLoaing] = useState<boolean>(false)
-
-    useEffect(() => {
-        getAllOrganization()
-    }, [])
 
     useEffect(() => {
         if (defaulValue) setFormData(defaulValue)
@@ -29,33 +23,47 @@ export default function OfficersDialog(props: PropsDialog) {
 
     const handleChange = (e: any) => {
         if (e.target) {
-            console.log(e.target.name);
             setFormData((prevState: any) => ({
                 ...prevState,
-                [e.target.name]: e.target.value
+                [e.target.name]: e.target.value,
+                "coQuanID": id
             }));
         }
     };
+
     const handleAdd = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        console.log("add",formData);
-        if (formData) addOfficers(formData,id)
-        setLoaing(false);
-        handleOpen(false)
+        try {
+            if (formData) addOfficers(formData, id)
+            toast.success('Thêm cán bộ thành công')
+            setLoaing(false);
+            handleOpen(false)
+            setFormData(undefined)
+        }
+        catch (err: any) {
+            console.error(err);
+            setLoaing(false);
+            toast.error('Thêm cán bộ thất bại')
+        }
     }
 
-    const handleUpdate = (e: any) => {
+    const handleUpdate = async (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        if (formData) updateOfficers(formData)
+        if (formData) {
+            let status = await updateOfficers(formData)
+            if (status) toast.success(`Cập nhật cán bộ ${formData?.hoVaTen} thành công`)
+            else toast.error(`Cập nhật cán bộ ${formData?.hoVaTen} thất bại`)
+        }
+
+
         setLoaing(false);
         handleOpen(false)
     }
 
     return (
         <>
-
             <Dialog
                 maxWidth='md'
                 fullWidth
@@ -80,11 +88,9 @@ export default function OfficersDialog(props: PropsDialog) {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ p: 3 }} >
-
-
                     <Box display='flex' flexDirection='column' justifyContent='space-between' alignItems='center' gap='12px'>
                         <Box style={{ width: '100%' }}>
-                            <Typography>Họ và tên</Typography>
+                            <Typography>Họ và tên (*)</Typography>
                             <OutlinedInput
                                 name='hoVaTen'
                                 value={formData?.hoVaTen}
@@ -92,10 +98,11 @@ export default function OfficersDialog(props: PropsDialog) {
                                 style={{ width: '100%' }}
                             />
                         </Box>
+
                         <Grid container spacing={3}>
                             <Grid item md={8}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Email</Typography>
+                                    <Typography>Email (*)</Typography>
                                     <OutlinedInput
                                         name='email'
                                         style={{ width: '100%' }}
@@ -106,7 +113,7 @@ export default function OfficersDialog(props: PropsDialog) {
                             </Grid>
                             <Grid item md={4}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Số điện thoại</Typography>
+                                    <Typography>Số điện thoại (*)</Typography>
                                     <OutlinedInput
                                         name='soDienThoai'
                                         style={{ width: '100%' }}
@@ -116,10 +123,8 @@ export default function OfficersDialog(props: PropsDialog) {
                                 </Box>
                             </Grid>
                         </Grid>
-
-
                         <Box style={{ width: '100%' }}>
-                            <Typography>Chức vụ</Typography>
+                            <Typography>Chức vụ (*)</Typography>
                             <OutlinedInput
                                 name='chucVu'
                                 value={formData?.chucVu}
@@ -128,7 +133,7 @@ export default function OfficersDialog(props: PropsDialog) {
                             />
                         </Box>
                         <Box style={{ width: '100%' }}>
-                            <Typography>Giới tính</Typography>
+                            <Typography>Giới tính (*)</Typography>
                             <RadioGroup
                                 name='gioiTinh'
                                 defaultValue={defaulValue?.gioiTinh}

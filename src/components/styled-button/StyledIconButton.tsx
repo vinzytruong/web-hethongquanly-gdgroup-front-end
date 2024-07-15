@@ -10,6 +10,8 @@ interface BaseButtonProps extends Pick<ButtonProps, 'onClick' | 'type' | 'startI
   color?: 'default' | 'primary' | 'secondary' | 'dark' | 'light'
   size?: 'small' | 'medium' | 'large'
   disableHoverEffect?: boolean
+  disabled?: boolean
+  sx?: object
 }
 interface StyledButtonRootProps extends BaseButtonProps {
   theme?: Theme
@@ -53,31 +55,31 @@ const StyledButtonRoot = styled('button', {
   // sizes and variants
   ...(size === 'small' &&
     variant === 'outlined' && {
-      padding: '4px 10px',
-    }),
+    padding: '4px 10px',
+  }),
   ...(size === 'medium' &&
     variant === 'outlined' && {
-      padding: '6px 14px',
-    }),
+    padding: '6px 14px',
+  }),
   ...(size === 'large' &&
     variant === 'outlined' && {
-      padding: '10px 18px',
-      fontSize: 15,
-    }),
+    padding: '10px 18px',
+    fontSize: 15,
+  }),
 
   ...(size === 'small' &&
     variant !== 'outlined' && {
-      padding: '6px 12px',
-    }),
+    padding: '6px 12px',
+  }),
   ...(size === 'medium' &&
     variant !== 'outlined' && {
-      padding: '8px 16px',
-    }),
+    padding: '8px 16px',
+  }),
   ...(size === 'large' &&
     variant !== 'outlined' && {
-      padding: '12px 20px',
-      fontSize: 15,
-    }),
+    padding: '12px 20px',
+    fontSize: 15,
+  }),
 
   // variants
   ...(variant !== 'contained' && {
@@ -88,67 +90,67 @@ const StyledButtonRoot = styled('button', {
   // colors & varians
   ...(color === 'default' &&
     variant === 'contained' && {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'primary' &&
     variant === 'contained' && {
-      backgroundColor: 'green',
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: 'green',
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'secondary' &&
     variant === 'contained' && {
-      backgroundColor:'red',
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: 'red',
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'dark' &&
     variant === 'contained' && {
-      backgroundColor: '#313d56',
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: '#313d56',
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'light' &&
     variant === 'contained' && {
-      backgroundColor: theme.palette.primary.contrastText,
-      color: theme.palette.text.primary,
-    }),
+    backgroundColor: theme.palette.primary.contrastText,
+    color: theme.palette.text.primary,
+  }),
 
   ...(color === 'primary' &&
     variant === 'outlined' && {
-      border: `2px solid ${theme.palette.primary.main}`,
-      color: theme.palette.primary.main,
-    }),
+    border: `2px solid ${theme.palette.primary.main}`,
+    color: theme.palette.primary.main,
+  }),
   ...(color === 'secondary' &&
     variant === 'outlined' && {
-      border: `2px solid ${theme.palette.secondary.main}`,
-      color: theme.palette.secondary.main,
-    }),
+    border: `2px solid ${theme.palette.secondary.main}`,
+    color: theme.palette.secondary.main,
+  }),
   ...(color === 'dark' &&
     variant === 'outlined' && {
-      border: `2px solid #313d56`,
-      color: '#313d56',
-    }),
+    border: `2px solid #313d56`,
+    color: '#313d56',
+  }),
   ...(color === 'light' &&
     variant === 'outlined' && {
-      border: `2px solid #313d56`,
-      color: `#313d56`,
-    }),
+    border: `2px solid #313d56`,
+    color: `#313d56`,
+  }),
 
   ...(color === 'primary' &&
     variant === 'text' && {
-      color: theme.palette.primary.main,
-    }),
+    color: theme.palette.primary.main,
+  }),
   ...(color === 'secondary' &&
     variant === 'text' && {
-      color: theme.palette.secondary.main,
-    }),
+    color: theme.palette.secondary.main,
+  }),
   ...(color === 'dark' &&
     variant === 'text' && {
-      color: '#313d56',
-    }),
+    color: '#313d56',
+  }),
   ...(color === 'light' &&
     variant === 'text' && {
-      color: theme.palette.primary.contrastText,
-    }),
+    color: theme.palette.primary.contrastText,
+  }),
 }))
 
 interface Props extends BaseButtonProps {

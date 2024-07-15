@@ -1,10 +1,12 @@
 
-import { authDangNhap } from '@/constant/api';
+import { authDangKy, authDangNhap } from '@/constant/api';
 import { AuthContextType } from '@/interfaces/auth';
 import { LOGIN, LOGOUT } from '@/store/auth/action';
 import { useAppDispatch } from '@/store/hook';
+import axiosCustomize from '@/utils/axios';
 import { setSession } from '@/utils/jwt';
 import axios from 'axios';
+// import axios from 'axios';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -13,8 +15,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 export const AuthContext = createContext<AuthContextType>({
     login: async (username: string, password: string) => { },
     logout: () => { },
-    isAuthenticated: () => false,
-    apiCall: async (url: any, method?: string, data?: null) => { },
+    isAuthenticated: () => true,
+    register: async () => { },
 });
 
 
@@ -22,47 +24,43 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: any) => {
     const dispatch = useAppDispatch()
-    const [accessToken, setAccessToken] = useState(null);
+    const [accessToken, setAccessToken] = useState<any>();
     const router = useRouter();
 
     useEffect(() => {
         const init = async () => {
             try {
-                const accessToken = window.localStorage.getItem('accessToken');
+                const accessTokens = window.localStorage.getItem('accessToken');
+                setAccessToken(accessTokens)
                 const account: any = localStorage.getItem('account');
-
-                if (accessToken) {
-                    setSession(accessToken, account);
+                if (accessTokens) {
+                    setSession(accessTokens, account);
                     dispatch(LOGIN({
                         isLoggedIn: true,
                         account: {
                             username: account.username,
-                            role: 'admin',
+                            role: 'NhanVien',
                             userId: account.userID
                         }
                     }));
                     // accountObject.role === 'admin' ? router.push('/admin') : router.push('/customer')
                 }
-                else {
-                    logout();
-                }
+                else if (router.asPath !== '/auth/login') logout();
             } catch (err) {
                 console.error(err);
-                logout();
             }
         };
         init();
-    }, []);
+    }, [dispatch, accessToken]);
 
     const login = async (username: string, password: string) => {
-        const dataJson = JSON.stringify({ "tenDangNhap": username, "matKhau": password})
+        const dataJson = JSON.stringify({ "tenDangNhap": username, "matKhau": password })
         try {
-            const response = await axios.post(authDangNhap, dataJson, { headers: { 'Content-Type': 'application/json' } });
+            const response = await axios.post(authDangNhap, dataJson, { headers: { 'Content-Type': 'application/json'} });
             const accessToken = response.data.token;
             const userID = response.data.userID
             const username = response.data.hoVaTen
-            // const avartar = response.data.avartar
-            setSession(accessToken, JSON.stringify({ userID: userID, username:username }));
+            setSession(accessToken, JSON.stringify({ userID: userID, username: username }));
             dispatch(LOGIN({
                 isLoggedIn: true,
                 account: {
@@ -72,37 +70,32 @@ export const AuthProvider = ({ children }: any) => {
                 }
             }));
             router.push('/home')
-
+            if(response.status===200){
+                return true
+            }
         } catch (error) {
             console.error('Đăng nhập thất bại:', error);
-            throw error;
+            return false;
         }
     };
 
     const logout = () => {
-        setSession(null,null);
+        setSession(null, null);
         dispatch(LOGOUT({
             isLoggedIn: false,
         }));
         localStorage.removeItem('accessToken');
-        router.push('/auth')
+        router.push('/auth/login')
     };
 
     const isAuthenticated = () => {
-        return !!accessToken;
+        return !accessToken;
     };
 
-    const apiCall = async (url: any, method = 'get', data = null) => {
+    const register = async (data: any) => {
+        const dataJson = JSON.stringify(data)
         try {
-            const config = {
-                method,
-                url,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                data,
-            };
-            const response = await axios(config);
+            const response = await axios.post( authDangKy, dataJson, { headers: { 'Content-Type': 'application/json' } });
             return response.data;
         } catch (error) {
             console.error('Lỗi khi gọi API:', error);
@@ -115,8 +108,8 @@ export const AuthProvider = ({ children }: any) => {
             login,
             logout,
             isAuthenticated,
-            apiCall,
+            register,
         }}>
-        {children}
+        { children}
     </AuthContext.Provider>;
 };

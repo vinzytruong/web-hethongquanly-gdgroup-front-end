@@ -12,21 +12,13 @@ export default createReducer(initialState, (builder) =>
             state.push(action.payload.author)
         })
         .addCase(UPDATE_AUTHOR, (state, action) => {
-            state = state.map(obj => {
-                if (obj.tacGiaID === action.payload.id) {
-                  obj.active = action.payload.author.active;
-                  obj.cccd=action.payload.author.cccd;
-                  obj.chucVuTacGia=action.payload.author.chucVuTacGia;
-                  obj.donViCongTac=action.payload.author.donViCongTac;
-                  obj.email=action.payload.author.email;
-                  obj.gioiTinh=action.payload.author.gioiTinh;
-                  obj.monChuyenNghanh=action.payload.author.monChuyenNghanh;
-                  obj.ngaySinh=action.payload.author.ngaySinh;
-                  obj.soDienThoai=action.payload.author.soDienThoai;
-                  obj.tenTacGia=action.payload.author.tenTacGia;
+            const updatedItems = state.map(item => {
+                if (item.tacGiaID === action.payload.id) {
+                    return { ...item, ...action.payload.author   };
                 }
-                return obj;
-              });
+                return item;
+            });
+            return updatedItems
         })
         .addCase(DELETE_AUTHOR, (state, action) => {
             return state.filter(item => item.tacGiaID !== action.payload.id)

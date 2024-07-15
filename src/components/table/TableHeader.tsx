@@ -15,7 +15,7 @@ interface EnhancedTableProps {
     orderBy: string;
     rowCount: number;
     headerCells: any;
-    action:boolean
+    action: boolean
 }
 
 const TableHeader = (props: EnhancedTableProps) => {
@@ -25,29 +25,32 @@ const TableHeader = (props: EnhancedTableProps) => {
         handleOrder(isAsc ? 'desc' : 'asc');
         handleOrderBy(property);
     };
-
     return (
         <TableHead>
             <TableRow>
                 <StyledTableCell>TT</StyledTableCell>
-                {headerCells.map((headCell: any) => (
-                    <StyledTableCell
-                        color='common.white'
-                        key={headCell.id}
-                        align={headCell.numeric ? 'center':'left'}
-                        padding={headCell.disablePadding ? 'none' : 'normal'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
-                            onClick={(e) => handleRequestSort(e, headCell.id)}
+                {headerCells?.map((headCell: any) => {
+                    const displayValue = headCell.display === false ? 'none' : 'table-cell';
+                    return (
+                        <StyledTableCell
+                            color='common.white'
+                            key={headCell.id}
+                            align={headCell.numeric ? 'center' : 'left'}
+                            padding={headCell.disablePadding ? 'none' : 'normal'}
+                            sortDirection={orderBy === headCell.id ? order : false}
+                            sx={{ display: { xs: displayValue, md: displayValue, lg: displayValue, xl: "table-cell" } }}
                         >
-                            <Typography fontWeight='bold'>{headCell.label}</Typography>
-                        </TableSortLabel>
-                    </StyledTableCell>
-                ))}
-                  {action && <StyledTableCell align='center'><Typography fontWeight='bold'>Hành động</Typography></StyledTableCell>}
+                            <TableSortLabel
+                                active={orderBy === headCell.id}
+                                direction={orderBy === headCell.id ? order : 'asc'}
+                                onClick={(e) => handleRequestSort(e, headCell.id)}
+                            >
+                                <Typography fontWeight='bold'>{headCell.label}</Typography>
+                            </TableSortLabel>
+                        </StyledTableCell>
+                    );
+                })}
+                {action && <StyledTableCell align='center'><Typography fontWeight='bold'>Hành động</Typography></StyledTableCell>}
             </TableRow>
         </TableHead>
     );
@@ -59,12 +62,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
         borderBottom: `1px solid ${theme.palette.text.secondary}`,
-        paddingBottom:'24px',
+        paddingBottom: '24px',
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
-        paddingTop:'24px',
-        paddingBottom:'24px'
+        paddingTop: '24px',
+        paddingBottom: '24px'
     },
 }));
 

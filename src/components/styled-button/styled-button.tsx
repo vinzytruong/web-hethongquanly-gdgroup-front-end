@@ -8,8 +8,10 @@ import { fontFamily } from '@/config/theme/typography'
 interface BaseButtonProps extends Pick<ButtonProps, 'onClick' | 'type' | 'startIcon' | 'endIcon'> {
   variant?: 'contained' | 'outlined' | 'text'
   color?: 'default' | 'primary' | 'secondary' | 'dark' | 'light'
-  size?: 'small' | 'medium' | 'large'|'extra'
-  disableHoverEffect?: boolean
+  size?: 'small' | 'medium' | 'large' | 'extra'
+  disableHoverEffect?: boolean,
+  disabled?: boolean,
+  fullwidth?:boolean,
 }
 interface StyledButtonRootProps extends BaseButtonProps {
   theme?: Theme
@@ -18,29 +20,34 @@ interface StyledButtonRootProps extends BaseButtonProps {
 const StyledButtonRoot = styled('button', {
   shouldForwardProp: (prop) =>
     prop !== 'variant' && prop !== 'color' && prop !== 'size' && prop !== 'disableHoverEffect',
-})<StyledButtonRootProps>(({ theme, color, variant, size, disableHoverEffect }) => ({
+})<StyledButtonRootProps>(({ theme, color, variant, size, disableHoverEffect, disabled,fullwidth }) => ({
   fontFamily,
-  cursor: 'pointer',
-  minWidth: 40,
+  minWidth: fullwidth? "100%" :140,
+  
   fontSize: 14,
   fontWeight: 500,
   // lineHeight: 1.5,
   // letterSpacing: 1,
-  borderRadius: Number(theme.shape.borderRadius) * 1,
+  cursor: disabled ? 'not-allowed' : 'pointer',
+  borderRadius: '8px',
 
   display: 'inline-flex',
   alignItems: 'center',
+  justifyContent:'center',
   userSelect: 'none',
   transform: 'unset',
   position: 'relative',
   overflow: 'hidden',
   border: 'none',
-  whiteSpace: 'nowrap',
+  whiteSpace: 'wrap',
   WebkitTapHighlightColor: 'transparent',
   verticalAlign: 'middle',
   outline: 'none !important',
   transition: theme.transitions.create(['transform']),
 
+  [theme.breakpoints.down('lg')]: {
+    width:'100%',
+  },
   // hover
   '&:hover': {
     ...(!disableHoverEffect && {
@@ -55,108 +62,108 @@ const StyledButtonRoot = styled('button', {
   // sizes and variants
   ...(size === 'small' &&
     variant === 'outlined' && {
-      padding: '4px 10px',
-    }),
+    padding: '4px 10px',
+  }),
   ...(size === 'medium' &&
     variant === 'outlined' && {
-      padding: '6px 14px',
-    }),
+    padding: '6px 14px',
+  }),
   ...(size === 'large' &&
     variant === 'outlined' && {
-      padding: '10px 18px',
-      fontSize: 15,
-    }),
+    padding: '10px 18px',
+    fontSize: 15,
+  }),
 
   ...(size === 'small' &&
     variant !== 'outlined' && {
-      padding: '6px 12px',
-    }),
+    padding: '6px 12px',
+  }),
   ...(size === 'medium' &&
     variant !== 'outlined' && {
-      padding: '8px 16px',
-    }),
+    padding: '8px 16px',
+  }),
   ...(size === 'large' &&
     variant !== 'outlined' && {
-      padding: '12px 20px',
-      fontSize: 15,
-    }),
-    ...(size === 'extra' &&
+    padding: '11px 20px',
+    fontSize: 15,
+  }),
+  ...(size === 'extra' &&
     variant !== 'outlined' && {
-      padding: '16px 28px',
-      fontSize: 16,
-    }),
+    padding: '16px 28px',
+    fontSize: 16,
+  }),
 
   // variants
   ...(variant !== 'contained' && {
-    backgroundColor: 'transparent',
+    backgroundColor: disabled ? "gray" : 'transparent',
     boxShadow: 'none !important',
   }),
 
   // colors & varians
   ...(color === 'default' &&
     variant === 'contained' && {
-      backgroundColor: theme.palette.text.primary,
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: disabled ? "gray" : theme.palette.text.primary,
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'primary' &&
     variant === 'contained' && {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText,
-      boxShadow: '0 6px 22px 0 rgb(18 124 113 / 12%)',
-    }),
+    backgroundColor: disabled ? "gray" : theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    boxShadow: '0 6px 22px 0 rgb(18 124 113 / 12%)',
+  }),
   ...(color === 'secondary' &&
     variant === 'contained' && {
-      backgroundColor: theme.palette.secondary.main,
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: disabled ? "gray" : theme.palette.secondary.main,
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'dark' &&
     variant === 'contained' && {
-      backgroundColor: '#313d56',
-      color: theme.palette.primary.contrastText,
-    }),
+    backgroundColor: disabled ? "gray" : '#313d56',
+    color: theme.palette.primary.contrastText,
+  }),
   ...(color === 'light' &&
     variant === 'contained' && {
-      backgroundColor: theme.palette.primary.contrastText,
-      color: theme.palette.text.primary,
-    }),
+    backgroundColor: disabled ? "gray" : theme.palette.primary.contrastText,
+    color: theme.palette.text.primary,
+  }),
 
   ...(color === 'primary' &&
     variant === 'outlined' && {
-      border: `2px solid ${theme.palette.primary.main}`,
-      color: theme.palette.primary.main,
-    }),
+    border: `2px solid ${theme.palette.primary.main}`,
+    color: theme.palette.primary.main,
+  }),
   ...(color === 'secondary' &&
     variant === 'outlined' && {
-      border: `2px solid ${theme.palette.secondary.main}`,
-      color: theme.palette.secondary.main,
-    }),
+    border: `2px solid ${theme.palette.secondary.main}`,
+    color: theme.palette.secondary.main,
+  }),
   ...(color === 'dark' &&
     variant === 'outlined' && {
-      border: `2px solid #313d56`,
-      color: '#313d56',
-    }),
+    border: `2px solid #313d56`,
+    color: '#313d56',
+  }),
   ...(color === 'light' &&
     variant === 'outlined' && {
-      border: `2px solid #313d56`,
-      color: `#313d56`,
-    }),
+    border: `2px solid #313d56`,
+    color: `#313d56`,
+  }),
 
   ...(color === 'primary' &&
     variant === 'text' && {
-      color: theme.palette.primary.main,
-    }),
+    color: theme.palette.primary.main,
+  }),
   ...(color === 'secondary' &&
     variant === 'text' && {
-      color: theme.palette.secondary.main,
-    }),
+    color: theme.palette.secondary.main,
+  }),
   ...(color === 'dark' &&
     variant === 'text' && {
-      color: '#313d56',
-    }),
+    color: '#313d56',
+  }),
   ...(color === 'light' &&
     variant === 'text' && {
-      color: theme.palette.primary.contrastText,
-    }),
+    color: theme.palette.primary.contrastText,
+  }),
 }))
 
 interface Props extends BaseButtonProps {
@@ -172,7 +179,7 @@ const StyledButton: FC<Props> = (props: Props) => {
           {startIcon}
         </Box>
       )}
-      <Box component="span">{children}</Box>
+      <Box component="span" >{children}</Box>
       {endIcon && (
         <Box component="span" sx={{ display: 'inherit', ml: 1, mr: -0.5 }}>
           {endIcon}
@@ -187,6 +194,7 @@ StyledButton.defaultProps = {
   variant: 'contained',
   size: 'medium',
   disableHoverEffect: false,
+  disabled: false
 }
 
 export default StyledButton

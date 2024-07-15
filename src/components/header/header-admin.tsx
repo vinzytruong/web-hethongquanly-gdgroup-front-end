@@ -22,7 +22,16 @@ const Header = () => {
   const { drawerOpen } = useAppSelector((state) => state.menu);
 
   return (
-    <Box bgcolor='background.paper' padding='12px 24px' height={`${headerHeight}px`} width='100vw' display='flex' justifyContent='space-between' alignItems='center'>
+    <Box 
+    bgcolor='background.paper' 
+    padding='12px 24px' 
+    boxShadow= "rgba(149, 157, 165, 0.2) 0px 2px 4px"
+    height={`${headerHeight}px`} 
+    width='100vw' display='flex' 
+    justifyContent='space-between' 
+    alignItems='center'
+    
+    >
       <Box
         display='flex'
         justifyContent='space-between'
@@ -33,11 +42,12 @@ const Header = () => {
           [theme.breakpoints.down("md")]: {
             width: "auto",
           },
+          
         }}
       >
-        <Box sx={{ display: { xs: 'none', md: 'flex' } }} justifyContent='flex-start' alignItems='center'>
+        {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }} justifyContent='flex-start' alignItems='center'>
           <Logo />
-        </Box>
+        </Box> */}
         <Avatar
           variant="rounded"
           sx={{
@@ -62,15 +72,15 @@ const Header = () => {
       <Box display='flex' width='100%' justifyContent='space-between' alignItems='center'>
         {/* <SearchSection /> */}
         <Box display='flex' width='100%' justifyContent='flex-end' alignItems='center' gap={2}>
-          <LocalizationSection />
-          <NotificationSection />
-          <ThemeModeSection />
+          {/* <LocalizationSection /> */}
+          {/* <NotificationSection /> */}
+          {/* <ThemeModeSection /> */}
           <ProfileSection />
         </Box>
       </Box>
-      <Box sx={{ display: { xs: "block", sm: "none" } }}>
+      {/* <Box sx={{ display: { xs: "block", sm: "none" } }}>
         <MobileSection />
-      </Box>
+      </Box> */}
     </Box>
   );
 };

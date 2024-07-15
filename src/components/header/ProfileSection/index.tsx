@@ -26,7 +26,7 @@ import useAuth from '@/hooks/useAuth';
 
 const ProfileSection = () => {
     const theme = useTheme();
-
+    const [account, setAccount] = useState<any>()
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
     const { logout } = useAuth()
@@ -56,6 +56,7 @@ const ProfileSection = () => {
 
     const prevOpen = useRef(open);
     useEffect(() => {
+        setAccount(JSON.parse(localStorage.getItem('account')!))
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
         }
@@ -67,23 +68,26 @@ const ProfileSection = () => {
         <Box
             sx={{
 
-
-                [theme.breakpoints.down('md')]: {
-                    mr: 2
-                }
+                display: 'flex',
+                alignItems: 'center',
+                borderRadius: '8px',
+                background: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
+                color: theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.dark,
+                
             }}
         >
+            <Box px={2}>
+                <Typography>{account?.username}</Typography>
+            </Box>
             <Chip
                 sx={{
                     height: '48px',
                     alignItems: 'center',
-                    borderRadius: '4px',
+                    borderRadius: '0 8px 8px 0',
                     border: 1,
-                    borderColor: theme.palette.primary.contrastText,
                     transition: 'all .2s ease-in-out',
                     background: theme.palette.primary.main,
                     '&[aria-controls="menu-list-grow"], &:hover': {
-                        borderColor: theme.palette.primary.contrastText,
                         background: `${theme.palette.primary.main}!important`,
                         color: theme.palette.primary.light,
                         '& svg': {
@@ -94,21 +98,21 @@ const ProfileSection = () => {
                         lineHeight: 0
                     }
                 }}
-                icon={
-                    <Avatar
-                        sx={{
-                            color: theme.palette.secondary.main,
-                            background: theme.palette.primary.contrastText,
-                            margin: '4px !important',
-                            cursor: 'pointer'
-                        }}
-                        variant='rounded'
-                        ref={anchorRef}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        color="inherit"
-                    />
-                }
+                // icon={
+                //     <Avatar
+                //         sx={{
+                //             color: theme.palette.secondary.main,
+                //             background: theme.palette.primary.contrastText,
+                //             margin: '4px !important',
+                //             cursor: 'pointer'
+                //         }}
+                //         variant='rounded'
+                //         ref={anchorRef}
+                //         aria-controls={open ? 'menu-list-grow' : undefined}
+                //         aria-haspopup="true"
+                //         color="inherit"
+                //     />
+                // }
                 label={<IconChevronDown stroke={1.5} size="1.5rem" color={theme.palette.primary.contrastText} />}
                 variant="outlined"
                 ref={anchorRef}
@@ -140,33 +144,33 @@ const ProfileSection = () => {
                     <Fade in={open} {...TransitionProps}>
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
-                                <Card
-                                    elevation={16}
+                                <Box
+                                    // elevation={16}
                                     sx={{
                                         border: 0,
-                                        boxShadow: theme.shadows[16]
+                                        // boxShadow: theme.shadows[16]
                                     }}
 
                                 >
-                                    <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
-                                        <Box sx={{ p: 2 }}>
-                                            <List
-                                                component="nav"
-                                                sx={{
-                                                    width: '100%',
-                                                    maxWidth: 350,
-                                                    minWidth: 300,
-                                                    backgroundColor: theme.palette.background.paper,
-                                                    borderRadius: '10px',
-                                                    [theme.breakpoints.down('md')]: {
-                                                        minWidth: '100%'
-                                                    },
-                                                    '& .MuiListItemButton-root': {
-                                                        mt: 0.5
-                                                    }
-                                                }}
-                                            >
-                                                <ListItemButton
+                                    {/* <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}> */}
+                                    <Box sx={{ p: 2 }}>
+                                        <List
+                                            component="nav"
+                                            sx={{
+                                                width: '100%',
+                                                maxWidth: 350,
+                                                minWidth: 300,
+                                                backgroundColor: theme.palette.background.paper,
+                                                borderRadius: '10px',
+                                                [theme.breakpoints.down('md')]: {
+                                                    minWidth: '100%'
+                                                },
+                                                '& .MuiListItemButton-root': {
+                                                    mt: 0.5
+                                                }
+                                            }}
+                                        >
+                                            {/* <ListItemButton
                                                     selected={selectedIndex === 0}
                                                     onClick={(event) => handleListItemClick(event, 0, '#')}
                                                 >
@@ -174,40 +178,40 @@ const ProfileSection = () => {
                                                         <IconSettings stroke={1.5} size="1.3rem" />
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant="body2">Cài đặt</Typography>} />
-                                                </ListItemButton>
-                                                <ListItemButton
-                                                    selected={selectedIndex === 1}
-                                                    onClick={(event) => handleListItemClick(event, 1, '#')}
-                                                >
-                                                    <ListItemIcon>
-                                                        <IconUser stroke={1.5} size="1.3rem" />
-                                                    </ListItemIcon>
-                                                    <Link href='/admin/profile' sx={{textDecoration:'none'}} >
-                                                        <ListItemText
-                                                            primary={
-                                                                <Grid container spacing={1} justifyContent="space-between">
-                                                                    <Grid item>
-                                                                        <Typography variant="body2">Thông tin cá nhân</Typography>
-                                                                    </Grid>
+                                                </ListItemButton> */}
+                                            <ListItemButton
+                                                selected={selectedIndex === 1}
+                                                onClick={(event) => handleListItemClick(event, 1, '#')}
+                                            >
+                                                <ListItemIcon>
+                                                    <IconUser stroke={1.5} size="1.3rem" />
+                                                </ListItemIcon>
+                                                <Link href='/admin/profile' sx={{ textDecoration: 'none' }} >
+                                                    <ListItemText
+                                                        primary={
+                                                            <Grid container spacing={1} justifyContent="space-between">
+                                                                <Grid item>
+                                                                    <Typography variant="body2">Thông tin cá nhân</Typography>
                                                                 </Grid>
-                                                            }
-                                                        />
-                                                    </Link>
+                                                            </Grid>
+                                                        }
+                                                    />
+                                                </Link>
 
-                                                </ListItemButton>
-                                                <ListItemButton
-                                                    selected={selectedIndex === 4}
-                                                    onClick={handleLogout}
-                                                >
-                                                    <ListItemIcon>
-                                                        <IconLogout stroke={1.5} size="1.3rem" />
-                                                    </ListItemIcon>
-                                                    <ListItemText primary={<Typography variant="body2">Đăng xuất</Typography>} />
-                                                </ListItemButton>
-                                            </List>
-                                        </Box>
-                                    </PerfectScrollbar>
-                                </Card>
+                                            </ListItemButton>
+                                            <ListItemButton
+                                                selected={selectedIndex === 4}
+                                                onClick={handleLogout}
+                                            >
+                                                <ListItemIcon>
+                                                    <IconLogout stroke={1.5} size="1.3rem" />
+                                                </ListItemIcon>
+                                                <ListItemText primary={<Typography variant="body2">Đăng xuất</Typography>} />
+                                            </ListItemButton>
+                                        </List>
+                                    </Box>
+                                    {/* </PerfectScrollbar> */}
+                                </Box>
                             </ClickAwayListener>
                         </Paper>
                     </Fade>

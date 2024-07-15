@@ -1,17 +1,9 @@
-import { ForwardRefExoticComponent, RefAttributes, forwardRef, useEffect } from 'react';
-
-// material-ui
+import { useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, Icon, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
-
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-
-// types
-
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '@/store/hook';
 import { OPEN_DRWAWER, SELECT_ITEM } from '@/store/menu/action';
-import Link from 'next/link';
 import { ChipProps } from '@mui/material/Chip';
 import { useTranslation } from 'react-i18next';
 
@@ -54,7 +46,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
         itemTarget = '_blank';
     }
 
-    
+
 
     const itemHandler = (id: string) => {
         dispatch(SELECT_ITEM({ selectedItem: [id] }));
@@ -76,26 +68,43 @@ const NavItem = ({ item, level }: NavItemProps) => {
         <ListItemButton
             disabled={item.disabled}
             sx={{
-                
+                display: 'flex',
                 mb: 0.5,
-                alignItems: 'flex-start',
+                alignItems: 'center',
                 backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
                 py: level > 1 ? 1 : 1.25,
-                pl: `${level * 18}px`
+                pl: `${level * 18}px`,
+                borderRadius:"8px"
             }}
             selected={selectedItem?.findIndex((id: string | undefined) => id === item.id) > -1}
             onClick={() => itemHandler(item.id!)}
         >
-           
+            <ListItemIcon
+                sx={{
+                    fontSize: 12, minWidth: '38px',
+                    color:
+                        selectedItem?.findIndex((id: string | undefined) => id === item.id) > -1 ?
+                            (theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main)
+                            :
+                            theme.palette.text.primary
+                }}>
+                {item.icon}
+            </ListItemIcon>
             <ListItemText
                 primary={
-                    <Typography variant={selectedItem?.findIndex((id: string | undefined) => id === item.id) > -1 ? 'h5' : 'body1'} color="inherit">
+                    <Typography variant={'body1'}
+                        color={
+                            selectedItem?.findIndex((id: string | undefined) => id === item.id) > -1 ?
+                                (theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.primary.main)
+                                :
+                                theme.palette.text.primary}
+                    >
                         {t(item.title!)}
                     </Typography>
                 }
                 secondary={
                     item.caption && (
-                        <Typography variant="caption"display="block" gutterBottom>
+                        <Typography variant="caption" display="block" gutterBottom>
                             {t(item.caption.toString())}
                         </Typography>
                     )

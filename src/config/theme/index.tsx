@@ -20,8 +20,8 @@ export default function ThemeCustomization({ children }: Props) {
     // const darkMode = mode === 'dark'
     
     // const palette = darkMode ? { ...paletteBase, ...paletteDark } : { ...paletteBase, ...paletteLight }
-    const palette = useMemo(() => { return mode === 'dark' ? { ...paletteBase, ...paletteDark } : { ...paletteBase, ...paletteLight } }, [mode]);
-    
+    // const palette = useMemo(() => { return mode === 'dark' ? { ...paletteBase, ...paletteDark } : { ...paletteBase, ...paletteLight } }, [mode]);
+    const palette = useMemo(() => { return { ...paletteBase, ...paletteLight } }, [mode]);
     const themeOptions: ThemeOptions = useMemo(
         () => ({
             palette: palette,

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-const isValidToken = (accessToken:any) => {
+const isValidToken = (accessToken: any) => {
   if (!accessToken) {
     return false;
   }
@@ -10,7 +10,7 @@ const isValidToken = (accessToken:any) => {
   return decoded.exp! > currentTime;
 };
 
-const handleTokenExpired = (exp:any) => {
+const handleTokenExpired = (exp: any) => {
   let expiredTimer;
   const currentTime = Date.now();
   // Test token expires after 10s
@@ -19,13 +19,12 @@ const handleTokenExpired = (exp:any) => {
   clearTimeout(expiredTimer);
   expiredTimer = setTimeout(() => {
     // eslint-disable-next-line no-alert
-    alert('Token expired');
     localStorage.removeItem('accessToken');
-    window.location.href = '/auth';
+    window.location.href = '/auth/login';
   }, timeLeft);
 };
 
-const setSession = (accessToken:any, accountObject:any) => {
+const setSession = (accessToken: any, accountObject: any) => {
   if (accessToken) {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('account', accountObject);

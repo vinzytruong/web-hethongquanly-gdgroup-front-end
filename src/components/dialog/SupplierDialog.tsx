@@ -11,19 +11,16 @@ import useDistrict from '@/hooks/useDistrict';
 import useProvince from '@/hooks/useProvince';
 import { Supplier } from '@/interfaces/supplier';
 import useSupplier from '@/hooks/useSupplier';
+import useSupplierType from '@/hooks/useSupplierType';
 
 export default function SupplierDialog(props: PropsDialog) {
-    const { title, defaulValue, isInsert, handleOpen, open, isUpdate } = props
     const theme = useTheme()
-    const [formData, setFormData] = useState<Supplier>();
+    const { title, defaulValue, isInsert, handleOpen, open, isUpdate } = props
     const { getAllProvince, dataProvince } = useProvince()
+    const { dataSupplierType } = useSupplierType()
     const { addSupplier, updateSupplier } = useSupplier()
     const [loading, setLoaing] = useState<boolean>(false)
-
-    console.log("update", formData);
-    useEffect(() => {
-        getAllProvince()
-    }, [formData?.tinhID])
+    const [formData, setFormData] = useState<Supplier>();
 
     useEffect(() => {
         if (defaulValue) setFormData(defaulValue)
@@ -31,17 +28,16 @@ export default function SupplierDialog(props: PropsDialog) {
 
     const handleChange = (e: any) => {
         if (e.target) {
-            console.log(e.target.name);
             setFormData((prevState: any) => ({
                 ...prevState,
                 [e.target.name]: e.target.value
             }));
         }
     };
+
     const handleAdd = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        console.log(formData);
         if (formData) addSupplier(formData)
         setLoaing(false);
         handleOpen(false)
@@ -82,8 +78,6 @@ export default function SupplierDialog(props: PropsDialog) {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ p: 3 }} >
-
-
                     <Box display='flex' flexDirection='column' justifyContent='space-between' alignItems='center' gap='12px'>
                         <Grid container spacing={3}>
                             <Grid item md={4}>
@@ -99,7 +93,7 @@ export default function SupplierDialog(props: PropsDialog) {
                             </Grid>
                             <Grid item md={8}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Tên công ty</Typography>
+                                    <Typography>Tên công ty (*)</Typography>
                                     <OutlinedInput
                                         name='tenCongTy'
                                         value={formData?.tenCongTy}
@@ -109,6 +103,20 @@ export default function SupplierDialog(props: PropsDialog) {
                                 </Box>
                             </Grid>
                         </Grid>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Loại (*)</Typography>
+                            <Select
+                                defaultValue={defaulValue?.loaiNCCID}
+                                name='loaiNCCID'
+                                value={formData?.loaiNCCID}
+                                onChange={handleChange}
+                                fullWidth
+                            >
+                                {dataSupplierType.map((item, index) => (
+                                    <MenuItem key={index} defaultValue={formData?.loaiNCCID} value={item.loaiNCCID}>{item.tenLoai}</MenuItem>
+                                ))}
+                            </Select>
+                        </Box>
                         <Box style={{ width: '100%' }}>
                             <Typography>Địa chỉ</Typography>
                             <OutlinedInput
@@ -121,7 +129,7 @@ export default function SupplierDialog(props: PropsDialog) {
                         <Grid container spacing={3}>
                             <Grid item md={6}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Tỉnh</Typography>
+                                    <Typography>Tỉnh (*)</Typography>
                                     <Select
                                         defaultValue={defaulValue?.tinhID}
                                         name='tinhID'
@@ -137,7 +145,7 @@ export default function SupplierDialog(props: PropsDialog) {
                             </Grid>
                             <Grid item md={6}>
                                 <Box style={{ width: '100%' }}>
-                                    <Typography>Người đại diện</Typography>
+                                    <Typography>Người đại diện (*)</Typography>
                                     <OutlinedInput
                                         name='nguoiDaiDien'
                                         style={{ width: '100%' }}
@@ -146,14 +154,46 @@ export default function SupplierDialog(props: PropsDialog) {
                                     />
                                 </Box>
                             </Grid>
-
                         </Grid>
                         <Box style={{ width: '100%' }}>
-                            <Typography>Thông tin thêm</Typography>
+                            <Typography>Nhân viên phụ trách (*)</Typography>
+                            <OutlinedInput
+                                name='nhanVienPhuTrach'
+                                style={{ width: '100%' }}
+                                value={formData?.nhanVienPhuTrach}
+                                onChange={handleChange}
+                            />
+                        </Box>
+                        <Grid container spacing={3}>
+                            <Grid item md={6}>
+                                <Box style={{ width: '100%' }}>
+                                    <Typography>Chức vụ (*)</Typography>
+                                    <OutlinedInput
+                                        name='chucVu'
+                                        style={{ width: '100%' }}
+                                        value={formData?.chucVu}
+                                        onChange={handleChange}
+                                    />
+                                </Box>
+                            </Grid>
+                            <Grid item md={6}>
+                                <Box style={{ width: '100%' }}>
+                                    <Typography>Số điện thoại (*)</Typography>
+                                    <OutlinedInput
+                                        name='soDienThoai'
+                                        style={{ width: '100%' }}
+                                        value={formData?.soDienThoai}
+                                        onChange={handleChange}
+                                    />
+                                </Box>
+                            </Grid>
+                        </Grid>
+                        <Box style={{ width: '100%' }}>
+                            <Typography>Ghi chú</Typography>
                             <OutlinedInput
                                 name='thongTinThem'
                                 style={{ width: '100%' }}
-                                value={formData?.thongTinThem}
+                                value={formData?.ghiChu}
                                 onChange={handleChange}
                             />
                         </Box>

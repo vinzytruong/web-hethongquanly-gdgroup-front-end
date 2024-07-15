@@ -1,8 +1,8 @@
-import SignIn from "./auth";
+import SignIn from "./auth/login";
 
 const IndexPage = () => {
   return (
-      <SignIn /> 
+    <SignIn />
   )
 }
 export default IndexPage;

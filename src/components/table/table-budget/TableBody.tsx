@@ -5,7 +5,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { StyledButton } from '../../styled-button';
-import { Rating } from '@mui/material';
+import { Button, Rating } from '@mui/material';
 import { useRouter } from 'next/router';
 import SnackbarAlert from '../../alert';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -18,9 +18,14 @@ import OrganizationDialog from '@/components/dialog/OrganizationDialog';
 import zIndex from '@mui/material/styles/zIndex';
 import useProvince from '@/hooks/useProvince';
 import useDistrict from '@/hooks/useDistrict';
+import useCommune from '@/hooks/useCommune';
+import { BAN_THI_TRUONG_NHAN_VIEN_KINH_DOANH, QUAN_TRI, BAN_THI_TRUONG_GIAM_DOC_KINH_DOANH } from '@/constant/role';
+import useRole from '@/hooks/useRole';
+import useStaff from '@/hooks/useStaff';
+import { color } from 'framer-motion';
 
 interface BodyDataProps {
-    handleView: (e: any) => void;
+    handleView?: (e: any) => void;
     handleEdit?: (e: any) => void;
     data: Organization[];
     page: number;
@@ -29,24 +34,55 @@ interface BodyDataProps {
     viewLink: string,
     isAdmin: boolean
 }
+const CommuneItem = ({ xaID }: any) => {
+    const { dataCommune } = useCommune(xaID)
+    if (!dataCommune) {
+        return "Đang tải ...";
+    }
+    return xaID ? dataCommune.find((item) => item.xaID === xaID)?.tenXa : 'Chưa có dữ liệu'
+};
 
+const DistrictItem = ({ huyenID }: any) => {
+    const { dataDistrict } = useDistrict(huyenID)
+    if (!dataDistrict) {
+        return "Đang tải ...";
+    }
+    return huyenID ? dataDistrict.find((item) => item.huyenID === huyenID)?.tenHuyen : 'Chưa có dữ liệu'
+};
+
+const StaffCreatedItem = ({ nhanVienID }: any) => {
+    const { dataStaff } = useStaff()
+    if (!dataStaff) {
+        return "Đang tải ...";
+    }
+    return nhanVienID ? dataStaff.find((item, index) => item.nhanVienID === nhanVienID)?.tenNhanVien : 'Chưa có dữ liệu'
+};
 const TableBodyBudget = (props: BodyDataProps) => {
     const { deleteOrganization, updateOrganization } = useOrganization()
     const { dataProvince, getAllProvince } = useProvince()
-    const { dataDistrict, getDistrictByProvinceId, getDistrictByID } = useDistrict()
+    // const { dataDistrict, getDistrictByProvinceId, getDistrictByID } = useDistrict()
+
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
+    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink } = props
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
     const router = useRouter();
     const [selectedID, setSelectedID] = React.useState<number>()
+    const { getAllRoleOfUser, dataRoleByUser, isLoadingRole } = useRole()
+
+    /* Role */
+    const isBusinessAdmin = dataRoleByUser[0]?.roleName.includes(BAN_THI_TRUONG_GIAM_DOC_KINH_DOANH)
+    const isBusinessStaff = dataRoleByUser[0]?.roleName.includes(BAN_THI_TRUONG_NHAN_VIEN_KINH_DOANH)
+    const isAdmin = dataRoleByUser[0]?.roleName.includes(QUAN_TRI)
+
+    React.useEffect(() => {
+        const account = JSON.parse(localStorage.getItem('account')!)
+        getAllRoleOfUser(account?.userID)
+    }, [])
 
     React.useEffect(() => {
         getAllProvince()
-    }, [])
-    React.useEffect(() => {
-        data.map(item => getDistrictByID(item.huyenID))
     }, [])
 
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
@@ -61,7 +97,10 @@ const TableBodyBudget = (props: BodyDataProps) => {
         setOpen(true)
     }
     const renderDataTinh = (tinhID: number) => dataProvince.find((item) => item.tinhID === tinhID)?.tenTinh
-    const renderDataHuyen = (huyenID: number) => dataDistrict.find((item) => item.huyenID === huyenID)?.tenHuyen
+
+
+
+
     return (
         <TableBody>
             {data?.map((row: Organization, index: any) => (
@@ -75,41 +114,41 @@ const TableBodyBudget = (props: BodyDataProps) => {
                 >
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
                     <StyledTableCell align="left">{row.tenCoQuan ? row.tenCoQuan : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.maSoThue ? row.maSoThue : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.huyenID ? renderDataHuyen(row.huyenID) : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.tinhID ? renderDataTinh(row.tinhID) : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="left">{row.diaChi ? row.diaChi : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.huyenID ? row.huyen?.tenHuyen : "Chưa có dữ lijf"} </StyledTableCell>
+                    <StyledTableCell align="left">{row.tinhID ? row.tinh?.tenTinh : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left">{row.nsCanBo ? row.nsCanBo.length : 'Chưa có dữ liệu'}</StyledTableCell>
+                    <StyledTableCell align="left"><StaffCreatedItem nhanVienID={row.nhanVienID} /></StyledTableCell>
                     <StyledTableCell align="center">
                         <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                            <StyledIconButton
-                                variant='contained'
-                                color='default'
-                                onClick={(e: any) => handleViewItem(e, row.coQuanID)}
 
-                            >
-                                <VisibilityOutlinedIcon />
 
-                            </StyledIconButton>
-                            {isAdmin &&
-                                <Box display='flex' gap={2} alignItems='center' justifyContent='center' zIndex={3}>
-                                    <StyledIconButton
-                                        variant='contained'
-                                        color='primary'
-                                        onClick={(e: any) => handleEditItem(e, row.coQuanID)}
+                            <Box display='flex' gap={2} alignItems='center' justifyContent='center' zIndex={3}>
+                                <StyledIconButton
+                                    variant='contained'
+                                    color='default'
+                                    onClick={(e: any) => handleViewItem(e, row.coQuanID)}
+                                // disabled={!(isAdmin || (dataRoleByUser[0]?.nhanVienID === row.nhanVienID))}
+                                >
+                                    <VisibilityOutlinedIcon />
+                                </StyledIconButton>
+                                <StyledIconButton
+                                    variant='contained'
+                                    color='primary'
+                                    onClick={(e: any) => handleEditItem(e, row.coQuanID)}
+                                    disabled={!(isAdmin || (dataRoleByUser[0]?.nhanVienID === row.nhanVienID))}
+                                >
+                                    <ModeEditOutlinedIcon />
+                                </StyledIconButton>
+                                {/* <StyledIconButton
+                                    variant='contained'
+                                    color='secondary'
+                                    onClick={(e: any) => handleDeleteItem(e, row.coQuanID)}
+                                    disabled={!(isAdmin || (dataRoleByUser[0]?.nhanVienID === row.nhanVienID))}
+                                >
+                                    <DeleteOutlineOutlinedIcon />
+                                </StyledIconButton> */}
+                            </Box>
 
-                                    >
-                                        <ModeEditOutlinedIcon />
-
-                                    </StyledIconButton>
-                                    <StyledIconButton
-                                        variant='contained'
-                                        color='secondary'
-                                        onClick={(e: any) => handleDeleteItem(e, row.coQuanID)}
-                                    >
-                                        <DeleteOutlineOutlinedIcon />
-                                    </StyledIconButton>
-                                </Box>
-                            }
 
 
                         </Box>
@@ -117,8 +156,8 @@ const TableBodyBudget = (props: BodyDataProps) => {
                 </StyledTableRow>
             ))}
             {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
-            {data.length===0 && (
-                <StyledTableRow style={{ height:100 }}>
+            {data.length === 0 && (
+                <StyledTableRow style={{ height: 100 }}>
                     <StyledTableCell align='center' colSpan={6}>Chưa có dữ liệu</StyledTableCell>
                 </StyledTableRow>
             )}

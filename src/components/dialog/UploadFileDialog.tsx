@@ -1,38 +1,24 @@
 import { Box, Button, useTheme } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    Alert,
     Dialog,
     DialogActions,
     DialogContent,
     DialogTitle,
-    FilledInput,
-    FormControlLabel,
-    Grid,
     IconButton,
-    Input,
-    InputBase,
-    LinearProgress,
-    MenuItem,
-    OutlinedInput,
-    Radio,
-    RadioGroup,
-    Rating,
-    Select,
-    Snackbar,
-    Step,
-    StepLabel,
-    Stepper,
-    TextField
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import { PropsDialog } from '@/interfaces/dialog';
 
 export default function UploadFileDialog(props: PropsDialog) {
-    const { title, defaulValue, isInsert, handleOpen, open, isUpdate, id, handlSaveFile } = props
+    const { title, defaulValue, isInsert, handleOpen, open, isUpdate, id, handlSaveFile, note } = props
     const theme = useTheme()
     const [file, setFile] = useState<File | null>(null);
+
+    useEffect(() => {
+        if (!open) setFile(null)
+    }, [open])
 
     return (
         <>
@@ -59,6 +45,7 @@ export default function UploadFileDialog(props: PropsDialog) {
                     <CloseIcon />
                 </IconButton>
                 <DialogContent sx={{ px: 3 }} >
+                    <Typography variant='h5'>{note}</Typography>
                     <Box sx={{ width: '100%', }}>
                         <Box sx={{
                             height: { xs: '80px', md: '220px' },

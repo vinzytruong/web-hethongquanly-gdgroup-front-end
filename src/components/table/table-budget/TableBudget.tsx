@@ -35,7 +35,7 @@ function getComparator<Key extends keyof any>(
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) {
+function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
     const stabilizedThis = array?.map((el, index) => [el, index] as [T, number]);
     stabilizedThis?.sort((a, b) => {
         const order = comparator(a[0], b[0]);
@@ -50,6 +50,8 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 interface Props {
     rows: Organization[],
     isAdmin: boolean,
+    setViewId?: (e: any) => void;
+    setEditId?: (e: any) => void;
 }
 
 interface HeadCell {
@@ -58,18 +60,12 @@ interface HeadCell {
     label: string;
     numeric: boolean;
 }
-const headCells: readonly HeadCell[] = [
+const headCells: HeadCell[] = [
     {
         id: 'organization_name',
         numeric: false,
         disablePadding: false,
         label: 'Tên cơ quan',
-    },
-    {
-        id: 'tax_code',
-        numeric: false,
-        disablePadding: false,
-        label: 'Mã số thuế',
     },
     {
         id: 'district',
@@ -84,70 +80,86 @@ const headCells: readonly HeadCell[] = [
         label: 'Tỉnh',
     },
     {
-        id: 'address',
+        id: 'numOfficer',
         numeric: false,
         disablePadding: false,
-        label: 'Địa chỉ',
+        label: 'SL cán bộ',
     },
-    
+    {
+        id: 'createdPerson',
+        numeric: false,
+        disablePadding: false,
+        label: 'Người nhập',
+    },
+
+
 ];
-const TableBudget = ({ rows, isAdmin }: Props) => {
+const TableBudget = ({ rows, isAdmin, setViewId, setEditId }: Props) => {
     const [order, setOrder] = React.useState<Order>('asc');
-    const [orderBy, setOrderBy] = React.useState<keyof Organization>('tenCoQuan');
+    const [orderBy, setOrderBy] = React.useState<keyof Organization>('coQuanID');
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [viewId, setViewId] = React.useState(0)
-    const [editId, setEditId] = React.useState(0)
+    // const [viewId, setViewId] = React.useState(0)
+    // const [editId, setEditId] = React.useState(0)
     const theme = useTheme()
 
     const visibleRows = React.useMemo(
         () =>
-            stableSort(rows, getComparator(order, orderBy))?.slice(
+            rows.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage,
             ),
-        [order, orderBy, page, rows, rowsPerPage],
+        [page, rows, rowsPerPage],
     );
 
     return (
-        <Box sx={{ overflow: "auto", py: 3, width: '100%' }}>
-            <Box sx={{ borderRadius: '6px', width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
-                <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
-                    <Table
-                        sx={{ minWidth: 750, border: 0 }}
-                        aria-labelledby="tableTitle"
-                        size='medium'
-                    >
-                        <TableHeader
-                            order={order}
-                            orderBy={orderBy}
-                            handleOrder={setOrder}
-                            handleOrderBy={setOrderBy}
-                            rowCount={rows?.length}
-                            headerCells={headCells}
-                            action={isAdmin}
-                        />
-                        <TableBodyBudget
-                            data={visibleRows}
-                            handleView={setViewId}
-                            handleEdit={setEditId}
-                            page={page}
-                            rowsPerPage={rowsPerPage}
-                            viewLink='budget/officers'
-                            editLink=''
-                            isAdmin={isAdmin}
-                        />
-                    </Table>
-                </TableContainer>
-                <TableCustomizePagination
-                    handlePage={setPage}
-                    handleRowsPerPage={setRowsPerPage}
-                    page={page}
-                    rowsPerPage={rowsPerPage}
-                    rows={rows}
-                />
+        <Box
+            display='flex'
+            width='100%'
+            bgcolor={theme.palette.background.paper}
+            px={3}
+            py={3}
+        >
+            <Box sx={{ overflow: "auto", width: '100%' }}>
+                <Box sx={{ borderRadius: '6px', width: "100%", display: "table", tableLayout: "fixed", backgroundColor: theme.palette.background.paper }}>
+                    <TableContainer sx={{ border: 0, borderRadius: '6px' }}>
+                        <Table
+                            sx={{ minWidth: 750, border: 0 }}
+                            aria-labelledby="tableTitle"
+                            size='medium'
+                        >
+                            <TableHeader
+                                order={order}
+                                orderBy={orderBy}
+                                handleOrder={setOrder}
+                                handleOrderBy={setOrderBy}
+                                rowCount={rows?.length}
+                                headerCells={headCells}
+                                action={isAdmin}
+                            />
+                            <TableBodyBudget
+                                data={visibleRows}
+                                handleView={setViewId}
+                                handleEdit={setEditId}
+                                page={page}
+                                rowsPerPage={rowsPerPage}
+                                viewLink='project/officers'
+                                editLink=''
+                                isAdmin={isAdmin}
+                            />
+                        </Table>
+                    </TableContainer>
+                    <TableCustomizePagination
+                        handlePage={setPage}
+                        handleRowsPerPage={setRowsPerPage}
+                        page={page}
+                        rowsPerPage={rowsPerPage}
+                        rows={rows}
+                    />
+                </Box>
             </Box>
         </Box>
+
     );
 }
 export default TableBudget

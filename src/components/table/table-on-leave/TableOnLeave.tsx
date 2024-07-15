@@ -48,6 +48,10 @@ function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => number) 
 interface ProductProps {
     rows: any,
     isAdmin: boolean,
+    setViewId: (e: number) => void;
+    setEditId: (e: number) => void;
+    setDeleteId: (e: number) => void;
+    setPrint: (e: number) => void;
 }
 
 interface HeadCell {
@@ -65,10 +69,22 @@ const headCells: readonly HeadCell[] = [
         label: 'Ngày viết đơn',
     },
     {
+        id: 'type',
+        numeric: false,
+        disablePadding: false,
+        label: 'Loại nghỉ phép',
+    },
+    {
         id: 'dateOff',
         numeric: false,
         disablePadding: false,
         label: 'Ngày nghỉ',
+    },
+    {
+        id: 'sumDateOff',
+        numeric: false,
+        disablePadding: false,
+        label: 'Số ngày nghỉ',
     },
     {
         id: 'dateConfirm',
@@ -77,20 +93,30 @@ const headCells: readonly HeadCell[] = [
         label: 'Ngày duyệt',
     },
     {
-        id: 'personCreate',
+        id: 'statusmanage',
         numeric: false,
         disablePadding: false,
-        label: 'Người viết đơn',
+        label: 'Quản lý duyệt',
     },
-    
+    {
+        id: 'status',
+        numeric: false,
+        disablePadding: false,
+        label: 'Hành chính duyệt',
+    },
+    {
+        id: 'status2',
+        numeric: false,
+        disablePadding: false,
+        label: 'Giám đốc duyệt',
+    },
+
 ];
-const TableOnLeave= ({ rows, isAdmin }: ProductProps) => {
+const TableOnLeave = ({ rows, isAdmin, setViewId, setDeleteId, setPrint, setEditId }: ProductProps) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Product>('name');
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [viewId, setViewId] = React.useState(0)
-    const [editId, setEditId] = React.useState(0)
     const theme = useTheme()
 
     const visibleRows = React.useMemo(
@@ -124,6 +150,8 @@ const TableOnLeave= ({ rows, isAdmin }: ProductProps) => {
                             data={visibleRows}
                             handleView={setViewId}
                             handleEdit={setEditId}
+                            handlePrint={setPrint}
+                            handleDelete={setDeleteId}
                             page={page}
                             rowsPerPage={rowsPerPage}
                             viewLink=''

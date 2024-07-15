@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
-import { Avatar, Box, ButtonBase, Card, ClickAwayListener, Grid, InputAdornment, List, ListItemButton, ListItemText, OutlinedInput, Paper, Popper, Skeleton, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, ButtonBase, Card, ClickAwayListener, FormControl, Grid, InputAdornment, InputLabel, List, ListItemButton, ListItemText, OutlinedInput, Paper, Popper, Skeleton, Typography, useMediaQuery } from '@mui/material';
 
 // third-party
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
@@ -15,6 +15,7 @@ import { shouldForwardProp } from '@mui/system';
 import Transitions from '../transitions/Transitions';
 import { StyledButton } from '../styled-button';
 import useDepartment from '@/hooks/useDepartment';
+import { CustomInput } from '../input';
 
 // styles
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
@@ -31,8 +32,8 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
   //   width: 434,
   //   paddingLeft: 16,
   //   paddingRight: 16,
-  height: 42,
-  fontSize:14,
+  // height: 42,
+  fontSize: 14,
   '& input': {
     background: 'transparent !important',
     paddingLeft: '4px !important'
@@ -122,16 +123,18 @@ const MobileSearch = ({ value, setValue, popupState }: Props) => {
 // ==============================|| SEARCH INPUT ||============================== //
 interface PropSearch {
   contentSearch: string,
+  fullwidth?: boolean,
   handleContentSearch: (e: any) => void
 }
-const SearchNoButtonSection = ({ contentSearch, handleContentSearch }: PropSearch) => {
+const SearchNoButtonSection = ({ contentSearch, handleContentSearch, fullwidth }: PropSearch) => {
   const theme = useTheme();
 
   return (
     <>
-      <Box sx={{ display: { xs: 'none', md: 'block' } }} >
-        <Box display='flex' justifyContent='space-between' alignItems='center' gap={1} sx={{ backgroundColor: '#fff' }} >
-          <OutlineInputStyle
+      <Box sx={{ width: "100%"}} >
+        <Box display='flex' justifyContent='space-between' alignItems='center' width="100%">
+          {/* <OutlineInputStyle
+          
             id="input-search-header"
             value={contentSearch}
             onChange={(e) => handleContentSearch(e.target.value)}
@@ -139,11 +142,22 @@ const SearchNoButtonSection = ({ contentSearch, handleContentSearch }: PropSearc
             aria-describedby="search-helper-text"
             inputProps={{ 'aria-label': 'weight' }}
             startAdornment={
-              <InputAdornment position="start">
-                <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
-              </InputAdornment>
+              
             }
-          />
+          /> */}
+          <FormControl sx={{ minWidth: fullwidth ? 0 : 380 }} size="small" fullWidth={fullwidth}>
+            {/* <InputLabel id="demo-select-small-label">Lọc theo tỉnh  </InputLabel> */}
+            <CustomInput
+              placeholder="Nhâp nội dung tìm kiếm"
+              value={contentSearch}
+              onChange={(e) => handleContentSearch(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconSearch stroke={1.5} size="1rem" color={theme.palette.grey[500]} />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
         </Box>
       </Box>
     </>

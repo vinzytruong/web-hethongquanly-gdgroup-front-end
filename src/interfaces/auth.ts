@@ -22,7 +22,7 @@ export interface AuthContextType {
     login: (username: string, password: string) => Promise<any>;
     logout: () => void;
     isAuthenticated: () => boolean;
-    apiCall: (url: any, method?: string, data?: null) => Promise<any>;
+    register: (data:any) => Promise<any>;
 }
 
 export interface Account {

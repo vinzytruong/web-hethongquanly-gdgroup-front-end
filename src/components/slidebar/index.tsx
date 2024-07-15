@@ -2,7 +2,7 @@ import { memo, useMemo } from "react";
 import { Box, Drawer, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { drawerWidth, headerHeight } from "../../constant";
+import { META_DATA, drawerWidth, headerHeight } from "../../constant";
 import MenuList from "./menu-list";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { OPEN_DRWAWER } from "@/store/menu/action";
@@ -36,16 +36,19 @@ const Sidebar = ({ window }: SidebarProps) => {
       <PerfectScrollbar
         component="div"
         style={{
-          height: !matchUpMd ? "calc(100vh - 56px)" : "calc(100vh - 88px)",
+          // height: !matchUpMd ? "calc(100vh - 56px)" : "calc(100vh - 88px)",
+         
           paddingLeft: "16px",
           paddingRight: "16px",
           paddingTop: "16px",
+          paddingBottom: "16px",
         }}
       >
+        <Logo/>
         <MenuList />
       </PerfectScrollbar>
     ),
-    [matchUpMd]
+    []
   );
 
   const container = window !== undefined ? () => window.document.body : undefined;
@@ -75,7 +78,8 @@ const Sidebar = ({ window }: SidebarProps) => {
             borderRight: 0,
             m: 0,
             padding:0,
-            
+            height:`calc(100vh - ${headerHeight}px)`,
+            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 12px",
             [theme.breakpoints.up('md')]: {
               top: `${headerHeight}px`
             }
@@ -84,7 +88,7 @@ const Sidebar = ({ window }: SidebarProps) => {
         ModalProps={{ keepMounted: true }}
         color="inherit"
       >
-        {drawerOpen && logo}
+        {/* {drawerOpen && logo} */}
         {drawerOpen && drawer}
       </Drawer>
     </Box>

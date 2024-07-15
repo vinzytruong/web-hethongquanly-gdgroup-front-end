@@ -17,6 +17,7 @@ const ThemeModeSection = () => {
                 <Avatar
                     variant="rounded"
                     sx={{
+                        borderRadius: '6px',
                         border: '1px solid',
                         borderColor: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,
                         background: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.primary.light,

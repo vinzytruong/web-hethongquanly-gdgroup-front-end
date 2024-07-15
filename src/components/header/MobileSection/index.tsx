@@ -45,66 +45,67 @@ const MobileSection = () => {
     }, [open]);
 
     return (
-        <>
-            <Box component="span" ref={anchorRef} sx={{ mt: 1, ml: 1 }}>
-                <IconButton
-                    sx={{ color: theme.palette.mode === 'dark' ? 'primary.main' : 'inherit', ml: 0.5, cursor: 'pointer' }}
-                    onClick={handleToggle}
-                >
-                    <IconDotsVertical
-                        stroke={1.5}
-                        aria-controls={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        style={{ fontSize: '1.5rem' }}
-                    />
-                </IconButton>
-            </Box>
+        <></>
+        // <>
+        //     <Box component="span" ref={anchorRef} sx={{ mt: 1, ml: 1 }}>
+        //         <IconButton
+        //             sx={{ color: theme.palette.mode === 'dark' ? 'primary.main' : 'inherit', ml: 0.5, cursor: 'pointer' }}
+        //             onClick={handleToggle}
+        //         >
+        //             <IconDotsVertical
+        //                 stroke={1.5}
+        //                 aria-controls={open ? 'menu-list-grow' : undefined}
+        //                 aria-haspopup="true"
+        //                 style={{ fontSize: '1.5rem' }}
+        //             />
+        //         </IconButton>
+        //     </Box>
 
-            <Popper
-                placement="bottom-end"
-                open={open}
-                anchorEl={anchorRef.current}
-                role={undefined}
-                transition
-                disablePortal
-                style={{ width: '100%', zIndex: 1 }}
-                popperOptions={{
-                    modifiers: [
-                        {
-                            name: 'offset',
-                            options: {
-                                offset: [0, matchMobile ? 30 : 10]
-                            }
-                        }
-                    ]
-                }}
-            >
-                {({ TransitionProps }) => (
-                    <ClickAwayListener onClickAway={handleClose}>
-                        {/* <Transitions type="zoom" in={open} {...TransitionProps} sx={{ transformOrigin: 'top right' }}> */}
-                            <Paper>
-                                {open && (
-                                    <AppBar
-                                        color="inherit"
-                                        sx={{
-                                            [theme.breakpoints.down('md')]: {
-                                                background: theme.palette.mode === 'dark' ? theme.palette.primary.main : '#fff'
-                                            }
-                                        }}
-                                    >
-                                        <Toolbar sx={{ pt: 2.75, pb: 2.75 }}>
-                                            <Grid container justifyContent={matchMobile ? 'space-between' : 'flex-end'} alignItems="center">
-                                                <LocalizationSection />
-                                            </Grid>
-                                        </Toolbar>
-                                    </AppBar>
-                                )}
-                            </Paper>
-                        {/* </Transitions> */}
-                    </ClickAwayListener>
-                )}
-            </Popper>
-        </>
+        //     <Popper
+        //         placement="bottom-end"
+        //         open={open}
+        //         anchorEl={anchorRef.current}
+        //         role={undefined}
+        //         transition
+        //         disablePortal
+        //         style={{ width: '100%', zIndex: 1 }}
+        //         popperOptions={{
+        //             modifiers: [
+        //                 {
+        //                     name: 'offset',
+        //                     options: {
+        //                         offset: [0, matchMobile ? 30 : 10]
+        //                     }
+        //                 }
+        //             ]
+        //         }}
+        //     >
+        //         {({ TransitionProps }) => (
+        //             <ClickAwayListener onClickAway={handleClose}>
+        //                 <Transitions type="zoom" in={open} {...TransitionProps} sx={{ transformOrigin: 'top right' }}>
+        //                     <Paper>
+        //                         {open && (
+        //                             <AppBar
+        //                                 color="inherit"
+        //                                 sx={{
+        //                                     [theme.breakpoints.down('md')]: {
+        //                                         background: theme.palette.mode === 'dark' ? theme.palette.primary.main : '#fff'
+        //                                     }
+        //                                 }}
+        //                             >
+        //                                 <Toolbar sx={{ pt: 2.75, pb: 2.75 }}>
+        //                                     <Grid container justifyContent={matchMobile ? 'space-between' : 'flex-end'} alignItems="center">
+        //                                         <LocalizationSection />
+        //                                     </Grid>
+        //                                 </Toolbar>
+        //                             </AppBar>
+        //                         )}
+        //                     </Paper>
+        //                 </Transitions>
+        //             </ClickAwayListener>
+        //         )}
+        //     </Popper>
+        // </>
     );
 };
 

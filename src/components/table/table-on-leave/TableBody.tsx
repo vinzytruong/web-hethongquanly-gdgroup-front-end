@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import { useTheme, Chip, Grid, Typography, Button } from '@mui/material';
 import Box from '@mui/material/Box';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -10,10 +11,17 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import StyledIconButton from '@/components/styled-button/StyledIconButton';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import LocalPrintshopOutlinedIcon from '@mui/icons-material/LocalPrintshopOutlined';
+import dayjs from 'dayjs';
+import CustomDialog from '@/components/dialog/CustomDialog';
+import { slice } from 'lodash';
+import EmployeeDetails from './EmployeeDetails';
 
 interface BodyDataProps {
     handleView: (e: any) => void;
     handleEdit?: (e: any) => void;
+    handlePrint: (e: any) => void;
+    handleDelete: (e: any) => void;
     data: any;
     page: number;
     rowsPerPage: number
@@ -25,65 +33,128 @@ interface BodyDataProps {
 const TableBodyOnLeave = (props: BodyDataProps) => {
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
-    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
+    const { data, handleEdit, handlePrint, handleDelete, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
     const router = useRouter()
 
+
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         handleView(id);
-        router.push(`${viewLink}?id=${id}`);
     }
+
+    const [openDialog, setOpenDialog] = React.useState(false)
+
+    const theme = useTheme()
 
     return (
         <TableBody>
             {data?.map((row: any, index: any) => (
-                <StyledTableRow
-                    hover
-                    onClick={(e: any) => handleViewItem(e, row.id)}
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.id}
-                    sx={{ cursor: 'pointer' }}
-                >
-                    <StyledTableCell padding="normal">
-                        {page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>
-                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>
-                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>
-                    <StyledTableCell align="left">Chưa cập nhật</StyledTableCell>        
-                    <StyledTableCell align="center">
-                        <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                            <StyledIconButton
-                                variant='contained'
-                                color='default'
-                                onClick={(e: any) => handleViewItem(e, row.id)}
-                            >
-                                <VisibilityOutlinedIcon/>
-                            </StyledIconButton>
-                            {isAdmin &&
-                                <Box display='flex' gap={2} alignItems='center' justifyContent='center'>
-                                    <StyledIconButton
+                <>
+                    <StyledTableRow
+                        hover
+                        // onClick={(e: any) => handleViewItem(e, row.nghiPhepID)}  
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                        sx={{ cursor: 'pointer' }}
+                    >
+                        <StyledTableCell padding="normal">
+                            {page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}
+                        </StyledTableCell>
+                        <StyledTableCell align="left">{row?.createDate?.slice(0, 16)}</StyledTableCell>
+                        <StyledTableCell align="left">{row?.nghiPhepLoai.tenLoaiNghiPhep}</StyledTableCell>
+                        <StyledTableCell align="left">{slice(row?.tuNgay, 0, 10)}</StyledTableCell>
+                        <StyledTableCell align="left">{row?.ngayNghi} ngày</StyledTableCell>
+                        <StyledTableCell align="left">{row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID !== 1 ? dayjs(row?.nghiPhep_LichSu[0]?.thoiGian).format('MM/DD/YYYY HH:mm') : 'Đang chờ duyệt'}</StyledTableCell>
+                        <StyledTableCell align="left">
+                            <Chip
+                                label={
+                                    (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 && row?.nghiPhep_LichSu.length < 3) ? row?.nghiPhep_LichSu[0]?.nhanVien.tenNhanVien + ' (không duyệt)' :
+                                        (row?.nghiPhep_LichSu.length < 2 && row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID !== 4) ? 'Đang duyệt' :
+                                            (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 2) ? row?.nghiPhep_LichSu[0]?.nhanVien.tenNhanVien :
+                                                (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 3) ? row?.nghiPhep_LichSu[1]?.nhanVien.tenNhanVien :
+                                                    (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 4) ? row?.nghiPhep_LichSu[2]?.nhanVien.tenNhanVien :
+                                                        row?.nghiPhep_LichSu[2]?.nhanVien.tenNhanVien}
+                                sx={{
+                                    backgroundColor:
+                                        row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 ? '#f44336' :
+                                            row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 4 ? 'green' :
+                                                theme.palette.primary.main,
+                                    color: theme.palette.primary.contrastText
+                                }}
+
+                            />
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                            <Chip
+                                label={
+                                    (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 && row?.nghiPhep_LichSu.length === 3) ? row?.nghiPhep_LichSu[0]?.nhanVien.tenNhanVien + ' (không duyệt)' :
+                                        row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 && row?.nghiPhep_LichSu.length === 4 ? row?.nghiPhep_LichSu[1]?.nhanVien.tenNhanVien :
+                                            row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 ? 'Không được duyệt' :
+                                                (row?.nghiPhep_LichSu.length < 3 && row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID !== 4) ? 'Đang duyệt' :
+                                                    (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 3) ? row?.nghiPhep_LichSu[0]?.nhanVien.tenNhanVien :
+                                                        (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 4) ? row?.nghiPhep_LichSu[1]?.nhanVien.tenNhanVien :
+                                                            row?.nghiPhep_LichSu[2]?.nhanVien.tenNhanVien}
+                                sx={{
+                                    backgroundColor:
+                                        row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 ? '#f44336' :
+                                            row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 4 ? 'green' :
+                                                theme.palette.primary.main,
+                                    color: theme.palette.primary.contrastText
+                                }}
+
+                            />
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                            <Chip
+                                label={
+                                    (row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 && row?.nghiPhep_LichSu.length === 4) ? row?.nghiPhep_LichSu[0]?.nhanVien.tenNhanVien + ' (không duyệt)' :
+                                        row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 ? 'Không được duyệt' :
+                                            (row?.nghiPhep_LichSu.length < 3 && row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID !== 4) ? 'Đang duyệt' :
+                                                (row?.nghiPhep_LichSu.length < 4 && row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID !== 4) ? 'Đang duyệt' :
+                                                    row?.nghiPhep_LichSu[0]?.nhanVien.tenNhanVien}
+                                sx={{
+                                    backgroundColor:
+                                        row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 5 ? '#f44336' :
+                                            row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID === 4 ? 'green' :
+                                                theme.palette.primary.main,
+                                    color: theme.palette.primary.contrastText
+                                }}
+                            />
+                        </StyledTableCell>
+                        <StyledTableCell align="left">
+                            <Box display='flex' gap={2} alignItems='center' justifyContent='flex-end'>
+
+                                {row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID
+                                    === 4 && <StyledIconButton
                                         variant='contained'
                                         color='primary'
-                                        onClick={(e: any) => handleViewItem(e, row.id)}
+                                        onClick={(e: any) => { handlePrint(row?.nghiPhepID | 0) }}
                                     >
-                                        <ModeEditOutlinedIcon/>
-                                    </StyledIconButton>
-                                    <StyledIconButton
-                                        variant='contained'   
+                                        <LocalPrintshopOutlinedIcon />
+                                    </StyledIconButton>}
+
+                                <StyledIconButton
+                                    variant='contained'
+                                    color='default'
+                                    onClick={(e: any) => handleViewItem(e, row.nghiPhepID)}
+                                >
+                                    <VisibilityOutlinedIcon />
+                                </StyledIconButton>
+
+                                {row?.nghiPhep_LichSu[0]?.nghiPhep_TrangThai?.trangThaiID
+                                    < 2 && <StyledIconButton
+                                        variant='contained'
                                         color='secondary'
-                                        onClick={(e: any) => handleViewItem(e, row.id)}
+                                        onClick={(e: any) => { handleDelete(row.nghiPhepID) }}
                                     >
-                                        <DeleteOutlineOutlinedIcon/>
-                                    </StyledIconButton>
-                                </Box>
-                            }
+                                        <DeleteOutlineOutlinedIcon />
+                                    </StyledIconButton>}
 
-
-                        </Box>
-                    </StyledTableCell>
-                </StyledTableRow>
+                            </Box>
+                        </StyledTableCell>
+                    </StyledTableRow>
+                </>
             ))}
             {alertContent && <SnackbarAlert message={alertContent.message} type={alertContent.type} setOpenAlert={setOpenAlert} openAlert={openAlert} />}
             {emptyRows > 0 && (
@@ -110,7 +181,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
-        paddingTop:'24px',
-        paddingBottom:'24px'
+        paddingTop: '24px',
+        paddingBottom: '24px'
     },
 }));

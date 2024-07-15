@@ -9,5 +9,6 @@ export interface Author{
     donViCongTac: string,
     chucVuTacGia: string,
     monChuyenNghanh: string,
-    active: boolean
+    active: boolean,
+    nhanVienID:number
 }

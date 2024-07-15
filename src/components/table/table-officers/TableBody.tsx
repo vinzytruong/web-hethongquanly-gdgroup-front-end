@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { toast } from "react-toastify";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TableBody from '@mui/material/TableBody';
@@ -17,36 +18,38 @@ import OrganizationDialog from '@/components/dialog/OrganizationDialog';
 import { Officers } from '@/interfaces/officers';
 import useOfficers from '@/hooks/useOfficers';
 import OfficersDialog from '@/components/dialog/OfficersDialog';
+import CustomDialog from '@/components/dialog/CustomDialog';
+import FormOfficer from '@/components/form/FormOfficer';
 
 interface BodyDataProps {
-    handleView: (e: any) => void;
+    handleView?: (e: any) => void;
     handleEdit?: (e: any) => void;
     data: Officers[];
     page: number;
     rowsPerPage: number
     editLink?: string
     viewLink: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    idDepartment: number
 }
 
 const TableBodyOfficers = (props: BodyDataProps) => {
+    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin, idDepartment } = props
+    const router = useRouter();
     const { deleteOfficers, updateOfficers } = useOfficers()
     const [alertContent, setAlertContent] = React.useState({ type: '', message: '' })
     const [openAlert, setOpenAlert] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-    const { data, handleEdit, handleView, page, rowsPerPage, editLink, viewLink, isAdmin } = props
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-    const router = useRouter();
     const [selectedID, setSelectedID] = React.useState<number>()
 
     const handleViewItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        console.log("view", id);
-
         // router.push(`${viewLink}?id=${id}`);
     }
 
-    const handleDeleteItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
-        deleteOfficers(id)
+    const handleDeleteItem = async (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
+        let status = await deleteOfficers(id)
+        if (status === 200) toast.success(`Xóa cán bộ ${data.find(item => item.canBoID === id)?.hoVaTen} của cơ quan thành công`)
+        else toast.error(`Xóa cán bộ ${data.find(item => item.canBoID === id)?.hoVaTen} của cơ quan thất bại`)
     }
     const handleEditItem = (e: React.MouseEventHandler<HTMLTableRowElement> | undefined, id: any) => {
         setSelectedID(id)
@@ -68,7 +71,6 @@ const TableBodyOfficers = (props: BodyDataProps) => {
                 >
                     <StyledTableCell padding="normal">{page > 0 ? (page * (rowsPerPage) + index + 1) : index + 1}</StyledTableCell>
                     <StyledTableCell align="left">{row.hoVaTen ? row.hoVaTen : 'Chưa có dữ liệu'}</StyledTableCell>
-                    <StyledTableCell align="center">{row.canBoID ? row.canBoID : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="center">{row.gioiTinh === 0 ? 'Nữ' : 'Nam'}</StyledTableCell>
                     <StyledTableCell align="left">{row.chucVu ? row.chucVu : 'Chưa có dữ liệu'}</StyledTableCell>
                     <StyledTableCell align="left">{row.soDienThoai ? row.soDienThoai : 'Chưa có dữ liệu'}</StyledTableCell>
@@ -114,7 +116,20 @@ const TableBodyOfficers = (props: BodyDataProps) => {
                     <StyledTableCell align='center' colSpan={6}>Chưa có dữ liệu</StyledTableCell>
                 </StyledTableRow>
             )}
-            <OfficersDialog title="Cập nhật cơ quan" defaulValue={data.find(item => item.canBoID === selectedID)} handleOpen={setOpen} open={open} isUpdate />
+            <CustomDialog
+                title={"Thêm cán bộ"}
+                open={open}
+                handleOpen={setOpen}
+                content={
+                    <FormOfficer
+                        id={idDepartment}
+                        handleOpen={setOpen}
+                        isUpdate
+                        defaultValue={data.find(item => item.canBoID === selectedID)}
+                    />
+                }
+            />
+            {/* <OfficersDialog id={idDepartment} title="Cập nhật cơ quan" defaulValue={data.find(item => item.canBoID === selectedID)} handleOpen={setOpen} open={open} isUpdate idParent={idDepartment} /> */}
         </TableBody>
     )
 }

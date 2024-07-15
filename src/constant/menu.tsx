@@ -1,6 +1,5 @@
 import { NavItemType } from '@/components/slidebar/menu-list/nav-item';
-import { IconDeviceAnalytics, IconHome, IconCheese, IconMapPin } from '@tabler/icons-react';
-
+import { IconSettings2, IconRosetteNumber0, IconDeviceAnalytics, IconHome, IconCheese, IconMapPin, IconSmartHome, IconUsersGroup, IconUserStar, IconWebhook, IconHomeCheck, IconHomeX, IconTextSize, IconCoins, IconBrandApplePodcast, IconSchool, IconCoin, IconListCheck, IconChecklist, IconListNumbers, IconReport, IconCalendarPlus, IconPlant, IconCheckbox, IconBuildingStore, IconShieldCheck, IconAtom2, IconCategoryPlus, IconBrandCodesandbox, IconCalculator, IconBuildingCommunity, IconUsers, IconBrandSuperhuman, IconHighlight, IconAdjustmentsStar, IconPresentation, IconDeviceProjector, IconPropeller, IconAerialLift, IconBuildingWarehouse, IconBuildingCottage } from '@tabler/icons-react';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboardAdmin = [
@@ -11,42 +10,50 @@ const dashboardAdmin = [
         children: [
             {
                 id: 'home',
-                title: "Home",
+                title: "Trang chủ",
                 type: 'item',
                 url: '/home',
-                icon: <IconHome />,
+                icon: <IconSmartHome stroke={1.5} />,
                 breadcrumbs: false
             },
             {
                 id: 'administrative_personnel',
-                title: "Administrative personnel",
+                title: "Hành chính nhân sự",
                 type: 'collapse',
                 url: '/administrative-personnel',
-                icon: <IconCheese />,
+                icon: <IconUsersGroup stroke={1.5} />,
                 breadcrumbs: false,
-                children:[
+                children: [
                     {
                         id: 'staff-information',
-                        title: "Staff information",
+                        title: "Nhân viên",
                         type: 'item',
                         url: '/administrative-personnel/staff',
-                        icon: <IconHome />,
+                        icon: <IconUserStar stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'company',
+                        title: "Công ty",
+                        type: 'item',
+                        url: '/administrative-personnel/company',
+                        icon: <IconWebhook stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
                         id: 'time-keeping',
-                        title: "Timekeeping",
+                        title: "Chấm công",
                         type: 'item',
                         url: '/administrative-personnel/checking',
-                        icon: <IconCheese />,
+                        icon: <IconHomeCheck stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
                         id: 'Leave-of-absence',
-                        title: "Leave of absence",
+                        title: "Nghỉ phép",
                         type: 'item',
                         url: '/administrative-personnel/be-on-leave',
-                        icon: <IconCheese />,
+                        icon: <IconHomeX stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
@@ -54,7 +61,7 @@ const dashboardAdmin = [
                         title: "Văn bản",
                         type: 'item',
                         url: '#',
-                        icon: <IconCheese />,
+                        icon: <IconTextSize stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
@@ -62,31 +69,31 @@ const dashboardAdmin = [
                         title: "Định vị",
                         type: 'item',
                         url: '#',
-                        icon: <IconCheese />,
+                        icon: <IconMapPin stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'employee',
+                        id: 'money',
                         title: "Tài sản",
                         type: 'item',
                         url: '#',
-                        icon: <IconCheese />,
+                        icon: <IconCoins stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'employee',
+                        id: 'apply',
                         title: "Tuyển dụng",
                         type: 'item',
                         url: '#',
-                        icon: <IconCheese />,
+                        icon: <IconBrandApplePodcast stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'employee',
+                        id: 'training',
                         title: "Đào tạo",
                         type: 'item',
                         url: '#',
-                        icon: <IconCheese />,
+                        icon: <IconSchool stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
@@ -94,41 +101,59 @@ const dashboardAdmin = [
                         title: "Thu chi",
                         type: 'item',
                         url: '#',
-                        icon: <IconCheese />,
+                        icon: <IconCoin stroke={1.5} />,
                         breadcrumbs: false
                     },
                 ]
             },
             {
-                id: 'work',
+                id: 'plan',
                 title: "Quản lý công việc",
                 type: 'collapse',
                 url: '#',
-                icon: <IconMapPin />,
+                icon: <IconCalendarPlus stroke={1.5} />,
                 breadcrumbs: false,
-                children:[
+                children: [
                     {
-                        id: 'task',
-                        title: "Công việc",
+                        id: 'create_assign',
+                        title: "Giao việc",
                         type: 'item',
-                        url: '#',
-                        icon: <IconCheese />,
+                        url: '/workflow/assign',
+                        icon: <IconPlant stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'schedule',
-                        title: "Lịch trình",
+                        id: 'assginedWork',
+                        title: "Công việc được giao",
                         type: 'item',
-                        url: '#',
-                        icon: <IconCheese />,
+                        url: '/workflow/assigned-work',
+                        icon: <IconPlant stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                ]
+            },
+            {
+                id: 'plan',
+                title: "Quản lý kế hoạch",
+                type: 'collapse',
+                url: '#',
+                icon: <IconCalendarPlus stroke={1.5} />,
+                breadcrumbs: false,
+                children: [
+                    {
+                        id: 'create_plan',
+                        title: "Lập kế hoạch",
+                        type: 'item',
+                        url: '/plan/create',
+                        icon: <IconPlant stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'report-task',
-                        title: "Báo cáo công việc",
+                        id: 'confirm_plan',
+                        title: "Duyệt kế hoạch",
                         type: 'item',
-                        url: '#',
-                        icon: <IconCheese />,
+                        url: '/plan/confirm',
+                        icon: <IconCheckbox stroke={1.5} />,
                         breadcrumbs: false
                     },
                 ]
@@ -137,26 +162,86 @@ const dashboardAdmin = [
                 id: 'product',
                 title: "Quản lý sản phẩm",
                 type: 'collapse',
-                url: '#',
-                icon: <IconMapPin />,
+                url: '/product',
+                icon: <IconBuildingStore stroke={1.5} />,
                 breadcrumbs: false,
-                children:[
+                children: [
                     {
                         id: 'product-by',
                         title: "Sản phẩm theo thông tư",
                         type: 'item',
-                        url: '#',
-                        icon: <IconCheese />,
+                        url: '/product/product-by',
+                        icon: <IconShieldCheck stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'unit',
+                        title: "Đơn vị tính",
+                        type: 'item',
+                        url: '/product/unit',
+                        icon: <IconAtom2 stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'category',
+                        title: "Danh mục",
+                        type: 'item',
+                        url: '/product/category',
+                        icon: <IconCategoryPlus stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'productType',
+                        title: "Loại sản phẩm",
+                        type: 'item',
+                        url: '/product/product-type',
+                        icon: <IconBrandCodesandbox stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
                         id: 'estimate',
-                        title: "Dự toán",
+                        title: "Xây dự toán",
                         type: 'item',
-                        url: '#',
-                        icon: <IconCheese />,
+                        url: '/product/estimate',
+                        icon: <IconCalculator stroke={1.5} />,
                         breadcrumbs: false
                     },
+                    {
+                        id: 'company_estimate',
+                        title: "Công ty",
+                        type: 'item',
+                        url: '/product/company-estimate',
+                        icon: <IconBuildingCommunity stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+
+                ]
+            },
+            {
+                id: 'partner',
+                title: "Quản lý đối tác",
+                type: 'collapse',
+                url: '/partner',
+                icon: <IconUsers stroke={1.5} />,
+                breadcrumbs: false,
+                children: [
+                    {
+                        id: 'supplier',
+                        title: "Nhà cung cấp",
+                        type: 'item',
+                        url: '/partner/supplier',
+                        icon: <IconBrandSuperhuman stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'author',
+                        title: "Tác giả",
+                        type: 'item',
+                        url: '/partner/author',
+                        icon: <IconHighlight stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+
                 ]
             },
             {
@@ -164,86 +249,82 @@ const dashboardAdmin = [
                 title: "Quản lý khách hàng",
                 type: 'collapse',
                 url: '/customer',
-                icon: <IconMapPin />,
+                icon: <IconAdjustmentsStar stroke={1.5} />,
                 breadcrumbs: false,
-                children:[
+                children: [
                     {
-                        id: 'budget',
-                        title: "Ngân sách",
+                        id: 'project',
+                        title: "Dự án",
                         type: 'item',
-                        url: '/customer/budget',
-                        icon: <IconCheese />,
+                        url: '/customer/project',
+                        icon: <IconPresentation stroke={1.5} />,
                         breadcrumbs: false
                     },
-                    {
-                        id: 'interactive_history',
-                        title: "Quản lý tương tác",
-                        type: 'item',
-                        url: '/customer/interaction',
-                        icon: <IconCheese />,
-                        breadcrumbs: false
-                    },
+
                     {
                         id: 'contractors',
                         title: "Nhà thầu",
                         type: 'item',
                         url: '/customer/contractors',
-                        icon: <IconCheese />,
+                        icon: <IconDeviceProjector stroke={1.5} />,
                         breadcrumbs: false
                     },
                     {
-                        id: 'supplier',
-                        title: "Nhà cung cấp",
+                        id: 'agency',
+                        title: "Đại lý",
                         type: 'item',
-                        url: '/customer/supplier',
-                        icon: <IconCheese />,
+                        url: '/customer/agency',
+                        icon: <IconPropeller stroke={1.5} />,
                         breadcrumbs: false
                     },
-                    {
-                        id: 'author',
-                        title: "Tác giả",
-                        type: 'item',
-                        url: '/customer/author',
-                        icon: <IconCheese />,
-                        breadcrumbs: false
-                    },
-                    
+
+
+
                 ]
             },
             {
-                id: 'warehouse',
-                title: "Quản lý kho",
-                type: 'item',
-                url: '#',
-                icon: <IconMapPin />,
-                breadcrumbs: false
-            }
+                id: 'config',
+                title: "Cài đặt",
+                type: 'collapse',
+                url: '/config',
+                icon: <IconAdjustmentsStar stroke={1.5} />,
+                breadcrumbs: false,
+                children: [
+                    {
+                        id: 'configNotification',
+                        title: "Cấu hình thông báo",
+                        type: 'item',
+                        url: '/config/notification',
+                        icon: <IconSettings2 stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                    {
+                        id: 'setcode',
+                        title: "Set code telegram",
+                        type: 'item',
+                        url: '/config/set-code',
+                        icon: <IconRosetteNumber0 stroke={1.5} />,
+                        breadcrumbs: false
+                    },
+                ]
+            },
             // {
-            //     id: 'admin-sites',
-            //     title: "Địa điểm",
-            //     type: 'collapse',
-            //     url: '/admin/sites',
-            //     icon: <IconDeviceAnalytics/>,
-            //     breadcrumbs: false,
-            //     children: [
-            //         {
-            //             id: 'admin-product-one',
-            //             title: "Di tích lịch sử",
-            //             type: 'item',
-            //             url: '/admin/sites/historical',
-            //             icon: <IconEyeTable/>,
-            //             breadcrumbs: false
-            //         },
-            //         {
-            //             id: 'admin-product-two',
-            //             title: "Địa điểm du lịch",
-            //             type: 'item',
-            //             url: '/admin/sites/sightseeing',
-            //             icon: <IconDevices/>,
-            //             breadcrumbs: false
-            //         },  
-            //     ]
+            //     id: 'estimate_manage',
+            //     title: "Quản lý dự toán",
+            //     type: 'item',
+            //     url: '#',
+            //     icon: <IconAerialLift stroke={1.5} />,
+            //     breadcrumbs: false
             // },
+            // {
+            //     id: 'warehouse',
+            //     title: "Quản lý kho",
+            //     type: 'item',
+            //     url: '#',
+            //     icon: <IconBuildingCottage stroke={1.5} />,
+            //     breadcrumbs: false
+            // }
+
 
         ]
     },

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Avatar, Box, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Grid, Typography } from '@mui/material';
 import MainCard from '@/components/card/MainCard';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import SkeletonCardTotal from '../skeleton/SkeletonCardStaff';
@@ -41,27 +41,32 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
   }
 }));
 
-// ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
-
-const TotalStaffCard = ({isLoading,data}:any) => {
+const TotalStaffCard = ({ isLoading, data }: any) => {
   const theme = useTheme();
+  const [displayedCount, setDisplayedCount] = useState(0);
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  useEffect(() => {
+    let start = 0;
+    const end = data.length;
+    if (start === end) return;
 
-  const handleClick = (event:any) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const incrementTime = Math.abs(Math.floor(500 / end)); // Adjust the duration as needed
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const timer = setInterval(() => {
+      start += 1;
+      setDisplayedCount(start);
+      if (start === end) clearInterval(timer);
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [data.length]);
 
   return (
     <>
       {isLoading ? (
-        <SkeletonCardTotal/>
+        <SkeletonCardTotal />
       ) : (
-        <CardWrapper border={false} content={false} style={{width:'100%'}}>
+        <CardWrapper border={false} content={false} style={{ width: '100%' }}>
           <Box sx={{ p: 2.25 }}>
             <Grid container direction="column">
               <Grid item>
@@ -70,31 +75,29 @@ const TotalStaffCard = ({isLoading,data}:any) => {
                     <Avatar
                       variant="rounded"
                       sx={{
+                        [theme.breakpoints.down('sm')]: {
+                          display: 'none'
+                        },
                         backgroundColor: '#1565c0',
-                        mt: 1
+                        mt: 0
                       }}
                     >
-                      <GroupOutlinedIcon/>
+                      <GroupOutlinedIcon />
                     </Avatar>
                   </Grid>
-                  
                 </Grid>
               </Grid>
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                  <Typography sx={{ fontSize: '2.5rem', fontWeight: 500, mr: 1, mt: 0.5, mb: 0.5 }}>{data.length}</Typography>
+                    <Typography sx={{ fontSize: '2.25rem', fontWeight: 500 }}>
+                      {displayedCount}
+                    </Typography>
                   </Grid>
-                  
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
-                <Typography
-                  sx={{
-                    fontSize: '1rem',
-                    fontWeight: 500,
-                  }}
-                >
+              <Grid item>
+                <Typography sx={{ fontSize: '1rem', fontWeight: 500 }}>
                   Nhân viên
                 </Typography>
               </Grid>

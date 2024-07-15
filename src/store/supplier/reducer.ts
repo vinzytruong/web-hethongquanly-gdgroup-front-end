@@ -19,7 +19,7 @@ export default createReducer(initialState, (builder) =>
                   obj.maSoThue=action.payload.supplier.maSoThue;
                   obj.nguoiDaiDien=action.payload.supplier.nguoiDaiDien;
                   obj.tinhID=action.payload.supplier.tinhID;
-                  obj.thongTinThem=action.payload.supplier.thongTinThem;
+                  obj.ghiChu=action.payload.supplier.ghiChu;
                 }
                 return obj;
               });

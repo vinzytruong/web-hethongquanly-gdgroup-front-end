@@ -17,6 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 
 export default function AuthorDialog(props: PropsDialog) {
@@ -31,40 +32,70 @@ export default function AuthorDialog(props: PropsDialog) {
         if (defaulValue) setFormData(defaulValue)
     }, [defaulValue])
 
-    const handleChange = (e: any) => {
 
-        if (e.target) {
-            console.log(e.target.name);
-            setFormData((prevState: any) => ({
+    const handleChange = (e: any) => {
+        if (e?.target) {
+            if (selectedDate === undefined) {
+                console.log("selectedDate",formData);
+                setFormData((prevState: any) => ({
+                    ...prevState,
+                    [e.target.name]: e.target.value,
+                    ['ngaySinh']:'01/01/0001 00:00:00'
+                }));
+            }
+            if (e.target.name === "gioiTinh") setFormData((prevState: any) => ({
                 ...prevState,
-                [e.target.name]: e.target.value
+                [e.target.name]: Number(e.target.value)
             }));
+            
+            else setFormData((prevState: any) => ({
+                    ...prevState,
+                    [e.target.name]: e.target.value
+                }));
+            
         }
         else {
             setDateChange(e)
             setFormData((prevState: any) => ({
                 ...prevState,
-                ['ngaySinh']: dayjs(e).format('DD/MM/YYYY'),
+                ['ngaySinh']: dayjs(e).format('DD/MM/YYYY HH:mm:ss'),
                 ['active']: true
             }));
         }
     };
+
     const handleAdd = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        console.log(formData);
-
-        if (formData) addAuthor(formData)
-        setLoaing(false);
-        handleOpen(false)
+        try {
+            if (formData) addAuthor(formData)
+            toast.success('Thêm tác giả thành công')
+            setLoaing(false);
+            handleOpen(false)
+            setFormData(undefined)
+        }
+        catch (err: any) {
+            console.error(err);
+            setLoaing(false);
+            toast.error('Thêm tác giả thất bại')
+        }
     }
+    // console.log("update", formData);
 
     const handleUpdate = (e: any) => {
         e.preventDefault();
         setLoaing(true);
-        if (formData) updateAuthor(formData)
-        setLoaing(false);
-        handleOpen(false)
+        try {
+            if (formData) updateAuthor(formData)
+            setLoaing(false);
+            handleOpen(false)
+            toast.success('Cập nhật tác giả thành công')
+        }
+        catch (err: any) {
+            console.error(err);
+            setLoaing(false);
+            toast.error('Cập nhật tác giả thất bại')
+        }
     }
 
     return (
@@ -166,7 +197,7 @@ export default function AuthorDialog(props: PropsDialog) {
                                 <DatePicker
                                     name='ngaySinh'
                                     sx={{ width: '100%' }}
-                                    
+                                    // defaultValue={dayjs(defaulValue?.ngaySinh) || '01/01/0001 00:00:00'}
                                     value={selectedDate}
                                     onChange={handleChange}
                                     disableFuture={true}
@@ -192,8 +223,8 @@ export default function AuthorDialog(props: PropsDialog) {
                                 onChange={handleChange}
                                 row
                             >
-                                <FormControlLabel value={1} control={<Radio />} label="Nam" />
-                                <FormControlLabel value={0} control={<Radio />} label="Nữ" />
+                                <FormControlLabel defaultValue={formData?.gioiTinh} value={1} control={<Radio />} label="Nam" />
+                                <FormControlLabel defaultValue={formData?.gioiTinh} value={0} control={<Radio />} label="Nữ" />
                             </RadioGroup>
                         </Box>
                     </Box>

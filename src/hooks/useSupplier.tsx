@@ -9,11 +9,28 @@ export default function useSupplier() {
     const dataSupplier = useAppSelector((state) => state.supplier)
     const [isLoadding, setIsLoading] = useState(true);
     const dispatch = useAppDispatch();
+    
+    useEffect(() => {
+        const getAllSupplier = async () => {
+            try {
+                const accessToken = window.localStorage.getItem('accessToken');
+                const headers = { Authorization: `Bearer ${accessToken}` };
+                const response = await axios.get(getNhaCungCap, { headers });
+                dispatch(GET_ALL({ supplier: response.data }))            
+                setIsLoading(false)
+            } catch (e) {
+                console.error("Error: ", e);
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        getAllSupplier()
+    }, [dispatch])
 
     const getAllSupplier = async () => {
         try {
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {Authorization: `Bearer ${accessToken}`};
+            const headers = { Authorization: `Bearer ${accessToken}` };
             const response = await axios.get(getNhaCungCap, { headers });
             dispatch(GET_ALL({ supplier: response.data }))
             setIsLoading(false)
@@ -23,12 +40,12 @@ export default function useSupplier() {
             setIsLoading(false)
         }
     }
-    
+
     const addSupplier = async (supplier: Supplier) => {
         try {
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json'};
-            const response = await axios.post(addNhaCungCap,  supplier , { headers });
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+            const response = await axios.post(addNhaCungCap, supplier, { headers });
             dispatch(ADD_SUPPLIER({ supplier: response.data }))
             setIsLoading(false)
         } catch (e) {
@@ -41,9 +58,10 @@ export default function useSupplier() {
     const updateSupplier = async (supplier: Supplier) => {
         try {
             const accessToken = window.localStorage.getItem('accessToken');
-            const headers = {Authorization: `Bearer ${accessToken}`,'Content-Type': 'application/json'};
-            const response = await axios.put(updateNhaCungCap,supplier, { headers });
-            dispatch(UPDATE_SUPPLIER({ supplier: response.data, id: response.data.nhaCungCapID }))
+            const headers = { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+            const response = await axios.put(updateNhaCungCap, supplier, { headers });
+            getAllSupplier()
+            // dispatch(UPDATE_SUPPLIER({ supplier: response.data, id: response.data.nhaCungCapID }))
             setIsLoading(false)
         } catch (e) {
             console.error("Error: ", e);
@@ -65,6 +83,6 @@ export default function useSupplier() {
     }
 
     return {
-        isLoadding, dataSupplier, getAllSupplier, addSupplier, updateSupplier, deleteSupplier
+        isLoaddingSupplier: isLoadding, dataSupplier, getAllSupplier, addSupplier, updateSupplier, deleteSupplier
     };
 }

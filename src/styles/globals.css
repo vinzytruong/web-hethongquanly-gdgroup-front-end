@@ -1,25 +1,34 @@
 :root {
-  --color-background: #ffffff;
-  --color-scrollbar: rgb(224, 224, 224);
+  --color-background: red;
+  --color-scrollbar: black !important; 
   --color-scrollbar-hover: #bbb;
 }
 
+.date_picker .css-z3c6am-MuiFormControl-root-MuiTextField-root {
+  width: 100% !important;
+}
+.required_text{
+  color:#d32f2f;
+}
+.is_change_product {
+  color: #1f700d;
+}
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px !important;
+  height: 7px !important;
 }
 ::-webkit-scrollbar-track,
 ::-webkit-scrollbar-corner {
-  background: var(--color-background);
+  background: white !important;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-scrollbar);
+  background: #0CC0F1 !important;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-track,
 ::-webkit-scrollbar-corner {
-  background: var(--color-background);
+  background: white !important;
   border-radius: 10px;
 }
 
@@ -52,4 +61,26 @@ body {
     transform: scale(5);
     opacity: 0;
   }
+}
+.css-u59zwl-MuiResponsiveChart-container>svg {
+  width: 100%;
+  height: 90% !important;
+}
+.css-fso5qs-MuiResponsiveChart-container>svg {
+  width: 100%;
+  height: 90% !important;
+}
+.css-rs4om0>svg {
+  width: 100%;
+  height: 90% !important;
+}
+.css-1suh3q0-MuiFormLabel-root-MuiInputLabel-root {
+
+  color: black;
+}
+.MuiFormControl-root.MuiTextField-root.css-165mck1 {
+  width: 100%;
+}
+.ql-editor {
+  min-height: 18em;
 }

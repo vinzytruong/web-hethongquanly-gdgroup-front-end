@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import { Avatar, Box, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { Avatar, Box, Grid, Typography } from '@mui/material';
 import MainCard from '@/components/card/MainCard';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import SkeletonCardTotal from '../skeleton/SkeletonCardStaff';
 
 const CardWrapper = styled(MainCard)(({ theme }) => ({
@@ -41,19 +41,30 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
   }
 }));
 
-// ===========================|| DASHBOARD DEFAULT - EARNING CARD ||=========================== //
-
-const TotalCustomerCard = ({isLoading,data}:any) => {
+const TotalCustomerCard = ({ isLoading, data }: any) => {
   const theme = useTheme();
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
 
-  const handleClick = (event:any) => {
-    setAnchorEl(event.currentTarget);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (time: any) => {
+    const hours = time.getHours().toString().padStart(2, '0');
+    const minutes = time.getMinutes().toString().padStart(2, '0');
+    const seconds = time.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const formatDate = (time: any) => {
+    const day = time.getDate().toString().padStart(2, '0');
+    const month = (time.getMonth() + 1).toString().padStart(2, '0');
+    const year = time.getFullYear();
+    return `${day}/${month}`;
   };
 
   return (
@@ -61,7 +72,7 @@ const TotalCustomerCard = ({isLoading,data}:any) => {
       {isLoading ? (
         <SkeletonCardTotal />
       ) : (
-        <CardWrapper border={false} content={false} style={{width:'100%'}}>
+        <CardWrapper border={false} content={false} style={{ width: '100%' }}>
           <Box sx={{ p: 2.25 }}>
             <Grid container direction="column">
               <Grid item>
@@ -70,32 +81,36 @@ const TotalCustomerCard = ({isLoading,data}:any) => {
                     <Avatar
                       variant="rounded"
                       sx={{
+                        [theme.breakpoints.down('sm')]: {
+                          display: 'none'
+                        },
                         backgroundColor: 'rgb(193, 118, 31)',
-                        mt: 1
+                        mt: 0
                       }}
                     >
-                      <GroupOutlinedIcon/>
+                      <AccessTimeIcon />
                     </Avatar>
                   </Grid>
-                  
                 </Grid>
               </Grid>
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                  <Typography sx={{ fontSize: '2.5rem', fontWeight: 500, mr: 1, mt: 0.5, mb: 0.5 }}>{data.length}</Typography>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 500 }}>
+                      {formatDate(currentTime)} {formatTime(currentTime)}
+                    </Typography>
+                    <Box>
+                    </Box>
                   </Grid>
-                  
                 </Grid>
               </Grid>
-              <Grid item sx={{ mb: 1.25 }}>
-                <Typography
-                  sx={{
-                    fontSize: '1rem',
-                    fontWeight: 500,
-                  }}
-                >
-                  Khách hàng
+              <Grid item>
+                <Typography sx={{ fontSize: '1rem', fontWeight: 500 }}>
+                  Thời gian
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography sx={{ fontSize: '1rem', fontWeight: 500 }}>
                 </Typography>
               </Grid>
             </Grid>

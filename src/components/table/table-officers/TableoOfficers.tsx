@@ -49,6 +49,7 @@ function stableSort<T>(array: any[], comparator: (a: T, b: T) => number) {
 interface Props {
     rows: Officers[],
     isAdmin: boolean,
+    idDepartment:number
 }
 
 interface HeadCell {
@@ -65,15 +66,9 @@ const headCells: readonly HeadCell[] = [
         label: 'Họ và tên',
     },
     {
-        id: 'officers_code',
-        numeric: true,
-        disablePadding: true,
-        label: 'Mã số cán bộ',
-    },
-    {
         id: 'gender',
         numeric: true,
-        disablePadding: true,
+        disablePadding: false,
         label: 'Giới tính',
     },
     {
@@ -95,7 +90,7 @@ const headCells: readonly HeadCell[] = [
         label: 'Email',
     },
 ];
-const TableOfficers = ({ rows, isAdmin }: Props) => {
+const TableOfficers = ({ rows, isAdmin,idDepartment }: Props) => {
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Officers>('canBoID');
     const [page, setPage] = React.useState(0);
@@ -140,6 +135,7 @@ const TableOfficers = ({ rows, isAdmin }: Props) => {
                             viewLink='officers'
                             editLink=''
                             isAdmin={isAdmin}
+                            idDepartment={idDepartment}
                         />
                     </Table>
                 </TableContainer>

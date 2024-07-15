@@ -9,35 +9,35 @@ interface PropsCard {
     id: number,
     handleOpen: (e: boolean) => void,
     handleEdit?: (e: any) => void;
+    handleInteraction?: (e: any) => void;
     handleDelete?: (e: any) => void;
+    isAllowDelete?: boolean,
+    isShowInteration?: boolean
 }
 
 export default function InfoCard(props: PropsCard) {
-    const { open, handleOpen, data, title, handleDelete, handleEdit, id } = props
+    const { open, handleOpen, data, title, handleDelete, handleEdit, handleInteraction, id, isAllowDelete, isShowInteration } = props
     const theme = useTheme()
-
     return (
         <Box
             bgcolor={theme.palette.background.paper}
-            px={3}
-            py={3}
+            // px={3}
+            // py={3}
             display={`${open ? 'flex' : 'none'}`}
-            width='600px'
-            height='66vh'
+            sx={{
+                width: {
+                    xs: '100%',
+                },
+                height: {
+                    xs: '100%',
+                    // sm: '66vh',
+                }
+            }}
             justifyContent='space-between'
             alignItems='center'
             flexDirection='column'
 
         >
-            <Box display='flex' justifyContent='space-between' alignItems='center' pb={3} width='100%'>
-                <Typography variant='h5' pt={1}>{title}</Typography>
-                <IconButton
-                    aria-label="close"
-                    onClick={() => handleOpen(false)}
-                >
-                    <CloseIcon />
-                </IconButton>
-            </Box>
             {data.map((item: any, index: any) =>
                 <Box
                     display='flex'
@@ -47,27 +47,38 @@ export default function InfoCard(props: PropsCard) {
                     key={index}
                     py={1}
                 >
-                    <Typography color={theme.palette.text.primary}>{item.key}</Typography>
-                    <Typography fontSize={14}>{item.value}</Typography>
+                    <Typography width={"100%"} color={theme.palette.text.primary}><span style={{fontWeight:"bold"}}>{item.key}: </span>{item.value}</Typography>
+
                 </Box>
             )}
-            <Box display='flex' gap={2} alignItems='center' justifyContent='space-between' width='100%' pt={3}>
-                <StyledButton
-                    variant='contained'
-                    color='primary'
-                    onClick={() => handleEdit!(id)}
-                >
-                    Chỉnh sửa
+            {isAllowDelete &&
+                <Box display='flex' gap={2} alignItems='center' justifyContent='space-between' width='100%' pt={3}>
+                    <StyledButton
+                        variant='contained'
+                        color='primary'
+                        onClick={() => handleEdit!(id)}
+                    >
+                        Chỉnh sửa
+                    </StyledButton>
+                    {
+                        isShowInteration === true && <StyledButton
+                            variant='contained'
+                            color='secondary'
+                            onClick={() => handleInteraction!(id)}
+                        >
+                            Báo cáo tiếp xúc
+                        </StyledButton>
+                    }
 
-                </StyledButton>
-                <StyledButton
-                    variant='outlined'
-                    color='primary'
-                    onClick={() => handleDelete!(id)}
-                >
-                    Xoá
-                </StyledButton>
-            </Box>
+                    <StyledButton
+                        variant='outlined'
+                        color='primary'
+                        onClick={() => handleDelete!(id)}
+                    >
+                        Xoá
+                    </StyledButton>
+                </Box>
+            }
         </Box>
     )
 }

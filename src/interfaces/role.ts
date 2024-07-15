@@ -1,0 +1,10 @@
+export interface Role {
+    id: string,
+    name: string,
+    normalizedName: string,
+    concurrencyStamp: string
+}
+export interface RoleByUser{
+    nhanVienID: any,
+    roleName: string[]
+}
